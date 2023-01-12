@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["node"],
+    "types": ["node", "@types/jest"],
     "paths": {
       "@/*": ["./src/*"]
     }
