@@ -21,6 +21,7 @@
     "@emotion/styled": "^11.10.5",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/material": "^5.11.4",
     "emotion-reset": "^3.0.1",
     "msw": "^0.49.2",
     "react": "^18.2.0",
