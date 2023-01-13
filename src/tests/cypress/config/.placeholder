@@ -1,0 +1,1 @@
+environment configuration JSON files to extend/override the base cypress.json file - not all teams did this but it's another approach
