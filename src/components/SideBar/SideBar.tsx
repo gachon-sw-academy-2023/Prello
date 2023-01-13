@@ -4,7 +4,8 @@ interface IMember {
   name: string;
   profile: string;
 }
-let members = [
+
+let members: Array<IMember> = [
   {
     name: 'dahye',
     profile: 'src/assets/workspace/sample-profile-image.png',
@@ -50,7 +51,6 @@ let members = [
     profile: 'src/assets/workspace/sample-profile-image.png',
   },
 ];
-
 const SideBar: React.FunctionComponent<SideBarProps> = (members) => {
   return (
     <S.LeftContainer>
