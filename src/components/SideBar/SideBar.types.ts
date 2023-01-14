@@ -3,7 +3,6 @@ interface IMember {
   name: string;
   profile: string;
 }
-
 export interface SideBarProps {
-  Imembers: Array<IMember>;
+  memberInfo: any;
 }
