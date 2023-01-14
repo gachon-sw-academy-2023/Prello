@@ -10,17 +10,15 @@
 
 • 🔥 Type checking [TypeScript](https://www.typescriptlang.org/)
 
-• ✅ Strict Mode for TypeScript and React 18
-
 • 💖 Code Formatter with [Prettier](https://prettier.io/) and [Eslint](https://eslint.org/)
 
-• 🦊 Husky for Git Hooks
+• 🦊 [Husky](https://typicode.github.io/husky/#/) for Git Hooks
 
-• 🚓 Lint git commit with Commitlint
+• 🚓 Lint git commit with [Commitlint](https://commitlint.js.org/#/)
 
-• 🦺 Unit Testing with Jest
+• 🦺 Unit Testing with [Jest](https://jestjs.io/docs/getting-started)
 
-• 🧪 E2E Testing with Cypress
+• 🧪 E2E Testing with [Cypress](https://www.cypress.io/)
 
 • ✔️ Build with [Vite](https://vitejs.dev/)
 
@@ -40,6 +38,7 @@
 "@emotion/styled": "^11.10.5",
 "emotion-reset": "^3.0.1",
 "jest": "^29.3.1",
+"cypress": "^12.3.0",
 "msw": "^0.49.2",
 "prettier": "^2.8.1",
 "vite": "^4.0.0"
@@ -87,7 +86,7 @@
 ### Clone the repo
 
 ```bash
-git clone https://github.com/gacheon-sw-academy-2023/Prello.git
+git clone https://github.com/gacheon-sw-academy-2023/PIMFY-Prello.git
 ```
 
 ### Install
@@ -95,25 +94,26 @@ git clone https://github.com/gacheon-sw-academy-2023/Prello.git
 Install all dependencies
 
 ```bash
-cd prello
-npm install # 필요한 패키지 설치
+cd pimfy-prello
+yarn install # 필요한 패키지 설치
 ```
 
 ### Running in dev mode
 
 ```bash
-npm run dev # 개발 모드로 실행
+yarn dev # 개발 모드로 실행
 ```
 
 ✅  Open [http://localhost:5173](http://localhost:5173/) with your browser to see the result.
 
 ## Commands
 
-- `npm run dev` : 애플리케이션 `http://127.0.0.1:5173/` 에서 실행
-- `npm run build` : 빌드
-- `npm run preview` : 빌드된 앱을 로컬에서 테스트
-- `npm test` : jest 실행
-- `npm run stroybook` : storybook `localhost:6006` 에서 실행
+- `yarn dev` : 애플리케이션 `http://127.0.0.1:5173/` 에서 실행
+- `yarn build` : 빌드
+- `yarn preview` : 빌드된 앱을 로컬에서 테스트
+- `yarn test` : jest 실행
+- `yarn test:cypress` : cypress 실행
+- `yarn storybook` : storybook `localhost:6006` 에서 실행
 
 <br/>
 
