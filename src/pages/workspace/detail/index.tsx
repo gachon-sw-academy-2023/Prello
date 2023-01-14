@@ -21,6 +21,7 @@ import {
   MemberWrapper,
 } from './styles';
 import { BarInfo, BarImg, WorkspaceName } from '@/pages/board/styles';
+import SideBar from '@/components/SideBar/SideBar';
 
 export default function WorkspaceDetail() {
   interface IMember {
@@ -88,7 +89,7 @@ export default function WorkspaceDetail() {
   return (
     <Container>
       {/* 왼쪽 사이드 바 */}
-      <LeftContainer>
+      {/* <LeftContainer>
         <LeftContentNotHover>
           <BarInfo>
             <BarImg src="src/assets/authorization/pimfy_profile.png" />
@@ -124,7 +125,8 @@ export default function WorkspaceDetail() {
           ></Icon>
           <Title margin={'10px 0'}>Setting</Title>
         </LeftContent>
-      </LeftContainer>
+      </LeftContainer> */}
+      <SideBar memberInfo={members} />
       {/* 오른쪽 화면 */}
       <RightContainer>
         <InfoContainer>

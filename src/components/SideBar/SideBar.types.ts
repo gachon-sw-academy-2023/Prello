@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 interface IMember {
   name: string;
   profile: string;
 }
 export interface SideBarProps {
-  memberInfo: any;
+  memberInfo: Array<IMember>;
 }

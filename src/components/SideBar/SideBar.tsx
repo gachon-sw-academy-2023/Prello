@@ -5,7 +5,7 @@ interface IMember {
   profile: string;
 }
 
-const SideBar: React.FunctionComponent<SideBarProps> = (memberInfo: any) => {
+const SideBar = ({ memberInfo }: SideBarProps) => {
   return (
     <S.LeftContainer>
       <S.LeftContentNotHover>
@@ -24,7 +24,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = (memberInfo: any) => {
         <S.Title margin={'10px 0'}>Members</S.Title>
       </S.LeftContent>
       <S.MembersWrapper>
-        {memberInfo.memberInfo.map((member: IMember) => (
+        {memberInfo.map((member: IMember) => (
           <S.MemberWrapper>
             <S.Image
               width={'35px'}
