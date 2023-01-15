@@ -4,17 +4,71 @@ import introduce2 from '@/assets/images/main/introduce2-temp.png';
 import introduce3 from '@/assets/images/main/introduce3-temp.png';
 import introduce4 from '@/assets/images/main/introduce4-temp.png';
 import { Slide } from 'react-awesome-reveal';
+import { Header } from '@/components/Header/Header';
+import { useEffect, useState, useMemo, useRef } from 'react';
+import { throttle } from 'lodash';
+
+type User = {
+  name: string;
+};
 
 export default function Main() {
+  const [user, setUser] = useState<User>();
+  const [updateHeader, setUpdateHeader] = useState<Boolean>();
+  const ref = useRef<any>(0);
+
+  const handleLogin = () => {
+    /* TODO: LOGIN */
+    setUser({ name: 'PIMFY' });
+  };
+
+  const handleLogout = () => {
+    /* TODO: LOGOUT */
+    setUser(undefined);
+  };
+
+  const handleJoin = () => {
+    /* TODO: JOIN */
+    setUser({ name: 'PIMFY' });
+  };
+
+  const throttledScroll = useMemo(
+    () =>
+      throttle(() => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY < ref.current.offsetTop - 50) {
+          setUpdateHeader(false);
+        } else {
+          setUpdateHeader(true);
+        }
+      }, 300),
+    [updateHeader],
+  );
+
+  useEffect(() => {
+    window.addEventListener('scroll', throttledScroll);
+    return () => {
+      window.removeEventListener('scroll', throttledScroll);
+    };
+  }, [throttledScroll]);
+
   return (
     <S.Container>
+      <Header
+        user={user}
+        onLogin={() => handleLogin()}
+        onLogout={() => handleLogout()}
+        onCreateAccount={() => handleJoin()}
+        color={updateHeader ? 'primary' : 'white'}
+        backgroundColor={updateHeader ? 'white' : 'empty'}
+      ></Header>
       <S.Wrapper>
         <S.Content>
           <S.TitleImage></S.TitleImage>
           <S.MainImage></S.MainImage>
         </S.Content>
       </S.Wrapper>
-      <S.IntroduceWrapper>
+      <S.IntroduceWrapper ref={ref}>
         <S.LeftSmallWrapper>
           <h1>워크스페이스</h1>
           <h3>prello는 팀별로 워크스페이스를 구성할 수 있습니다.</h3>

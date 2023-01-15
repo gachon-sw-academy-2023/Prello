@@ -5,7 +5,9 @@ type IntroduceImageProps = {
 };
 
 /* 메인 페이지 */
-export const Container = styled.div``;
+export const Container = styled.div`
+  overflow: 'scroll';
+`;
 
 export const Wrapper = styled.div`
   height: 100vh;
