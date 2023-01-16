@@ -21,7 +21,9 @@ import {
   MemberWrapper,
 } from './styles';
 import { BarInfo, BarImg, WorkspaceName } from '@/pages/board/styles';
+import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import SideBar from '@/components/SideBar/SideBar';
+import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 
 export default function WorkspaceDetail() {
   interface IMember {
@@ -88,51 +90,15 @@ export default function WorkspaceDetail() {
 
   return (
     <Container>
-      {/* 왼쪽 사이드 바 */}
-      {/* <LeftContainer>
-        <LeftContentNotHover>
-          <BarInfo>
-            <BarImg src="src/assets/authorization/pimfy_profile.png" />
-            <WorkspaceName>PIMFY</WorkspaceName>
-          </BarInfo>
-        </LeftContentNotHover>
-        <Line margin="10px"></Line>
-        <LeftContent>
-          <Icon
-            width={'20px'}
-            height={'20px'}
-            img={'src/assets/workspace/user-icon.png'}
-          ></Icon>
-          <Title margin={'10px 0'}>Members</Title>
-        </LeftContent>
-        <MembersWrapper>
-          {members.map((member) => (
-            <MemberWrapper>
-              <Image
-                width={'35px'}
-                height={'35px'}
-                img={'src/assets/workspace/sample-profile-image.png'}
-              ></Image>
-              <ProfileName>{member.name}</ProfileName>
-            </MemberWrapper>
-          ))}
-        </MembersWrapper>
-        <LeftContent>
-          <Icon
-            width={'20px'}
-            height={'20px'}
-            img={'src/assets/workspace/setting-icon.png'}
-          ></Icon>
-          <Title margin={'10px 0'}>Setting</Title>
-        </LeftContent>
-      </LeftContainer> */}
       <SideBar memberInfo={members} />
-      {/* 오른쪽 화면 */}
       <RightContainer>
         <InfoContainer>
-          <WorkspaceImage></WorkspaceImage>
+          <WorkspaceImg
+            radius="0px"
+            image="src/assets/authorization/pimfy_profile.png"
+          />
           <InfoContents>
-            <Title margin={'10px 0'}>PIMPY</Title>
+            <SubTitle size="md">PIMPY</SubTitle>
             <ExplainText>핌피팀입니당</ExplainText>
           </InfoContents>
         </InfoContainer>

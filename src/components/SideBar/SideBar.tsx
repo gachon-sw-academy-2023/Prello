@@ -1,5 +1,7 @@
 import * as S from './SideBar.styles';
 import { SideBarProps } from './SideBar.types';
+import SubTitle from '../SubTitle/SubTitle';
+import WorkspaceImg from '../WorkspaceImg/WorkspaceImg';
 interface IMember {
   name: string;
   profile: string;
@@ -10,8 +12,12 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
     <S.LeftContainer>
       <S.LeftContentNotHover>
         <S.BarInfo>
-          <S.BarImg src="src/assets/authorization/pimfy_profile.png" />
-          <S.WorkspaceName workspaceName="pimfy">ddd</S.WorkspaceName>
+          <WorkspaceImg
+            size="sm"
+            radius="16px"
+            image="src/assets/authorization/pimfy_profile.png"
+          />
+          <SubTitle>pimfy</SubTitle>
         </S.BarInfo>
       </S.LeftContentNotHover>
       <S.Line margin="10px"></S.Line>
@@ -21,7 +27,7 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
           height={'20px'}
           img={'src/assets/workspace/user-icon.png'}
         ></S.Icon>
-        <S.Title margin={'10px 0'}>Members</S.Title>
+        <SubTitle>Members</SubTitle>
       </S.LeftContent>
       <S.MembersWrapper>
         {memberInfo.map((member: IMember) => (
@@ -41,7 +47,7 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
           height={'20px'}
           img={'src/assets/workspace/setting-icon.png'}
         ></S.Icon>
-        <S.Title margin={'10px 0'}>Setting</S.Title>
+        <SubTitle>Setting</SubTitle>
       </S.LeftContent>
     </S.LeftContainer>
   );

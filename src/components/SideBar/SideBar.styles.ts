@@ -41,6 +41,7 @@ export const LeftContainer = styled.div`
 `;
 export const LeftContent = styled.div`
   display: flex;
+  align-items: center;
   width: 100%;
   margin: 15px 0px;
   padding-left: 10px;
@@ -69,6 +70,7 @@ export const MembersWrapper = styled.div`
 export const MemberWrapper = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
   padding-top: 10px;
 `;
 
