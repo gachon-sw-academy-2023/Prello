@@ -6,6 +6,7 @@ const colors = {
   success: '#59CE8F',
   warning: '#FEF9A7',
   error: '#FA1E0E',
+  gradient: 'linear-gradient(to bottom, #fca4be 0%, #e5a4fc 100%)',
 } as const;
 
 export default colors;

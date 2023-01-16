@@ -1,5 +1,5 @@
-import Button from './Button';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import Button from './Button';
 
 export default {
   title: 'Button',
@@ -13,12 +13,6 @@ Default.args = {
   children: '버튼',
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  ...Default.args,
-  color: 'secondary',
-};
-
 export const Small = Template.bind({});
 Small.args = {
   ...Default.args,
@@ -29,4 +23,11 @@ export const Large = Template.bind({});
 Large.args = {
   ...Default.args,
   size: 'lg',
+};
+
+export const Styled = Template.bind({});
+Styled.args = {
+  ...Default.args,
+  color: 'gradient',
+  radius: 'circle',
 };
