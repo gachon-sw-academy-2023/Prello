@@ -31,7 +31,8 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
       </S.LeftContent>
       <S.MembersWrapper>
         {memberInfo.map((member: IMember) => (
-          <S.MemberWrapper>
+          // key 변경 필요
+          <S.MemberWrapper key={member.name}>
             <S.Image
               width={'35px'}
               height={'35px'}

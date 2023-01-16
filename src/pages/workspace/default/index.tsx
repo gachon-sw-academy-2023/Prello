@@ -1,56 +1,45 @@
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Wrapper,
-  Title,
-  CreateButton,
-  Item,
-  GradientBG,
-  ItemContents,
-  ItemBoardName,
-  ProfileImages,
-  ProfileImage,
-} from './styles';
+import * as S from './styles';
 
 export default function WorkspaceDefault() {
   const navigate = useNavigate();
   return (
-    <Container>
-      <Wrapper>
-        <Title>나의 워크스페이스</Title>
-        <CreateButton>+ 새로운 워크스페이스</CreateButton>
-      </Wrapper>
+    <S.Container>
+      <S.Wrapper>
+        <S.Title>나의 워크스페이스</S.Title>
+        <S.CreateButton>+ 새로운 워크스페이스</S.CreateButton>
+      </S.Wrapper>
 
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <Item
+          <S.Item
             onClick={() => {
               navigate('/workspace-detail');
             }}
           >
-            <GradientBG></GradientBG>
-            <ItemContents>
-              <Title>MOKA</Title>
-              <ItemBoardName>First Board</ItemBoardName>
-              <ProfileImages>
-                <ProfileImage></ProfileImage>
-                <ProfileImage></ProfileImage>
-                <ProfileImage></ProfileImage>
-              </ProfileImages>
-            </ItemContents>
-          </Item>
+            <S.GradientBG></S.GradientBG>
+            <S.ItemContents>
+              <S.Title>MOKA</S.Title>
+              <S.ItemBoardName>First Board</S.ItemBoardName>
+              <S.ProfileImages>
+                <S.ProfileImage></S.ProfileImage>
+                <S.ProfileImage></S.ProfileImage>
+                <S.ProfileImage></S.ProfileImage>
+              </S.ProfileImages>
+            </S.ItemContents>
+          </S.Item>
         </Grid>
         <Grid item xs={3}>
-          <Item></Item>
+          <S.Item></S.Item>
         </Grid>
         <Grid item xs={3}>
-          <Item></Item>
+          <S.Item></S.Item>
         </Grid>
         <Grid item xs={3}>
-          <Item></Item>
+          <S.Item></S.Item>
         </Grid>
       </Grid>
-    </Container>
+    </S.Container>
   );
 }
