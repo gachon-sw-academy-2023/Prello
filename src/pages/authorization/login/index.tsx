@@ -1,7 +1,26 @@
 import Button from '@/components/Button/Button';
+import { FormEvent, useEffect, useState } from 'react';
 import * as S from './styles';
+import { useNavigate } from 'react-router-dom';
+import routes from '@/routes';
 
 function Login() {
+  const [login, setLogin] = useState(false);
+  const navigate = useNavigate();
+  const handleSubmit = () => {
+    fetch('/login', {
+      method: 'post',
+    }).then((res) => {
+      if (res.status === 200) {
+        setLogin(true);
+      }
+    });
+  };
+  useEffect(() => {
+    if (login) {
+      navigate(routes.WORKSPACEDEFAULT);
+    }
+  });
   return (
     <S.Container>
       <S.LeftWrapper>
@@ -28,11 +47,11 @@ function Login() {
 
             <label>Password</label>
             <S.InputPwd type="password"></S.InputPwd>
-          </S.Form>
 
-          <Button color="gradient" radius="circle">
-            Sign In
-          </Button>
+            <Button color="gradient" radius="circle" onClick={handleSubmit}>
+              Sign In
+            </Button>
+          </S.Form>
         </S.Content>
       </S.RightWrapper>
     </S.Container>
