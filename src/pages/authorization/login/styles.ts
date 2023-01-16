@@ -57,7 +57,7 @@ export const Ttile = styled.h1`
   font-size: 30px;
 `;
 
-export const Form = styled.div`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -125,10 +125,4 @@ export const InputPwd = styled.input`
   ::placeholder {
     color: #c0c3d0;
   }
-`;
-
-export const Btn = styled(Button)`
-  width: 250px;
-  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
-  box-sizing: border-box;
 `;

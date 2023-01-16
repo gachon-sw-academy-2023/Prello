@@ -7,7 +7,8 @@ import routes from '@/routes';
 function Login() {
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     fetch('/login', {
       method: 'post',
     }).then((res) => {
@@ -41,14 +42,18 @@ function Login() {
         <S.Content>
           <S.Ttile>LOGIN</S.Ttile>
 
-          <S.Form>
+          <S.Form onSubmit={handleSubmit}>
             <label>Email</label>
-            <S.InputEmail type="text" placeholder="Type here"></S.InputEmail>
+            <S.InputEmail
+              type="text"
+              placeholder="Type here"
+              required
+            ></S.InputEmail>
 
             <label>Password</label>
-            <S.InputPwd type="password"></S.InputPwd>
+            <S.InputPwd type="password" required></S.InputPwd>
 
-            <Button color="gradient" radius="circle" onClick={handleSubmit}>
+            <Button type="submit" color="gradient" radius="circle">
               Sign In
             </Button>
           </S.Form>
