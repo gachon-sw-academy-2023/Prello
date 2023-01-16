@@ -1,8 +1,8 @@
 import * as S from './styles';
-import introduce1 from '@/assets/images/main/introduce1-temp.png';
-import introduce2 from '@/assets/images/main/introduce2-temp.png';
-import introduce3 from '@/assets/images/main/introduce3-temp.png';
-import introduce4 from '@/assets/images/main/introduce4-temp.png';
+import introduce1 from '/assets/images/main/introduce1-temp.png';
+import introduce2 from '/assets/images/main/introduce2-temp.png';
+import introduce3 from '/assets/images/main/introduce3-temp.png';
+import introduce4 from '/assets/images/main/introduce4-temp.png';
 import { Slide } from 'react-awesome-reveal';
 import { Header } from '@/components/Header/Header';
 import { useEffect, useState, useMemo, useRef } from 'react';
