@@ -9,9 +9,20 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
   cursor: pointer;
   border: none;
   ${flexCenter}
-  border-radius: 0.2rem;
-  background-color: ${({ color }) => color && colors[color]};
-  color: ${colors.white};
+  background: ${({ color }) => color && colors[color]};
+  color: ${({ textColor }) => textColor && colors[textColor]};
+  ${({ radius }) =>
+    radius === 'square'
+      ? css`
+          border-radius: 0.2rem;
+        `
+      : radius === 'circle'
+      ? css`
+          border-radius: 2rem;
+        `
+      : css`
+          border-radius: 0%;
+        `}
   ${({ size }) =>
     size === 'sm'
       ? css`

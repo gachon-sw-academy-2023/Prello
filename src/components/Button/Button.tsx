@@ -9,12 +9,20 @@ import { ButtonProps } from './Button.types';
 
 const Button = ({
   size = 'md',
-  color = 'primary',
+  color = 'gradient',
+  radius = 'square',
+  textColor = 'white',
   children,
   ...rest
 }: ButtonProps) => {
   return (
-    <S.Container {...rest} size={size} color={color}>
+    <S.Container
+      {...rest}
+      size={size}
+      color={color}
+      radius={radius}
+      textColor={textColor}
+    >
       {children}
     </S.Container>
   );
