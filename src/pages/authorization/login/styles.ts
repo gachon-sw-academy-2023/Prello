@@ -66,10 +66,6 @@ export const Form = styled.form`
   margin-top: 60px;
   margin-bottom: 30px;
 
-  input {
-    margin-bottom: 30px;
-  }
-
   label {
     width: 50%;
     margin-bottom: 10px;
@@ -91,14 +87,12 @@ export const InputEmail = styled.input`
   padding: 8px 40px;
   border: 1px solid #eaebf6;
   transition: all 0.1s ease 0s;
-  background: url('src/assets/authorization/login/profile.png') no-repeat left;
+  background: url('src/assets/authorization/login/email.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
-
   :focus {
     border: 1.5px solid #e5a4fc;
   }
-
   ::placeholder {
     color: #c0c3d0;
   }
@@ -117,12 +111,18 @@ export const InputPwd = styled.input`
   background: url('src/assets/authorization/login/padlock.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
-
   :focus {
     border: 1.5px solid #e5a4fc;
   }
-
   ::placeholder {
     color: #c0c3d0;
   }
+`;
+
+export const Warning = styled.div`
+  display: flex;
+  width: 50%;
+  color: tomato;
+  margin: 10px 0px 20px 0px;
+  font-size: 12px;
 `;
