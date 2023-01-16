@@ -57,7 +57,7 @@ export const Ttile = styled.h1`
   font-size: 30px;
 `;
 
-export const Form = styled.div`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,10 +65,6 @@ export const Form = styled.div`
   width: 100%;
   margin-top: 60px;
   margin-bottom: 30px;
-
-  input {
-    margin-bottom: 30px;
-  }
 
   label {
     width: 50%;
@@ -91,14 +87,12 @@ export const InputEmail = styled.input`
   padding: 8px 40px;
   border: 1px solid #eaebf6;
   transition: all 0.1s ease 0s;
-  background: url('src/assets/authorization/login/profile.png') no-repeat left;
+  background: url('src/assets/authorization/login/email.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
-
   :focus {
     border: 1.5px solid #e5a4fc;
   }
-
   ::placeholder {
     color: #c0c3d0;
   }
@@ -117,18 +111,18 @@ export const InputPwd = styled.input`
   background: url('src/assets/authorization/login/padlock.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
-
   :focus {
     border: 1.5px solid #e5a4fc;
   }
-
   ::placeholder {
     color: #c0c3d0;
   }
 `;
 
-export const Btn = styled(Button)`
-  width: 250px;
-  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
-  box-sizing: border-box;
+export const Warning = styled.div`
+  display: flex;
+  width: 50%;
+  color: tomato;
+  margin: 10px 0px 20px 0px;
+  font-size: 12px;
 `;
