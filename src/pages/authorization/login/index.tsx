@@ -3,9 +3,8 @@ import { FormEvent, useEffect, useState } from 'react';
 import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
-const emailRegex =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const pwdRegex = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}';
+import { emailRegex, pwdRegex } from '@/utils/authorization';
+
 function Login() {
   const [login, setLogin] = useState(false);
   const [emailValidation, setEmailValidation] = useState(true);
