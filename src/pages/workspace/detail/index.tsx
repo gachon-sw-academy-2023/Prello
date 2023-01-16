@@ -94,7 +94,7 @@ export default function WorkspaceDetail() {
       <RightContainer>
         <InfoContainer>
           <WorkspaceImg
-            radius="0px"
+            radius="none"
             image="src/assets/authorization/pimfy_profile.png"
           />
           <InfoContents>

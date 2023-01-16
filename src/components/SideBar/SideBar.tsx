@@ -14,7 +14,7 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
         <S.BarInfo>
           <WorkspaceImg
             size="sm"
-            radius="16px"
+            radius="rounded"
             image="src/assets/authorization/pimfy_profile.png"
           />
           <SubTitle>pimfy</SubTitle>

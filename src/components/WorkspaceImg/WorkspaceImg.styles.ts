@@ -6,7 +6,6 @@ export const RworkspaceImg = styled.div<ImageProps>`
   width: 50px;
   height: 50px;
   margin-right: 20px;
-  border-radius: ${(props) => props.radius};
   background-size: cover;
   background-image: url(${(props) => props.image});
   ${({ size }) =>
@@ -23,5 +22,18 @@ export const RworkspaceImg = styled.div<ImageProps>`
       : css`
           width: 80px;
           height: 80px;
+        `}
+
+  ${({ radius }) =>
+    radius === 'rounded'
+      ? css`
+          border-radius: 16px;
+        `
+      : radius === 'round'
+      ? css`
+          border-radius: 100px;
+        `
+      : css`
+          border-radius: 0;
         `}
 `;

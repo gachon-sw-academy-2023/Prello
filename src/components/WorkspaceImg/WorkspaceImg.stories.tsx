@@ -19,7 +19,7 @@ export const Round = Template.bind({});
 Round.args = {
   ...Default.args,
   image: 'src/assets/authorization/pimfy_profile.png',
-  radius: '16px',
+  radius: 'rounded',
 };
 
 export const Small = Template.bind({});

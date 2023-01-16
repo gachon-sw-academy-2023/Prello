@@ -3,7 +3,7 @@ import { ImageProps } from './WorkspaceImg.types';
 
 const WorkspaceImg = ({
   size = 'md',
-  radius = '0px',
+  radius,
   image = 'src/assets/workspace/sample-workspace-image.png',
 }: ImageProps) => {
   return (
