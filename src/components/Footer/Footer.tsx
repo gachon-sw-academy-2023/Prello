@@ -8,15 +8,15 @@ export default function Footer() {
   return (
     <S.FooterContainer>
       <S.ColWrapper ratio={70}>
-        <S.RowWrapper ratio={70}>
+        <S.RowWrapper ratio={50}>
           <h1>Prello</h1>
         </S.RowWrapper>
-        <S.TextWrapper ratio={15}>
+        <S.TextWrapper ratio={30}>
           <h2>Address</h2>
           <p>경기도 성남시 수정구 성남대로 1342</p>
           <p>가천대학교 AI 공학관 411호</p>
         </S.TextWrapper>
-        <S.TextWrapper ratio={15}>
+        <S.TextWrapper ratio={20}>
           <h2>Contact</h2>
           <p>pimfy@example.com</p>
           <p>(270) 555-0117</p>
