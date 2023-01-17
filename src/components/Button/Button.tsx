@@ -7,8 +7,9 @@ const Button = ({
   radius = 'square',
   textColor = 'white',
   width = 15,
-  children,
   shadow = false,
+  children,
+
   ...rest
 }: ButtonProps) => {
   return (
