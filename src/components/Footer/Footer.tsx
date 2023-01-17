@@ -1,8 +1,8 @@
 import * as S from './Footer.styles';
-import facebook from '@/assets/images/main/facebook.png';
-import github from '@/assets/images/main/github.png';
-import instagram from '@/assets/images/main/instagram.png';
-import linkedIn from '@/assets/images/main/linkedIn.png';
+import facebook from '/assets/images/main/facebook.png';
+import github from '/assets/images/main/github.png';
+import instagram from '/assets/images/main/instagram.png';
+import linkedIn from '/assets/images/main/linkedIn.png';
 
 export default function Footer() {
   return (
