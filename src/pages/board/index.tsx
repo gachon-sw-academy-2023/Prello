@@ -24,7 +24,9 @@ export default function Board() {
   };
 
   useEffect(() => {
-    axios.get('/api/getMemberData.json').then((res) => setMember(res.data));
+    axios
+      .get('https://pimfy-prello.netlify.app/getMemberData.json')
+      .then((res) => setMember(res.data));
   }, []);
 
   return (

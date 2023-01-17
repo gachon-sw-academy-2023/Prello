@@ -11,12 +11,6 @@
    to = "/index.html"
    status = 200
 
-  [[redirects]]
-   from = "/api/*"
-   to = "https://pimfy-prello.netlify.app/:splat"
-   status = 200
-   force = true
-
   ## (optional) Settings for Netlify Dev
   ## https://github.com/netlify/cli/blob/main/docs/netlify-dev.md#project-detection
   #[dev]
