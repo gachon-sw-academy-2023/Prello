@@ -1,5 +1,4 @@
 import colors from '@/styles/colors';
-import { flexCenter } from '@/styles/shared/flex';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ButtonProps } from './Button.types';
@@ -8,7 +7,9 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
   transition: all 0.5s ease-in-out;
   cursor: pointer;
   border: none;
-  ${flexCenter}
+  display: inline-block;
+  /* font-weight: 700; */
+  line-height: 1;
   background: ${({ color }) => color && colors[color]};
   color: ${({ textColor }) => textColor && colors[textColor]};
   ${({ radius }) =>
@@ -35,4 +36,16 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
       : css`
           padding: 1rem 2.5rem;
         `}
+
+  &.button--sm {
+    font-size: 12px;
+  }
+
+  &.button--md {
+    font-size: 14px;
+  }
+
+  &.button--lg {
+    font-size: 16px;
+  }
 `;

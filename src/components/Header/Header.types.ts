@@ -9,5 +9,5 @@ export interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
   onLogout: () => void;
   onCreateAccount: () => void;
   color?: 'primary' | 'white';
-  backgroundColor?: 'white' | 'empty';
+  backgroundColor?: 'white' | 'empty' | 'primary';
 }
