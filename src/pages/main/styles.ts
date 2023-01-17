@@ -29,12 +29,12 @@ export const Content = styled.div`
 
 export const TitleImage = styled.img`
   width: 20%;
-  content: url('src/assets/images/main/logo.png');
+  content: url('/assets/images/main/logo.png');
 `;
 
 export const MainImage = styled.img`
   width: 60%;
-  content: url('src/assets/images/main/main.png');
+  content: url('/assets/images/main/main.png');
 `;
 
 /* 소개 페이지 */
