@@ -22,6 +22,14 @@ export const HeaderDiv = styled.div`
   align-items: center;
 `;
 
+export const HeaderLeftDiv = styled(HeaderDiv)`
+  justify-content: left;
+`;
+
+export const HeaderRightDiv = styled(HeaderDiv)`
+  justify-content: right;
+`;
+
 export const Title = styled.h1`
   font-family: 'Rubik Bubbles', cursive;
   font-size: 25px;
@@ -60,6 +68,8 @@ export const HeaderImg = styled.img`
   width: 7%;
   border-radius: 50%;
   margin-left: 30px;
+
+  content: url('/assets/authorization/pimfy_profile.png');
 `;
 
 export const Wrapper = styled.div`
@@ -169,7 +179,15 @@ export const AddBtn = styled.div`
   cursor: pointer;
 `;
 
+export const AddBtnText = styled.span`
+  margin-left: 10px;
+`;
+
 export const AddListBtn = styled.div`
   font-weight: 600;
   font-size: 15px;
+`;
+
+export const AddListWrapper = styled(ListWrapper)`
+  padding: 15px 40px;
 `;
