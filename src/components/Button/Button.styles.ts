@@ -25,7 +25,7 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
           border-radius: 2rem;
         `
       : css`
-          border-radius: 0%;
+          border-radius: 0.5rem;
         `}
   ${({ height }) =>
     height === 'sm'
@@ -45,4 +45,9 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
           padding-top: 1rem;
           padding-bottom: 1rem;
         `}
+    ${({ shadow }) =>
+    shadow &&
+    css`
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    `}
 `;

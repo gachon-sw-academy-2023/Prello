@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
+import Button from '@/components/Button/Button';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 
 export default function WorkspaceDefault() {
@@ -9,7 +10,9 @@ export default function WorkspaceDefault() {
     <S.Container>
       <S.Wrapper>
         <S.Title>나의 워크스페이스</S.Title>
-        <S.CreateButton>+ 새로운 워크스페이스</S.CreateButton>
+        <Button width={50} radius={'rounded'} color={'primary'} shadow={true}>
+          + 새로운 워크스페이스
+        </Button>
       </S.Wrapper>
 
       <Grid container spacing={2}>

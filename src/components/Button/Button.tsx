@@ -8,6 +8,7 @@ const Button = ({
   textColor = 'white',
   width = 15,
   children,
+  shadow = false,
   ...rest
 }: ButtonProps) => {
   return (
@@ -18,6 +19,7 @@ const Button = ({
       color={color}
       radius={radius}
       textColor={textColor}
+      shadow={shadow}
     >
       {children}
     </S.Container>
