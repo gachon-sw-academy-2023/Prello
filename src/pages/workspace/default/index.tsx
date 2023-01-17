@@ -13,7 +13,7 @@ export default function WorkspaceDefault() {
       </S.Wrapper>
 
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4} md={3}>
           <S.Item
             onClick={() => {
               navigate('/workspace-detail');
@@ -31,13 +31,13 @@ export default function WorkspaceDefault() {
             </S.ItemContents>
           </S.Item>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4} md={3}>
           <S.Item></S.Item>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4} md={3}>
           <S.Item></S.Item>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4} md={3}>
           <S.Item></S.Item>
         </Grid>
       </Grid>

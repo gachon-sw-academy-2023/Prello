@@ -106,13 +106,13 @@ export default function WorkspaceDetail() {
         <BoardContainer>
           <Grid container spacing={4}>
             {boards.map((board) => (
-              <Grid item xs={4} key={board.title}>
+              <Grid item xs={12} sm={6} md={4} key={board.title}>
                 <Item center={false} color={'#ffe7ee'}>
                   <Title margin={'30px 20px'}>{board.title}</Title>
                 </Item>
               </Grid>
             ))}
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={6} md={4}>
               <Item center={true} color={'#fffcff'}>
                 <Image
                   width={'50px'}
