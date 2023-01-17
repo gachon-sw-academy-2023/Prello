@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
+import ProfileImg from '@/components/ProfileImg/ProfileImg';
 
 export default function WorkspaceDefault() {
   const navigate = useNavigate();
@@ -23,9 +24,9 @@ export default function WorkspaceDefault() {
               <S.Title>MOKA</S.Title>
               <S.ItemBoardName>First Board</S.ItemBoardName>
               <S.ProfileImages>
-                <S.ProfileImage></S.ProfileImage>
-                <S.ProfileImage></S.ProfileImage>
-                <S.ProfileImage></S.ProfileImage>
+                <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+                <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+                <ProfileImg image="/assets/workspace/sample-profile-image.png" />
               </S.ProfileImages>
             </S.ItemContents>
           </S.Item>

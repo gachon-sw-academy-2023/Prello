@@ -55,7 +55,7 @@ const ItemContents = styled.div`
   padding: 30px 10px;
 `;
 const ItemBoardName = styled.h1`
-  padding: 20px 0 40px 0;
+  padding: 20px 0 50px 0;
   font-size: 18px;
   font-weight: 500;
   font-family: 'LINESeedKR-Rg';

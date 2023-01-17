@@ -33,47 +33,47 @@ export default function WorkspaceDetail() {
   let members: IMember[] = [
     {
       name: 'dahye',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: 'leah',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: 'rylee',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: '멤버1',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: '멤버2',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: '멤버3',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: '멤버4',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: '멤버5',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: '멤버6',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: '멤버7',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
     {
       name: '멤버8',
-      profile: 'src/assets/workspace/sample-profile-image.png',
+      profile: '/assets/workspace/sample-profile-image.png',
     },
   ];
   interface IBoard {
@@ -95,7 +95,7 @@ export default function WorkspaceDetail() {
         <InfoContainer>
           <WorkspaceImg
             radius="none"
-            image="src/assets/authorization/pimfy_profile.png"
+            image="/assets/authorization/pimfy_profile.png"
           />
           <InfoContents>
             <SubTitle size="md">PIMPY</SubTitle>
@@ -117,7 +117,7 @@ export default function WorkspaceDetail() {
                 <Image
                   width={'50px'}
                   height={'50px'}
-                  img={'src/assets/workspace/sample-add-icon.png'}
+                  img={'/assets/workspace/sample-add-icon.png'}
                 ></Image>
               </Item>
             </Grid>
