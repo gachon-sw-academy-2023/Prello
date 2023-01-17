@@ -17,33 +17,38 @@ export const Header = ({
       </div>
       <div>
         {user ? (
-          <>
+          <div>
             <span>
               Welcome, <b>{user.name}</b>!
             </span>
             <Button
-              size="md"
+              height="md"
               color="empty"
               textColor={color}
               onClick={onLogout}
             >
-              Log out
+              Log Out
             </Button>
-          </>
+          </div>
         ) : (
-          <>
-            <Button size="md" color="empty" textColor={color} onClick={onLogin}>
-              Log in
+          <div>
+            <Button
+              height="md"
+              color="empty"
+              textColor={color}
+              onClick={onLogin}
+            >
+              Log In
             </Button>
             <Button
-              size="md"
+              height="md"
               color="empty"
               textColor={color}
               onClick={onCreateAccount}
             >
-              Sign up
+              Sign Up
             </Button>
-          </>
+          </div>
         )}
       </div>
     </S.HeaderContainer>

@@ -1,7 +1,8 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: 'sm' | 'md' | 'lg';
+  height?: 'sm' | 'md' | 'lg';
+  width?: number;
   children: ReactNode;
   color?: 'white' | 'gradient' | 'empty';
   radius?: 'square' | 'circle';

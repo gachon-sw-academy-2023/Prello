@@ -2,21 +2,22 @@ import * as S from './Button.styles';
 import { ButtonProps } from './Button.types';
 
 const Button = ({
-  size = 'md',
+  height = 'md',
   color = 'gradient',
   radius = 'square',
   textColor = 'white',
+  width = 15,
   children,
   ...rest
 }: ButtonProps) => {
   return (
     <S.Container
       {...rest}
-      size={size}
+      height={height}
+      width={width}
       color={color}
       radius={radius}
       textColor={textColor}
-      className={`button--${size}`}
     >
       {children}
     </S.Container>

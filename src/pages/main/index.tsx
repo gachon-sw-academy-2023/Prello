@@ -8,6 +8,7 @@ import { Header } from '@/components/Header/Header';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { throttle } from 'lodash';
 import Footer from '@/components/Footer/Footer';
+import Button from '@/components/Button/Button';
 
 type User = {
   name: string;
@@ -32,6 +33,8 @@ export default function Main() {
     /* TODO: JOIN */
     setUser({ name: 'PIMFY' });
   };
+
+  const handleNavigate = () => {};
 
   const throttledScroll = useMemo(
     () =>
@@ -67,6 +70,16 @@ export default function Main() {
         <S.Content>
           <S.TitleImage></S.TitleImage>
           <S.MainImage></S.MainImage>
+          <S.SubmitBtn
+            height="lg"
+            width={100}
+            color="white"
+            textColor="black"
+            radius="circle"
+            onClick={handleNavigate}
+          >
+            Sign Up
+          </S.SubmitBtn>
         </S.Content>
       </S.Wrapper>
       <S.IntroduceWrapper ref={ref}>

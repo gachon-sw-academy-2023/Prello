@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Button from '@/components/Button/Button';
 
 type IntroduceImageProps = {
   img: string;
@@ -34,6 +35,7 @@ export const TitleImage = styled.img`
 
 export const MainImage = styled.img`
   width: 60%;
+  margin-bottom: 20px;
   content: url('src/assets/images/main/main.png');
 `;
 
@@ -98,4 +100,10 @@ export const RightSmallWrapper = styled(InsideWrapper)`
 export const IntroduceImage = styled.img<IntroduceImageProps>`
   width: 90%;
   content: url(${(props) => props.img});
+`;
+
+export const SubmitBtn = styled(Button)`
+  margin-top: 5px;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
+  box-sizing: border-box;
 `;

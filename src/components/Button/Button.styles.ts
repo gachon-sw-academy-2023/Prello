@@ -8,10 +8,13 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
   cursor: pointer;
   border: none;
   display: inline-block;
-  /* font-weight: 700; */
   line-height: 1;
   background: ${({ color }) => color && colors[color]};
   color: ${({ textColor }) => textColor && colors[textColor]};
+  padding-left: ${({ width }) => width}px;
+  padding-right: ${({ width }) => width}px;
+  text-align: center;
+  font-family: 'LINESeedKR-Bd';
   ${({ radius }) =>
     radius === 'square'
       ? css`
@@ -24,28 +27,22 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
       : css`
           border-radius: 0%;
         `}
-  ${({ size }) =>
-    size === 'sm'
+  ${({ height }) =>
+    height === 'sm'
       ? css`
-          padding: 0.5rem 1.5rem;
+          font-size: 12px;
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
         `
-      : size === 'md'
+      : height === 'md'
       ? css`
-          padding: 0.7rem 2rem;
+          font-size: 14px;
+          padding-top: 0.7rem;
+          padding-bottom: 0.7rem;
         `
       : css`
-          padding: 1rem 2.5rem;
+          font-size: 16px;
+          padding-top: 1rem;
+          padding-bottom: 1rem;
         `}
-
-  &.button--sm {
-    font-size: 12px;
-  }
-
-  &.button--md {
-    font-size: 14px;
-  }
-
-  &.button--lg {
-    font-size: 16px;
-  }
 `;

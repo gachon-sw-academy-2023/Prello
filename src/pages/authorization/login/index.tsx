@@ -1,4 +1,3 @@
-import Button from '@/components/Button/Button';
 import { FormEvent, useEffect, useState } from 'react';
 import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
@@ -59,7 +58,7 @@ function Login() {
         </S.Header>
 
         <S.Content>
-          <S.Ttile>LOGIN</S.Ttile>
+          <S.Title>LOGIN</S.Title>
 
           <S.Form onSubmit={handleSubmit}>
             <label>Email</label>
@@ -81,9 +80,15 @@ function Login() {
               </p>
             </S.Warning>
 
-            <Button type="submit" color="gradient" radius="circle">
+            <S.SubmitBtn
+              type="submit"
+              color="gradient"
+              radius="circle"
+              height="md"
+              width={160}
+            >
               Sign In
-            </Button>
+            </S.SubmitBtn>
           </S.Form>
         </S.Content>
       </S.RightWrapper>
