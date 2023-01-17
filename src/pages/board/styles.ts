@@ -169,7 +169,15 @@ export const AddBtn = styled.div`
   cursor: pointer;
 `;
 
+export const AddBtnText = styled.span`
+  margin-left: 10px;
+`;
+
 export const AddListBtn = styled.div`
   font-weight: 600;
   font-size: 15px;
+`;
+
+export const AddListWrapper = styled(ListWrapper)`
+  padding: 15px 40px;
 `;

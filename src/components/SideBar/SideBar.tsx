@@ -15,7 +15,7 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
           <WorkspaceImg
             size="sm"
             radius="rounded"
-            image="src/assets/authorization/pimfy_profile.png"
+            image="assets/authorization/pimfy_profile.png"
           />
           <SubTitle>pimfy</SubTitle>
         </S.BarInfo>
@@ -25,7 +25,7 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
         <S.Icon
           width={'20px'}
           height={'20px'}
-          img={'src/assets/workspace/user-icon.png'}
+          img={'assets/workspace/user-icon.png'}
         ></S.Icon>
         <SubTitle>Members</SubTitle>
       </S.LeftContent>
@@ -46,7 +46,7 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
         <S.Icon
           width={'20px'}
           height={'20px'}
-          img={'src/assets/workspace/setting-icon.png'}
+          img={'assets/workspace/setting-icon.png'}
         ></S.Icon>
         <SubTitle>Setting</SubTitle>
       </S.LeftContent>
