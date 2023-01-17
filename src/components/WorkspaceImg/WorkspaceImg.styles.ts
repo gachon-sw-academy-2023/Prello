@@ -2,9 +2,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { ImageProps } from './WorkspaceImg.types';
 
-export const RworkspaceImg = styled.div<ImageProps>`
-  width: 50px;
-  height: 50px;
+export const WorkspaceImg = styled.div<ImageProps>`
   margin-right: 20px;
   background-size: cover;
   background-image: url(${(props) => props.image});

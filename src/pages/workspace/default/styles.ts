@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 // 전체 div
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f5f6f7;
   padding: 0 50px;
 `;
@@ -55,7 +55,7 @@ const ItemContents = styled.div`
   padding: 30px 10px;
 `;
 const ItemBoardName = styled.h1`
-  padding: 20px 0 40px 0;
+  padding: 20px 0 50px 0;
   font-size: 18px;
   font-weight: 500;
   font-family: 'LINESeedKR-Rg';
@@ -70,7 +70,7 @@ const ProfileImage = styled.div`
   height: 40px;
   margin-right: 10px;
   background-size: cover;
-  background-image: url('src/assets/workspace/sample-profile-image.png');
+  background-image: url('/assets/workspace/sample-profile-image.png');
 `;
 
 export {
