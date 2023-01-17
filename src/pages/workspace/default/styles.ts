@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 // 전체 div
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f5f6f7;
   padding: 0 50px;
 `;
