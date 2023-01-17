@@ -3,16 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import Button from '@/components/Button/Button';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
-
+import { Mobile, Default } from '@/utils/mediaQuery';
 export default function WorkspaceDefault() {
   const navigate = useNavigate();
   return (
     <S.Container>
       <S.Wrapper>
         <S.Title>나의 워크스페이스</S.Title>
-        <Button width={50} radius={'rounded'} color={'primary'} shadow={true}>
-          + 새로운 워크스페이스
-        </Button>
+        <Mobile>
+          <Button width={20} radius={'rounded'} color={'primary'} shadow={true}>
+            + 새로운 워크스페이스
+          </Button>
+        </Mobile>
+        <Default>
+          <Button width={50} radius={'rounded'} color={'primary'} shadow={true}>
+            + 새로운 워크스페이스
+          </Button>
+        </Default>
       </S.Wrapper>
 
       <Grid container spacing={2}>
