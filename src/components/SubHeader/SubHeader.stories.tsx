@@ -12,6 +12,12 @@ const Template: ComponentStory<typeof SubHeader> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
+  searchBar: false,
+  profileImg: 'src/assets/authorization/pimfy_profile.png',
+};
+
+export const WithSearchBar = Template.bind({});
+WithSearchBar.args = {
   searchBar: true,
   profileImg: 'src/assets/authorization/pimfy_profile.png',
 };
