@@ -143,6 +143,7 @@ export const ListWrapper = styled.div`
 
   margin-left: 25px;
   justify-content: center;
+  cursor: pointer;
 `;
 
 export const ListHeader = styled.div`
@@ -176,6 +177,7 @@ export const Item = styled.div`
   height: 35px;
   margin-bottom: 10px;
   width: 80%;
+  cursor: pointer;
 `;
 
 export const AddBtn = styled.div`
