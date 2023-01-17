@@ -6,13 +6,14 @@ import SideBar from '@/components/SideBar/SideBar';
 import axios from 'axios';
 
 export default function Board() {
+  // Sample Data
   const [items, setItems] = useState([
     { idx: 1, content: 'a' },
     { idx: 2, content: 'b' },
   ]);
   const [member, setMember] = useState([]);
 
-  const addItem = () => {
+  const handleAddItem = () => {
     setItems([
       ...items,
       {
@@ -31,15 +32,15 @@ export default function Board() {
   return (
     <S.Container>
       <S.Header>
-        <S.HeaderDiv style={{ justifyContent: 'left' }}>
+        <S.HeaderLeftDiv>
           <S.Title>Prello</S.Title>
           <S.Divider />
           <S.BoardName>First Board</S.BoardName>
-        </S.HeaderDiv>
-        <S.HeaderDiv style={{ justifyContent: 'right' }}>
+        </S.HeaderLeftDiv>
+        <S.HeaderRightDiv>
           <S.SearchBar placeholder="Search" />
-          <S.HeaderImg src="/assets/authorization/pimfy_profile.png" />
-        </S.HeaderDiv>
+          <S.HeaderImg />
+        </S.HeaderRightDiv>
       </S.Header>
       <S.Wrapper>
         <SideBar memberInfo={member} />
@@ -54,7 +55,7 @@ export default function Board() {
             {items.map((item, idx) => (
               <S.Item defaultValue={item.content} key={idx} />
             ))}
-            <S.AddBtn onClick={addItem}>
+            <S.AddBtn onClick={handleAddItem}>
               <span>+</span>
               <S.AddBtnText>Add a card</S.AddBtnText>
             </S.AddBtn>
