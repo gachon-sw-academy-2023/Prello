@@ -24,9 +24,7 @@ export default function Board() {
   };
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5173/getMemberData.json')
-      .then((res) => setMember(res.data));
+    axios.get('/api/getMemberData.json').then((res) => setMember(res.data));
   }, []);
 
   return (
