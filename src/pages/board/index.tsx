@@ -6,18 +6,12 @@ import SideBar from '@/components/SideBar/SideBar';
 import axios from 'axios';
 
 export default function Board() {
-  // Sample Data
-  const [items, setItems] = useState([
-    { idx: 1, content: 'a' },
-    { idx: 2, content: 'b' },
-  ]);
   const [member, setMember] = useState([]);
-
   const handleAddItem = () => {
     setItems([
       ...items,
       {
-        idx: items.length,
+        id: items.length,
         content: '',
       },
     ]);
@@ -28,6 +22,15 @@ export default function Board() {
       .get('https://pimfy-prello.netlify.app/getMemberData.json')
       .then((res) => setMember(res.data));
   }, []);
+
+  const [items, setItems] = useState<any[]>([
+    { id: 1, content: 'a' },
+    { id: 2, content: 'b' },
+  ]);
+  const [items2, setItems2] = useState<any[]>([
+    { id: 3, content: 'c' },
+    { id: 4, content: 'd' },
+  ]);
 
   return (
     <S.Container>
@@ -52,9 +55,29 @@ export default function Board() {
                 <FontAwesomeIcon icon={faEllipsis} />
               </span>
             </S.ListHeader>
-            {items.map((item, idx) => (
-              <S.Item defaultValue={item.content} key={idx} />
-            ))}
+            <S.ItemWrapper list={items} setList={setItems} group="shared">
+              {items.map((item) => (
+                <S.Item key={item.id}>{item.content}</S.Item>
+              ))}
+            </S.ItemWrapper>
+
+            <S.AddBtn onClick={handleAddItem}>
+              <span>+</span>
+              <S.AddBtnText>Add a card</S.AddBtnText>
+            </S.AddBtn>
+          </S.ListWrapper>
+          <S.ListWrapper>
+            <S.ListHeader>
+              <h1>Doing</h1>
+              <span>
+                <FontAwesomeIcon icon={faEllipsis} />
+              </span>
+            </S.ListHeader>
+            <S.ItemWrapper list={items2} setList={setItems2} group="shared">
+              {items2.map((item) => (
+                <S.Item key={item.id}>{item.content}</S.Item>
+              ))}
+            </S.ItemWrapper>
             <S.AddBtn onClick={handleAddItem}>
               <span>+</span>
               <S.AddBtnText>Add a card</S.AddBtnText>
