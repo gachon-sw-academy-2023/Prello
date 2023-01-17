@@ -12,13 +12,13 @@ const Template: ComponentStory<typeof WorkspaceImg> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  image: 'src/assets/authorization/pimfy_profile.png',
+  image: '/assets/authorization/pimfy_profile.png',
 };
 
 export const Round = Template.bind({});
 Round.args = {
   ...Default.args,
-  image: 'src/assets/authorization/pimfy_profile.png',
+  image: '/assets/authorization/pimfy_profile.png',
   radius: 'rounded',
 };
 

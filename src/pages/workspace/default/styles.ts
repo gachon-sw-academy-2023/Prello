@@ -70,7 +70,7 @@ const ProfileImage = styled.div`
   height: 40px;
   margin-right: 10px;
   background-size: cover;
-  background-image: url('src/assets/workspace/sample-profile-image.png');
+  background-image: url('/assets/workspace/sample-profile-image.png');
 `;
 
 export {
