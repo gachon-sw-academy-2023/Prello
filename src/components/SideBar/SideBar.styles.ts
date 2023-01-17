@@ -105,7 +105,7 @@ export const WorkspaceImage = styled.div`
   width: 90px;
   height: 80px;
   background-size: cover;
-  background-image: url('src/assets/workspace/sample-workspace-image.png');
+  background-image: url('assets/workspace/sample-workspace-image.png');
 `;
 
 export const InfoContents = styled.div`
