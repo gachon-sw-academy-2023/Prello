@@ -31,3 +31,5 @@ cypress/screenshots
 
 # Testing
 coverage
+# Local Netlify folder
+.netlify
