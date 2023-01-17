@@ -38,7 +38,7 @@ export const BackBtn = styled.div`
 export const BackImg = styled.img`
   width: 18px;
   margin-right: 8px;
-  content: url('src/assets/authorization/login/arrow-right.png');
+  content: url('assets/authorization/login/arrow-right.png');
 `;
 
 export const Sspan = styled.span`
@@ -71,7 +71,7 @@ export const SignUpForm = styled.div`
 
 export const CoverImg = styled.div`
   width: 75%;
-  content: url('src/assets/authorization/login/cover.png');
+  content: url('assets/authorization/login/cover.png');
 `;
 
 export const InputEmail = styled.input`
@@ -84,7 +84,7 @@ export const InputEmail = styled.input`
   padding: 8px 40px;
   border: 1px solid #eaebf6;
   transition: all 0.1s ease 0s;
-  background: url('src/assets/authorization/login/email.png') no-repeat left;
+  background: url('assets/authorization/login/email.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
 
@@ -107,7 +107,7 @@ export const InputPwd = styled.input`
   padding: 8px 40px;
   border: 1px solid #eaebf6;
   transition: all 0.1s ease 0s;
-  background: url('src/assets/authorization/login/padlock.png') no-repeat left;
+  background: url('assets/authorization/login/padlock.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
 
@@ -129,7 +129,7 @@ export const InputNickname = styled.input`
   padding: 8px 40px;
   border: 1px solid #eaebf6;
   transition: all 0.1s ease 0s;
-  background: url('src/assets/authorization/login/profile.png') no-repeat left;
+  background: url('assets/authorization/login/profile.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
 
