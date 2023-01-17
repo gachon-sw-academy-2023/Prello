@@ -1,4 +1,4 @@
-import { Button } from '@/stories/Button';
+import Button from '@/components/Button/Button';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
@@ -53,7 +53,7 @@ export const StyledText = styled.span`
   margin-left: 5px;
 `;
 
-export const Ttile = styled.h1`
+export const Title = styled.h1`
   font-size: 30px;
 `;
 
@@ -125,4 +125,10 @@ export const Warning = styled.div`
   color: tomato;
   margin: 10px 0px 20px 0px;
   font-size: 12px;
+`;
+
+export const SubmitBtn = styled(Button)`
+  margin-top: 5px;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
+  box-sizing: border-box;
 `;

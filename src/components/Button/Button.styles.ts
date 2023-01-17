@@ -1,5 +1,4 @@
 import colors from '@/styles/colors';
-import { flexCenter } from '@/styles/shared/flex';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ButtonProps } from './Button.types';
@@ -8,9 +7,14 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
   transition: all 0.5s ease-in-out;
   cursor: pointer;
   border: none;
-  ${flexCenter}
+  display: inline-block;
+  line-height: 1;
   background: ${({ color }) => color && colors[color]};
   color: ${({ textColor }) => textColor && colors[textColor]};
+  padding-left: ${({ width }) => width}px;
+  padding-right: ${({ width }) => width}px;
+  text-align: center;
+  font-family: 'LINESeedKR-Bd';
   ${({ radius }) =>
     radius === 'square'
       ? css`
@@ -23,16 +27,22 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
       : css`
           border-radius: 0%;
         `}
-  ${({ size }) =>
-    size === 'sm'
+  ${({ height }) =>
+    height === 'sm'
       ? css`
-          padding: 0.5rem 1.5rem;
+          font-size: 12px;
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
         `
-      : size === 'md'
+      : height === 'md'
       ? css`
-          padding: 0.7rem 2rem;
+          font-size: 14px;
+          padding-top: 0.7rem;
+          padding-bottom: 0.7rem;
         `
       : css`
-          padding: 1rem 2.5rem;
+          font-size: 16px;
+          padding-top: 1rem;
+          padding-bottom: 1rem;
         `}
 `;

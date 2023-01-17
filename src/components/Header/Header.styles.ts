@@ -3,7 +3,7 @@ import colors from '@/styles/colors';
 
 type TextProps = {
   color: 'primary' | 'white';
-  backgroundColor: 'white' | 'empty';
+  backgroundColor: 'white' | 'empty' | 'primary';
 };
 
 // Header
@@ -26,10 +26,6 @@ export const HeaderContainer = styled.div<TextProps>`
     color: ${({ color }) => color && colors[color]};
     font-size: 25px;
     font-family: 'Rubik Bubbles', cursive;
-  }
-
-  button + button {
-    margin-left: 10px;
   }
 
   span {

@@ -143,7 +143,7 @@ export const InputNickname = styled.input`
 `;
 
 export const SubmitBtn = styled(Button)`
-  width: 250px;
+  margin-top: 5px;
   box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
   box-sizing: border-box;
 `;

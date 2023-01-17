@@ -13,18 +13,6 @@ Default.args = {
   children: '버튼',
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  ...Default.args,
-  size: 'sm',
-};
-
-export const Large = Template.bind({});
-Large.args = {
-  ...Default.args,
-  size: 'lg',
-};
-
 export const Styled = Template.bind({});
 Styled.args = {
   ...Default.args,
