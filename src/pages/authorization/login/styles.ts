@@ -1,4 +1,4 @@
-import { Button } from '@/stories/Button';
+import Button from '@/components/Button/Button';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
@@ -42,7 +42,7 @@ export const BackBtn = styled.div`
   display: flex;
   align-items: center;
   img {
-    content: url('src/assets/authorization/login/arrow-right.png');
+    content: url('assets/authorization/login/arrow-right.png');
     width: 18px;
     margin-right: 8px;
   }
@@ -53,7 +53,7 @@ export const StyledText = styled.span`
   margin-left: 5px;
 `;
 
-export const Ttile = styled.h1`
+export const Title = styled.h1`
   font-size: 30px;
 `;
 
@@ -74,7 +74,7 @@ export const Form = styled.form`
 
 export const Img = styled.img`
   width: 75%;
-  content: url('src/assets/authorization/login/cover.png');
+  content: url('assets/authorization/login/cover.png');
 `;
 
 export const InputEmail = styled.input`
@@ -87,7 +87,7 @@ export const InputEmail = styled.input`
   padding: 8px 40px;
   border: 1px solid #eaebf6;
   transition: all 0.1s ease 0s;
-  background: url('src/assets/authorization/login/email.png') no-repeat left;
+  background: url('assets/authorization/login/email.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
   :focus {
@@ -108,7 +108,7 @@ export const InputPwd = styled.input`
   padding: 8px 40px;
   border: 1px solid #eaebf6;
   transition: all 0.1s ease 0s;
-  background: url('src/assets/authorization/login/padlock.png') no-repeat left;
+  background: url('assets/authorization/login/padlock.png') no-repeat left;
   background-size: 16px;
   background-position: 10px 10px;
   :focus {
@@ -125,4 +125,10 @@ export const Warning = styled.div`
   color: tomato;
   margin: 10px 0px 20px 0px;
   font-size: 12px;
+`;
+
+export const SubmitBtn = styled(Button)`
+  margin-top: 5px;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
+  box-sizing: border-box;
 `;

@@ -2,7 +2,7 @@ import { emailRegex, pwdRegex } from '@/utils/authorization';
 import React, { useState, useCallback } from 'react';
 import Modal from './modal';
 import * as S from './styles';
-
+import Button from '@/components/Button/Button';
 export default function SignUp() {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [emailValidation, setEmailValidation] = useState(true);
@@ -103,8 +103,9 @@ export default function SignUp() {
               color="gradient"
               radius="circle"
               onClick={onClickToggleModal}
+              width={160}
             >
-              DONE
+              Done
             </S.SubmitBtn>
           </S.SignUpForm>
         </S.Content>
