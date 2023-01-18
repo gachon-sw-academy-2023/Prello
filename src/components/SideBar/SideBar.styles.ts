@@ -36,7 +36,7 @@ export const Line = styled.div<TitleProps>`
 // 사이드바 div
 export const LeftContainer = styled.div`
   width: 250px;
-  min-height: 100vh;
+  max-height: 100vh;
   padding: 20px 30px;
 `;
 export const LeftContent = styled.div`
