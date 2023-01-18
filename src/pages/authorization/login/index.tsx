@@ -3,22 +3,13 @@ import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 import { emailRegex, pwdRegex } from '@/utils/authorization';
-import { useIndexedDB } from 'react-indexed-db';
+
 function Login() {
   const [login, setLogin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [emailValidation, setEmailValidation] = useState(true);
   const [pwdValidation, setPwdValidation] = useState(true);
   const navigate = useNavigate();
-  const { getByIndex } = useIndexedDB('user');
 
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
   const emailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value.match(emailRegex) || e.target.value === null) {
       setEmailValidation(false);
@@ -26,6 +17,7 @@ function Login() {
       setEmailValidation(true);
     }
   };
+
   const pwdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value.match(pwdRegex) || e.target.value === null) {
       setPwdValidation(false);
@@ -33,32 +25,16 @@ function Login() {
       setPwdValidation(true);
     }
   };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
-    if (emailValidation && pwdValidation) {
-      fetch('/login', {
-        method: 'post',
-      }).then((res) => {
-        if (res.status === 200) {
-          setLogin(true);
-          getByIndex('email', email)
-            .then(
-              (personFromDB) => {
-                console.log(personFromDB);
-              },
-              (error) => {
-                console.log(error);
-              },
-            )
-            .catch((error) => console.log(error));
-        }
-      });
-    }
+    fetch('/login', {
+      method: 'post',
+    }).then((res) => {
+      if (res.status === 200) {
+        setLogin(true);
+      }
+    });
   };
-
   useEffect(() => {
     if (login && emailValidation && pwdValidation) {
       navigate(routes.WORKSPACEDEFAULT);
@@ -88,23 +64,21 @@ function Login() {
             <label>Email</label>
             <S.InputEmail
               type="text"
-              value={email}
               placeholder="Type here"
-              onChange={handleChangeEmail}
               onBlur={emailInput}
               required
             ></S.InputEmail>
-            <S.BlankDiv />
+            <S.Warning>
+              <p hidden={emailValidation}>이메일 형식을 확인해주세요.</p>
+            </S.Warning>
 
             <label>Password</label>
-            <S.InputPwd
-              type="password"
-              value={password}
-              onChange={handleChangePassword}
-              onBlur={pwdInput}
-              required
-            ></S.InputPwd>
-            <S.BlankDiv />
+            <S.InputPwd type="password" onBlur={pwdInput} required></S.InputPwd>
+            <S.Warning>
+              <p hidden={pwdValidation}>
+                영어/숫자/특수문자를 조합하여 8자리 이상 입력해주세요.
+              </p>
+            </S.Warning>
 
             <S.SubmitBtn
               type="submit"
