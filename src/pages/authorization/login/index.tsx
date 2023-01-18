@@ -12,9 +12,8 @@ function Login() {
   const [pwdValidation, setPwdValidation] = useState(true);
   const navigate = useNavigate();
 
-  const { add } = useIndexedDB('people');
+  const { add } = useIndexedDB('user');
   const [person, setPerson] = useState();
-  const { clear } = useIndexedDB('people');
 
   const emailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
