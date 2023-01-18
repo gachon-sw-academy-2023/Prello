@@ -4,78 +4,12 @@ import { ReactSortable } from 'react-sortablejs';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
-`;
-
-export const Header = styled.div`
-  display: flex;
-  height: 10%;
-  width: 100%;
-  padding: 0px 30px;
-  background: #ffffff;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const HeaderDiv = styled.div`
-  display: flex;
-  width: 50%;
-  align-items: center;
-`;
-
-export const HeaderLeftDiv = styled(HeaderDiv)`
-  justify-content: left;
-`;
-
-export const HeaderRightDiv = styled(HeaderDiv)`
-  justify-content: right;
-`;
-
-export const Title = styled.h1`
-  font-family: 'Rubik Bubbles', cursive;
-  font-size: 25px;
-  color: #fca4be;
-  text-transform: uppercase;
-`;
-
-export const Divider = styled.div`
-  border-left: 1px solid #000000;
-  height: 20px;
-  margin: 0px 15px;
-`;
-
-export const BoardName = styled.h1`
-  color: #4f4e4e;
-`;
-
-export const SearchBar = styled.input`
-  width: 298px;
-  height: 55px;
-  left: 1461px;
-  top: 20px;
-
-  background: #fcfbfa;
-  border: none;
-  border-radius: 10px;
-
-  background-image: url(https://www.freepnglogos.com/uploads/search-png/search-icon-transparent-images-vector-16.png);
-  background-size: 10px;
-  background-position: 10px center;
-  background-repeat: no-repeat;
-  padding-left: 40px;
-`;
-
-export const HeaderImg = styled.img`
-  width: 7%;
-  border-radius: 50%;
-  margin-left: 30px;
-
-  content: url('/assets/authorization/pimfy_profile.png');
+  max-height: 100vh;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
-  height: 100%;
+  height: 90%;
   background: #f5f5f5;
 `;
 
@@ -125,7 +59,6 @@ export const HorDivider = styled.div`
 export const RightWrapper = styled.div`
   display: flex;
   width: 80%;
-  padding-top: 30px;
 `;
 
 export const ListWrapper = styled.div`
@@ -142,6 +75,7 @@ export const ListWrapper = styled.div`
   border-radius: 10px;
 
   margin-left: 25px;
+  margin-top: 30px;
   justify-content: center;
   cursor: pointer;
 `;

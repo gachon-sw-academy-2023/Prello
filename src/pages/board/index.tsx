@@ -6,6 +6,7 @@ import SideBar from '@/components/SideBar/SideBar';
 import axios from 'axios';
 import { ReactSortable } from 'react-sortablejs';
 import Sortable from 'sortablejs';
+import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 
 export default function Board() {
   const [member, setMember] = useState([]);
@@ -44,17 +45,10 @@ export default function Board() {
 
   return (
     <S.Container>
-      <S.Header>
-        <S.HeaderLeftDiv>
-          <S.Title>Prello</S.Title>
-          <S.Divider />
-          <S.BoardName>First Board</S.BoardName>
-        </S.HeaderLeftDiv>
-        <S.HeaderRightDiv>
-          <S.SearchBar placeholder="Search" />
-          <S.HeaderImg />
-        </S.HeaderRightDiv>
-      </S.Header>
+      <WithSearchBar
+        profileImg="public/assets/authorization/pimfy_profile.png"
+        searchBar={true}
+      />
       <S.Wrapper>
         <SideBar memberInfo={member} />
         <S.RightWrapper className="column">
