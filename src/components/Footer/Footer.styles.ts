@@ -30,25 +30,50 @@ export const RowWrapper = styled.div<WrapperProps>`
   }
 `;
 
+export const MRowWrapper = styled(RowWrapper)`
+  display: inline-block;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+
+  h1 {
+    font-size: 20px;
+    color: black;
+    font-family: 'Rubik Bubbles', cursive;
+    margin-bottom: 20px;
+  }
+`;
+
 export const CopyrightWrapper = styled(RowWrapper)`
   align-items: center;
   margin-top: 5%;
   margin-bottom: 30px;
 `;
 
+export const MCopyrightWrapper = styled(CopyrightWrapper)`
+  justify-content: space-between;
+  text-align: center;
+  width: fit-content;
+  margin: auto;
+  padding-top: 30px;
+`;
+
 export const TextWrapper = styled(RowWrapper)`
   display: inline-block;
   margin-right: 5%;
+  width: fit-content;
 
   h2 {
     margin-top: 30px;
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: 700;
+    font-family: 'LINESeedKR-Bd';
   }
 
   p {
     margin-top: 5px;
+    font-family: 'LINESeedKR-Rg';
   }
 `;
 
@@ -56,7 +81,7 @@ export const ImageWrapper = styled(RowWrapper)`
   justify-content: space-between;
   align-items: center;
   margin-left: 15%;
-  margin-right: 5%;
+  /* margin-right: 5%; */
   margin-top: 5%;
 `;
 

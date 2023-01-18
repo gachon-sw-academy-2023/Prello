@@ -7,7 +7,7 @@ import { Slide } from 'react-awesome-reveal';
 import { Header } from '@/components/Header/Header';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { throttle } from 'lodash';
-import Footer from '@/components/Footer/Footer';
+import { Footer } from '@/components/Footer/Footer';
 import Button from '@/components/Button/Button';
 import { Default, Mobile } from '@/utils/mediaQuery';
 
@@ -133,7 +133,7 @@ export default function Main() {
               <h3>자유롭게 어디서나 간편하게 접속할 수 있습니다 ✋</h3>
             </S.RightSmallWrapper>
           </S.IntroduceWrapper>
-          <Footer></Footer>
+          <Footer isMobile={false}></Footer>
         </S.Container>
       </Default>
       <Mobile>
@@ -210,6 +210,7 @@ export default function Main() {
               </Slide>
             </S.MWrapper>
           </S.MIntroduceWrapper>
+          <Footer isMobile={true}></Footer>
         </S.Container>
       </Mobile>
     </>
