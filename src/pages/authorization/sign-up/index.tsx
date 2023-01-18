@@ -26,7 +26,7 @@ export default function SignUp() {
     console.log(nickname);
     if (emailValidation && pwdValidation && pwdConfirmValidation) {
       onClickToggleModal;
-      add({ name: email, email: password, nickname: nickname }).then(
+      add({ email: email, password: password, nickname: nickname }).then(
         (event) => {
           console.log('ID Generated: ', event);
         },

@@ -11,27 +11,22 @@ function Login() {
   const [emailValidation, setEmailValidation] = useState(true);
   const [pwdValidation, setPwdValidation] = useState(true);
   const navigate = useNavigate();
+  const { getByIndex } = useIndexedDB('user');
 
-  const { add } = useIndexedDB('user');
-  const [person, setPerson] = useState();
-
-  const emailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    if (!e.target.value.match(emailRegex) || e.target.value === null) {
-      setEmailValidation(false);
-    } else {
-      setEmailValidation(true);
-    }
-  };
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-
+  const emailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value.match(emailRegex) || e.target.value === null) {
+      setEmailValidation(false);
+    } else {
+      setEmailValidation(true);
+    }
+  };
   const pwdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
     if (!e.target.value.match(pwdRegex) || e.target.value === null) {
       setPwdValidation(false);
     } else {
@@ -49,14 +44,16 @@ function Login() {
       }).then((res) => {
         if (res.status === 200) {
           setLogin(true);
-          add({ name: email, email: password }).then(
-            (event) => {
-              console.log('ID Generated: ', event);
-            },
-            (error) => {
-              console.log(error);
-            },
-          );
+          getByIndex('email', email)
+            .then(
+              (personFromDB) => {
+                console.log(personFromDB);
+              },
+              (error) => {
+                console.log(error);
+              },
+            )
+            .catch((error) => console.log(error));
         }
       });
     }
@@ -97,9 +94,7 @@ function Login() {
               onBlur={emailInput}
               required
             ></S.InputEmail>
-            <S.Warning>
-              <p hidden={emailValidation}>이메일 형식을 확인해주세요.</p>
-            </S.Warning>
+            <S.BlankDiv />
 
             <label>Password</label>
             <S.InputPwd
@@ -109,11 +104,7 @@ function Login() {
               onBlur={pwdInput}
               required
             ></S.InputPwd>
-            <S.Warning>
-              <p hidden={pwdValidation}>
-                영어/숫자/특수문자를 조합하여 8자리 이상 입력해주세요.
-              </p>
-            </S.Warning>
+            <S.BlankDiv />
 
             <S.SubmitBtn
               type="submit"
