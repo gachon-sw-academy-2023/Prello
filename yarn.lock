@@ -11927,6 +11927,11 @@ react-element-to-jsx-string@^14.3.4:
     is-plain-object "5.0.0"
     react-is "17.0.2"
 
+react-indexed-db@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/react-indexed-db/-/react-indexed-db-1.0.12.tgz#b8c6c4752a28eb2c6335b6b3289efc8262d119ae"
+  integrity sha512-39UY97QvH0BXke1dOa1jUIihjMSs5v4jMcUDZ3HBRKGr2kn6gnH5+7I0Px5Np9W8bomD7XTIXpCKVNrtKFQTIQ==
+
 react-inspector@^5.1.0:
   version "5.1.1"
   resolved "https://registry.npmjs.org/react-inspector/-/react-inspector-5.1.1.tgz"
