@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ReactSortable } from 'react-sortablejs';
 
 export const Container = styled.div`
   display: flex;
@@ -142,6 +143,7 @@ export const ListWrapper = styled.div`
 
   margin-left: 25px;
   justify-content: center;
+  cursor: pointer;
 `;
 
 export const ListHeader = styled.div`
@@ -158,17 +160,24 @@ export const ListHeader = styled.div`
     font-size: 10px;
   }
 `;
+export const ItemWrapper = styled(ReactSortable)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 5px;
+  width: 100%;
+`;
 
-export const Item = styled.input`
+export const Item = styled.div`
   display: flex;
   align-items: center;
-  padding: 0px 15px;
+  padding: 0px 25px;
   background: rgba(252, 164, 190, 0.23);
   border-radius: 10px;
-  width: 90%;
   height: 35px;
   margin-bottom: 10px;
-  border: none;
+  width: 80%;
+  cursor: pointer;
 `;
 
 export const AddBtn = styled.div`
