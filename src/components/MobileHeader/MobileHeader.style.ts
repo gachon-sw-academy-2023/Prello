@@ -1,12 +1,11 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { MobileHeaderProps } from './MobileHeader.types';
 
 export const Header = styled.div`
   display: flex;
   flex-direction: column;
-  height: 5%;
   width: 100%;
+  padding: 10px 20px;
 `;
 
 export const Wrapper = styled.div`
@@ -57,4 +56,22 @@ export const HeaderImg = styled.img<MobileHeaderProps>`
   width: 30px;
   border-radius: 50%;
   content: url(${(props) => props.profileImg});
+`;
+
+export const SideMenuWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+  background-color: #fca4be;
+
+  div {
+    width: 100%;
+    padding: 20px;
+    cursor: pointer;
+
+    :hover {
+      background-color: #e394ab;
+    }
+  }
 `;

@@ -1,12 +1,13 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
-import * as S from './styles';
+import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import SideBar from '@/components/SideBar/SideBar';
-import axios from 'axios';
-import { ReactSortable } from 'react-sortablejs';
-import Sortable from 'sortablejs';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
+import { Default, Mobile } from '@/utils/mediaQuery';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Sortable from 'sortablejs';
+import * as S from './styles';
 
 export default function Board() {
   const [member, setMember] = useState([]);
@@ -45,12 +46,20 @@ export default function Board() {
 
   return (
     <S.Container>
-      <WithSearchBar
-        profileImg="public/assets/authorization/pimfy_profile.png"
-        searchBar={true}
-      />
+      <Default>
+        <WithSearchBar
+          profileImg="public/assets/authorization/pimfy_profile.png"
+          searchBar={true}
+        />
+      </Default>
+      <Mobile>
+        <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
+      </Mobile>
       <S.Wrapper>
-        <SideBar memberInfo={member} />
+        <Default>
+          <SideBar memberInfo={member} />
+        </Default>
+
         <S.RightWrapper className="column">
           <S.ListWrapper draggable="true">
             <S.ListHeader>
@@ -93,61 +102,6 @@ export default function Board() {
           </S.AddListWrapper>
         </S.RightWrapper>
       </S.Wrapper>
-      {/* 
-      <S.Header>
-        <S.HeaderLeftDiv>
-          <S.Title>Prello</S.Title>
-          <S.Divider />
-          <S.BoardName>First Board</S.BoardName>
-        </S.HeaderLeftDiv>
-        <S.HeaderRightDiv>
-          <S.SearchBar placeholder="Search" />
-          <S.HeaderImg />
-        </S.HeaderRightDiv>
-      </S.Header>
-      <S.Wrapper>
-        <SideBar memberInfo={member} />
-        <S.RightWrapper>
-          <S.ListWrapper>
-            <S.ListHeader>
-              <h1>To Do</h1>
-              <span>
-                <FontAwesomeIcon icon={faEllipsis} />
-              </span>
-            </S.ListHeader>
-            <S.ItemWrapper list={items} setList={setItems} group="shared">
-              {items.map((item) => (
-                <S.Item key={item.id}>{item.content}</S.Item>
-              ))}
-            </S.ItemWrapper>
-
-            <S.AddBtn onClick={handleAddItem}>
-              <span>+</span>
-              <S.AddBtnText>Add a card</S.AddBtnText>
-            </S.AddBtn>
-          </S.ListWrapper>
-          <S.ListWrapper>
-            <S.ListHeader>
-              <h1>Doing</h1>
-              <span>
-                <FontAwesomeIcon icon={faEllipsis} />
-              </span>
-            </S.ListHeader>
-            <S.ItemWrapper list={items2} setList={setItems2} group="shared">
-              {items2.map((item) => (
-                <S.Item key={item.id}>{item.content}</S.Item>
-              ))}
-            </S.ItemWrapper>
-            <S.AddBtn onClick={handleAddItem}>
-              <span>+</span>
-              <S.AddBtnText>Add a card</S.AddBtnText>
-            </S.AddBtn>
-          </S.ListWrapper>
-          <S.AddListWrapper>
-            <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
-          </S.AddListWrapper>
-        </S.RightWrapper>
-      </S.Wrapper> */}
     </S.Container>
   );
 }

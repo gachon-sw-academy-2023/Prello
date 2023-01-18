@@ -4,7 +4,7 @@ import { ReactSortable } from 'react-sortablejs';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  height: 100vh;
 `;
 
 export const Wrapper = styled.div`
