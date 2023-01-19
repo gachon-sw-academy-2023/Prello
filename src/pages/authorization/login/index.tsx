@@ -6,11 +6,11 @@ import { useIndexedDB } from 'react-indexed-db';
 import { pwdRegex } from '@/utils/checkPassword';
 import { emailRegex } from '@/utils/checkEmail';
 function Login() {
-  const [login, setLogin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailValidation, setEmailValidation] = useState(true);
-  const [pwdValidation, setPwdValidation] = useState(true);
+  const [login, setLogin] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [emailValidation, setEmailValidation] = useState<boolean>(true);
+  const [pwdValidation, setPwdValidation] = useState<boolean>(true);
   const navigate = useNavigate();
   const { getByIndex } = useIndexedDB('user');
 

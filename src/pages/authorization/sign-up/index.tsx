@@ -5,14 +5,15 @@ import { useIndexedDB } from 'react-indexed-db';
 import Modal from './modal';
 import * as S from './styles';
 export default function SignUp() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const [emailValidation, setEmailValidation] = useState(false);
-  const [pwdValidation, setPwdValidation] = useState(false);
-  const [pwdConfirmValidation, setPwdConfirmValidation] = useState(false);
+  const [emailValidation, setEmailValidation] = useState<boolean>(false);
+  const [pwdValidation, setPwdValidation] = useState<boolean>(false);
+  const [pwdConfirmValidation, setPwdConfirmValidation] =
+    useState<boolean>(false);
 
   const { add } = useIndexedDB('user');
 
@@ -70,6 +71,11 @@ export default function SignUp() {
   };
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    if (!e.target.value.match(pwdRegex)) {
+      setPwdValidation(false);
+    } else {
+      setPwdValidation(true);
+    }
   };
   const handleChangePasswordConfirm = (
     e: React.ChangeEvent<HTMLInputElement>,
