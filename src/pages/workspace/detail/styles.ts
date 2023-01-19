@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
   width: 100%;
   background-color: #f5f6f7;
   display: flex;
+  padding-top: 65px;
 `;
 // 구분선
 export const Line = styled.div<TitleProps>`

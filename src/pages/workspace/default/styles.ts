@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 // 전체 div
 export const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
   background-color: #f5f6f7;
 `;
 export const ContentsWrapper = styled.div`
   width: 100%;
+  min-height: 100vh;
   background-color: #f5f6f7;
-  padding: 0 50px;
+  padding: 65px 50px 0 50px;
 `;
 
 // 타이틀 + 버튼 감싸는 div
