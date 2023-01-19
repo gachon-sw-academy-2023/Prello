@@ -132,7 +132,6 @@ export const SubmitBtn = styled(Button)`
   box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
   box-sizing: border-box;
 `;
-
 export const BlankDiv = styled.div`
   width: 50%;
   height: 2rem;
