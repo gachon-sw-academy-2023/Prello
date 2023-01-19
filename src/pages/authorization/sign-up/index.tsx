@@ -1,5 +1,6 @@
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
+import { Default, Mobile } from '@/utils/mediaQuery';
 import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
 import Modal from './modal';
@@ -92,19 +93,25 @@ export default function SignUp() {
           회원가입이 완료되었습니다! 💖
         </Modal>
       )}
-      <S.LeftWrapper>
-        <S.CoverImg />
-      </S.LeftWrapper>
+      <Default>
+        <S.LeftWrapper>
+          <S.CoverImg />
+        </S.LeftWrapper>
+      </Default>
       <S.RightWrapper>
         <S.Header>
-          <S.BackBtn>
-            <S.BackImg />
-            <span>Back</span>
-          </S.BackBtn>
-          <p>
-            <span>I have an account!</span>
-            <S.Sspan>Login</S.Sspan>
-          </p>
+          <Default>
+            <S.HeaderWrapper>
+              <S.BackBtn>
+                <S.BackImg />
+                <span>Back</span>
+              </S.BackBtn>
+              <p>
+                <span>I have an account!</span>
+                <S.Sspan>Login</S.Sspan>
+              </p>
+            </S.HeaderWrapper>
+          </Default>
         </S.Header>
 
         <S.Content>
