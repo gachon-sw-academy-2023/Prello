@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   height: 90%;
   min-width: 100vh;
   background: #f5f5f5;
-  margin-top: 10%;
+  margin-top: 65px;
 `;
 
 export const LeftWrapper = styled.div`
