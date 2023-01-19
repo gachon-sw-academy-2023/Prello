@@ -9,57 +9,16 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
   display: flex;
-  height: 90%;
-  min-width: 100vh;
   background: #f5f5f5;
-  margin-top: 65px;
-`;
-
-export const LeftWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-  padding: 20px 25px;
-  color: #4f4e4e;
-`;
-
-export const BarInfo = styled.div`
+  height: 100%;
   width: 100%;
-  display: flex;
-`;
-
-export const BarImg = styled.img`
-  height: 50px;
-  border-radius: 17px;
-`;
-
-export const WorkspaceName = styled.h1`
-  margin-left: 20px;
-  font-size: 20px;
-  font-weight: bold;
-`;
-
-export const MenuWrapper = styled.div`
-  height: 65%;
-`;
-
-export const Menu = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  padding: 10px;
-`;
-
-export const HorDivider = styled.div`
-  border-bottom: 0.5px solid #383838;
-  height: 1px;
-  margin: 20px 0px;
+  margin-top: 65px;
 `;
 
 export const RightWrapper = styled.div`
   display: flex;
+  background: #f5f5f5;
+  padding-right: 25px;
 `;
 
 export const ListContainer = styled.div`
