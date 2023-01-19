@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
   display: flex;
   height: 100vh;
+  justify-content: center;
 `;
 export const LeftWrapper = styled.div`
   display: flex;
@@ -28,6 +29,12 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 80px;
+`;
+export const HeaderWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const Content = styled.div`
@@ -67,7 +74,7 @@ export const Form = styled.form`
   margin-bottom: 30px;
 
   label {
-    width: 50%;
+    width: 350px;
     margin-bottom: 10px;
   }
 `;
@@ -78,7 +85,7 @@ export const Img = styled.img`
 `;
 
 export const InputEmail = styled.input`
-  width: 50%;
+  width: 350px;
   color: rgb(36, 35, 42);
   font-size: 16px;
   line-height: 20px;
@@ -99,7 +106,7 @@ export const InputEmail = styled.input`
 `;
 
 export const InputPwd = styled.input`
-  width: 50%;
+  width: 350px;
   color: rgb(36, 35, 42);
   font-size: 16px;
   line-height: 20px;
@@ -121,7 +128,7 @@ export const InputPwd = styled.input`
 
 export const Warning = styled.div`
   display: flex;
-  width: 50%;
+  width: 350px;
   color: tomato;
   margin: 10px 0px 20px 0px;
   font-size: 12px;
