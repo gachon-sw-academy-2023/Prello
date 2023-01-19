@@ -2,8 +2,9 @@ import { FormEvent, useEffect, useState } from 'react';
 import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
-import { emailRegex, pwdRegex } from '@/utils/authorization';
 import { useIndexedDB } from 'react-indexed-db';
+import { pwdRegex } from '@/utils/checkPassword';
+import { emailRegex } from '@/utils/checkEmail';
 function Login() {
   const [login, setLogin] = useState(false);
   const [email, setEmail] = useState('');

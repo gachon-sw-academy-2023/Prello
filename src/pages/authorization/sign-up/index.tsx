@@ -1,10 +1,9 @@
-import React, { useState, useCallback } from 'react';
-import Modal from './modal';
-import * as S from './styles';
-import Button from '@/components/Button/Button';
-import { useIndexedDB } from 'react-indexed-db';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
+import React, { useCallback, useState } from 'react';
+import { useIndexedDB } from 'react-indexed-db';
+import Modal from './modal';
+import * as S from './styles';
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
