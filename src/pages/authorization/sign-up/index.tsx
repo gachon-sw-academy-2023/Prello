@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
 import Modal from './modal';
 import * as S from './styles';
+import { useIndexedDB } from 'react-indexed-db';
 export default function SignUp() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
