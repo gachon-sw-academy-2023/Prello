@@ -16,17 +16,19 @@ export default function MobileMain() {
   /* TODO: Recoil */
   const [user, setUser] = useState<User>();
   const [updateHeader, setUpdateHeader] = useState<Boolean>();
-  const ref = useRef<any>(0);
+  const ref = useRef<HTMLInputElement>(null);
   const handleNavigate = () => {};
 
   const throttledScroll = useMemo(
     () =>
       throttle(() => {
         const currentScrollY = window.scrollY;
-        if (currentScrollY < ref.current.offsetTop - 50) {
-          setUpdateHeader(false);
-        } else {
-          setUpdateHeader(true);
+        if (ref.current != null) {
+          if (currentScrollY < ref.current.offsetTop - 50) {
+            setUpdateHeader(false);
+          } else {
+            setUpdateHeader(true);
+          }
         }
       }, 300),
     [updateHeader],
