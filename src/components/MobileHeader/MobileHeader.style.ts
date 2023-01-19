@@ -3,8 +3,10 @@ import { MobileHeaderProps } from './MobileHeader.types';
 
 export const Header = styled.div`
   display: flex;
+  position: fixed;
   flex-direction: column;
   width: 100%;
+  background-color: #ffffff;
   padding: 10px 20px;
 `;
 

@@ -10,7 +10,9 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   height: 90%;
+  min-width: 100vh;
   background: #f5f5f5;
+  margin-top: 10%;
 `;
 
 export const LeftWrapper = styled.div`
