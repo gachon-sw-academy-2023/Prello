@@ -5,7 +5,7 @@ import { SubHeaderProps } from './SubHeader.types';
 export const Header = styled.div`
   display: flex;
   position: fixed;
-  height: 10%;
+  height: 7%;
   width: 100%;
   background: #ffffff;
   align-items: center;
@@ -46,7 +46,7 @@ export const BoardName = styled.p`
 
 export const SearchBar = styled.input<Omit<SubHeaderProps, 'children'>>`
   width: 298px;
-  height: 55px;
+  height: 40px;
   left: 1461px;
   top: 20px;
 
@@ -71,7 +71,7 @@ export const SearchBar = styled.input<Omit<SubHeaderProps, 'children'>>`
 `;
 
 export const HeaderImg = styled.img<SubHeaderProps>`
-  width: 7%;
+  width: 5%;
   border-radius: 50%;
   margin-left: 30px;
   content: url(${(props) => props.profileImg});
