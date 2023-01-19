@@ -58,7 +58,10 @@ export const HorDivider = styled.div`
 
 export const RightWrapper = styled.div`
   display: flex;
-  width: 80%;
+`;
+
+export const ListContainer = styled.div`
+  display: flex;
 `;
 
 export const ListWrapper = styled.div`
@@ -67,7 +70,7 @@ export const ListWrapper = styled.div`
   align-items: center;
   color: #606060;
 
-  width: 20%;
+  width: 250px;
   height: fit-content;
   padding: 40px 0px 20px 0px;
   background: #ffffff;
