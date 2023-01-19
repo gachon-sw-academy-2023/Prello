@@ -21,8 +21,19 @@ export const RightWrapper = styled.div`
   padding-right: 25px;
 `;
 
+export const MobileRightWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+`;
+
 export const ListContainer = styled.div`
   display: flex;
+`;
+export const ListMobileContiner = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ListWrapper = styled.div`
@@ -42,6 +53,10 @@ export const ListWrapper = styled.div`
   margin-top: 30px;
   justify-content: center;
   cursor: pointer;
+`;
+
+export const MobileListWrapper = styled(ListWrapper)`
+  width: 350px;
 `;
 
 export const ListHeader = styled.div`
@@ -97,4 +112,9 @@ export const AddListBtn = styled.div`
 
 export const AddListWrapper = styled(ListWrapper)`
   padding: 15px 40px;
+`;
+
+export const MobileAddListWrapper = styled(ListWrapper)`
+  width: 350px;
+  padding: 15px;
 `;
