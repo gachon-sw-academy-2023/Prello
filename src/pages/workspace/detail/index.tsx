@@ -19,11 +19,13 @@ import {
   Item,
   Icon,
   MemberWrapper,
+  Wrapper,
 } from './styles';
 import { BarInfo, BarImg, WorkspaceName } from '@/pages/board/styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
+import { SubHeader } from '@/components/SubHeader/SubHeader';
 
 export default function WorkspaceDetail() {
   interface IMember {
@@ -90,40 +92,43 @@ export default function WorkspaceDetail() {
 
   return (
     <Container>
-      <SideBar memberInfo={members} />
-      <RightContainer>
-        <InfoContainer>
-          <WorkspaceImg
-            radius="none"
-            image="/assets/authorization/pimfy_profile.png"
-          />
-          <InfoContents>
-            <SubTitle size="md">PIMPY</SubTitle>
-            <ExplainText>핌피팀입니당</ExplainText>
-          </InfoContents>
-        </InfoContainer>
-        <Line margin="0"></Line>
-        <BoardContainer>
-          <Grid container spacing={4}>
-            {boards.map((board) => (
-              <Grid item xs={12} sm={6} md={4} key={board.title}>
-                <Item center={false} color={'#ffe7ee'}>
-                  <Title margin={'30px 20px'}>{board.title}</Title>
+      <SubHeader />
+      <Wrapper>
+        <SideBar memberInfo={members} />
+        <RightContainer>
+          <InfoContainer>
+            <WorkspaceImg
+              radius="none"
+              image="/assets/authorization/pimfy_profile.png"
+            />
+            <InfoContents>
+              <SubTitle size="md">PIMPY</SubTitle>
+              <ExplainText>핌피팀입니당</ExplainText>
+            </InfoContents>
+          </InfoContainer>
+          <Line margin="0"></Line>
+          <BoardContainer>
+            <Grid container spacing={4}>
+              {boards.map((board) => (
+                <Grid item xs={12} sm={6} md={4} key={board.title}>
+                  <Item center={false} color={'#ffe7ee'}>
+                    <Title margin={'30px 20px'}>{board.title}</Title>
+                  </Item>
+                </Grid>
+              ))}
+              <Grid item xs={12} sm={6} md={4}>
+                <Item center={true} color={'#fffcff'}>
+                  <Image
+                    width={'50px'}
+                    height={'50px'}
+                    img={'/assets/workspace/sample-add-icon.png'}
+                  ></Image>
                 </Item>
               </Grid>
-            ))}
-            <Grid item xs={12} sm={6} md={4}>
-              <Item center={true} color={'#fffcff'}>
-                <Image
-                  width={'50px'}
-                  height={'50px'}
-                  img={'/assets/workspace/sample-add-icon.png'}
-                ></Image>
-              </Item>
             </Grid>
-          </Grid>
-        </BoardContainer>
-      </RightContainer>
+          </BoardContainer>
+        </RightContainer>
+      </Wrapper>
     </Container>
   );
 }
