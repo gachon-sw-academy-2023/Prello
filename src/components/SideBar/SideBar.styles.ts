@@ -63,7 +63,7 @@ export const Title = styled.h1<TitleProps>`
 `;
 export const MembersWrapper = styled.div`
   width: 100%;
-  height: 60vh;
+  height: 55vh;
   overflow: auto;
   padding-left: 10px;
 `;
