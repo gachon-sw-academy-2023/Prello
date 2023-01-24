@@ -1,11 +1,13 @@
+import routes from '@/routes';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
+import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
 import { useNavigate } from 'react-router-dom';
 import Modal from './modal';
 import * as S from './styles';
-import routes from '@/routes';
+
 export default function SignUp() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -35,25 +37,32 @@ export default function SignUp() {
       pwdConfirmValidation &&
       nicknameValidation
     ) {
-      onClickToggleModal;
-      fetch('/sign-up', {
-        method: 'post',
-      }).then((res) => {
-        if (res.status === 200) {
-          handleSignUp();
-        }
-      });
+      patchSignUp();
     }
   }
+
+  const patchSignUp = async () => {
+    try {
+      const response = await axios.post('/sign-up', email);
+      if (response.status === 200) {
+        handleSignUp();
+        console.log(response.data.message);
+        onClickToggleModal();
+      }
+    } catch (error: any) {
+      if (error.response.status === 409) {
+        console.log(error.response.data.message);
+
+        /* TODO:  모달창으로 이메일 중복 알림 및 처리*/
+      }
+    }
+  };
 
   const handleSignUp = () => {
     add({ email: email, password: password, nickname: nickname }).then(
       (event) => {
         console.log('ID Generated: ', event);
-
-        / * TODO: 회원 가입 완료 모달 추가 */;
-
-        navigate(routes.LOGIN);
+        setTimeout(() => navigate(routes.LOGIN), 1000);
       },
       (error) => {
         console.log(error);

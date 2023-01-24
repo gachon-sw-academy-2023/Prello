@@ -32,7 +32,7 @@ function App() {
               {
                 name: 'nickname',
                 keypath: 'nickname',
-                options: { unique: true },
+                options: { unique: false },
               },
             ],
           },
