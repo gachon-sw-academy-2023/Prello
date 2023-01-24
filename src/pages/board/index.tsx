@@ -46,6 +46,8 @@ export default function Board() {
   return (
     <S.Container>
       <WithSearchBar
+        divider={true}
+        children="first board"
         profileImg="public/assets/authorization/pimfy_profile.png"
         searchBar={true}
       />

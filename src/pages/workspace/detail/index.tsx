@@ -70,7 +70,11 @@ export default function WorkspaceDetail() {
 
   return (
     <S.Container>
-      <SubHeader />
+      <SubHeader
+        divider={true}
+        children="Workspace"
+        profileImg="assets/authorization/pimfy_profile.png"
+      />
       <S.Wrapper>
         <SideBar memberInfo={members} />
         <S.RightContainer>

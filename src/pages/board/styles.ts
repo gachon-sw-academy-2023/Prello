@@ -4,13 +4,13 @@ import { ReactSortable } from 'react-sortablejs';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  min-height: 100vh;
+  background: #f5f5f5;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
-  height: 90%;
-  background: #f5f5f5;
+  padding-top: 65px;
 `;
 
 export const LeftWrapper = styled.div`

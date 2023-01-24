@@ -9,7 +9,10 @@ export default function WorkspaceDefault() {
   const navigate = useNavigate();
   return (
     <S.Container>
-      <SubHeader />
+      <SubHeader
+        divider={false}
+        profileImg="assets/authorization/pimfy_profile.png"
+      />
       <S.ContentsWrapper>
         <S.Wrapper>
           <S.Title>나의 워크스페이스</S.Title>
