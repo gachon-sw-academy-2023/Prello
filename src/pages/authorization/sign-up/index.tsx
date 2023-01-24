@@ -14,6 +14,7 @@ export default function SignUp() {
   const [pwdValidation, setPwdValidation] = useState<boolean>(false);
   const [pwdConfirmValidation, setPwdConfirmValidation] =
     useState<boolean>(false);
+  const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
 
   const { add } = useIndexedDB('user');
 
@@ -25,7 +26,12 @@ export default function SignUp() {
     console.log(password);
     console.log(passwordConfirm);
     console.log(nickname);
-    if (emailValidation && pwdValidation && pwdConfirmValidation) {
+    if (
+      emailValidation &&
+      pwdValidation &&
+      pwdConfirmValidation &&
+      nicknameValidation
+    ) {
       onClickToggleModal;
       add({ email: email, password: password, nickname: nickname }).then(
         (event) => {
@@ -69,6 +75,7 @@ export default function SignUp() {
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
+
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     if (!e.target.value.match(pwdRegex)) {
@@ -77,14 +84,22 @@ export default function SignUp() {
       setPwdValidation(true);
     }
   };
+
   const handleChangePasswordConfirm = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setPasswordConfirm(e.target.value);
   };
+
   const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
+    if (nickname.length >= 2 && nickname.length <= 8) {
+      setNicknameValidation(true);
+    } else {
+      setNicknameValidation(false);
+    }
   };
+
   return (
     <S.Container>
       {isOpenModal && (
@@ -152,8 +167,8 @@ export default function SignUp() {
               onChange={handleChangeNickname}
             ></S.InputNickname>
             <S.Warning>
-              <p hidden={true}>
-                사용중인 닉네임입니다. 다른 닉네임을 입력해주세요.
+              <p hidden={nicknameValidation}>
+                2자리 이상, 8자리 이하로 입력해주세요.
               </p>
             </S.Warning>
 
