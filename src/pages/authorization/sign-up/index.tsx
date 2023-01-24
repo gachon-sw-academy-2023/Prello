@@ -2,8 +2,10 @@ import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
+import { useNavigate } from 'react-router-dom';
 import Modal from './modal';
 import * as S from './styles';
+import routes from '@/routes';
 export default function SignUp() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -17,6 +19,7 @@ export default function SignUp() {
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
 
   const { add } = useIndexedDB('user');
+  const navigate = useNavigate();
 
   function handleSubmit() {
     console.log(emailValidation);
@@ -33,16 +36,30 @@ export default function SignUp() {
       nicknameValidation
     ) {
       onClickToggleModal;
-      add({ email: email, password: password, nickname: nickname }).then(
-        (event) => {
-          console.log('ID Generated: ', event);
-        },
-        (error) => {
-          console.log(error);
-        },
-      );
+      fetch('/sign-up', {
+        method: 'post',
+      }).then((res) => {
+        if (res.status === 200) {
+          handleSignUp();
+        }
+      });
     }
   }
+
+  const handleSignUp = () => {
+    add({ email: email, password: password, nickname: nickname }).then(
+      (event) => {
+        console.log('ID Generated: ', event);
+
+        / * TODO: 회원 가입 완료 모달 추가 */;
+
+        navigate(routes.LOGIN);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
 
   const onClickToggleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
