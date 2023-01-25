@@ -18,11 +18,11 @@ export default function SignUp() {
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const [emailValidation, setEmailValidation] = useState<boolean>(false);
-  const [pwdValidation, setPwdValidation] = useState<boolean>(false);
+  const [emailValidation, setEmailValidation] = useState<boolean>(true);
+  const [pwdValidation, setPwdValidation] = useState<boolean>(true);
   const [pwdConfirmValidation, setPwdConfirmValidation] =
-    useState<boolean>(false);
-  const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
+    useState<boolean>(true);
+  const [nicknameValidation, setNicknameValidation] = useState<boolean>(true);
 
   const { add } = useIndexedDB('user');
   const navigate = useNavigate();
@@ -82,15 +82,15 @@ export default function SignUp() {
     if (e.target.value.match(emailRegex)) {
       setEmailValidation(true);
     } else {
-      setEmailValidation(true);
+      setEmailValidation(false);
     }
   };
 
   const pwdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value.match(pwdRegex)) {
-      setPwdValidation(false);
-    } else {
+    if (e.target.value.match(pwdRegex)) {
       setPwdValidation(true);
+    } else {
+      setPwdValidation(false);
     }
   };
 
@@ -108,10 +108,10 @@ export default function SignUp() {
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    if (!e.target.value.match(pwdRegex)) {
-      setPwdValidation(false);
-    } else {
+    if (e.target.value.match(pwdRegex)) {
       setPwdValidation(true);
+    } else {
+      setPwdValidation(false);
     }
   };
 
@@ -123,7 +123,7 @@ export default function SignUp() {
 
   const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
-    if (nickname.length >= 2 && nickname.length <= 8) {
+    if (e.target.value.length >= 2 && e.target.value.length <= 8) {
       setNicknameValidation(true);
     } else {
       setNicknameValidation(false);
