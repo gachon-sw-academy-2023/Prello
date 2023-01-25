@@ -5,5 +5,6 @@ const routes = {
   BOARD: '/board',
   WORKSPACEDEFAULT: '/workspace',
   WORKSPACEDETAIL: '/workspace-detail',
+  WORKSPACESETTING: '/workspace-setting',
 };
 export default routes;

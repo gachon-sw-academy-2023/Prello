@@ -8,6 +8,7 @@ const colors = {
   error: '#FA1E0E',
   gradient: 'linear-gradient(to bottom, #fca4be 0%, #e5a4fc 100%)',
   empty: '#00000000',
+  notworking: '#C1BABC',
 } as const;
 
 export default colors;

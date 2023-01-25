@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { style } from '@mui/system';
 type ImageProps = {
   img: string;
   width: string;
@@ -85,10 +86,8 @@ export const ProfileName = styled.p`
 
 //오른쪽 화면
 export const RightContainer = styled.div`
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  padding: 30px;
+  margin: auto;
+  width: 60%;
 `;
 
 export const InfoContainer = styled.div`
@@ -106,7 +105,6 @@ export const WorkspaceImage = styled.div`
 
 export const InfoContents = styled.div`
   width: 100%;
-  padding-left: 15px;
 `;
 export const ExplainText = styled.p`
   font-size: 16px;
@@ -114,28 +112,25 @@ export const ExplainText = styled.p`
   margin: 20px 10px 7px 0;
   color: #4f4e4e;
 `;
-
-// 보드 아이템
-export const BoardContainer = styled.div`
+export const RoundLineInput = styled.input`
+  border-radius: 10px;
+  border: 0.1px solid;
+  border-color: #cbcbcb;
   width: 100%;
-  padding: 20px 0;
+  height: fit-content;
+  font-family: 'LINESeedKR-Rg';
+  padding: 10px 10px;
+  font-size: 16px;
+  color: #4f4e4e;
 `;
-export const Item = styled.div<ItemProps>`
+export const SaveButtonWrapper = styled.div`
   display: flex;
-  align-items: ${(props) => (props.center ? 'center' : 'left')};
-  flex-direction: row;
-  justify-content: ${(props) => (props.center ? 'center' : 'left')};
-  background-color: ${(props) => props.color};
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 200px;
-  border-radius: 0.5rem;
-  margin: 10px 0;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  margin-bottom: 70px;
 `;
-export const Icon = styled.div<ImageProps>`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  background-size: cover;
-  background-image: url(${(props) => props.img});
-  margin: 7px 10px 10px 0;
+export const EmptyBox = styled.div`
+  width: 100%;
+  height: 20px;
 `;
