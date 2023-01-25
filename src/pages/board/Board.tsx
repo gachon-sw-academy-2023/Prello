@@ -38,7 +38,7 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
           <S.ListHeader>
             <h1>{title}</h1>
             <span>
-              <FontAwesomeIcon icon={faEllipsis} />
+              <FontAwesomeIcon icon={faEllipsis} onClick={() => setCards([])} />
             </span>
           </S.ListHeader>
           <S.ItemWrapper
