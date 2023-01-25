@@ -2,15 +2,13 @@ import styled from '@emotion/styled';
 import { ReactSortable } from 'react-sortablejs';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   background: #f5f5f5;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
   padding-top: 65px;
+  height: 100vh;
 `;
 
 export const MobileRightWrapper = styled.div`
@@ -46,7 +44,11 @@ export const ListWrapper = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
-export const RightWrapper = styled.div``;
+export const RightWrapper = styled.div`
+  display: flex;
+  background: #f5f5f5;
+  padding-right: 25px;
+`;
 export const MobileListWrapper = styled(ListWrapper)`
   width: 350px;
 `;
