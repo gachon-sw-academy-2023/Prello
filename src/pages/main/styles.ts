@@ -33,10 +33,20 @@ export const TitleImage = styled.img`
   content: url('/assets/images/main/logo.png');
 `;
 
+export const MTitleImage = styled(TitleImage)`
+  width: 40%;
+  margin-bottom: 10%;
+`;
+
 export const MainImage = styled.img`
   width: 60%;
   margin-bottom: 20px;
   content: url('/assets/images/main/main.png');
+`;
+
+export const MMainImage = styled(MainImage)`
+  width: 70%;
+  margin-bottom: 10%;
 `;
 
 /* 소개 페이지 */
@@ -97,9 +107,46 @@ export const RightSmallWrapper = styled(InsideWrapper)`
   float: right;
 `;
 
+export const MIntroduceWrapper = styled(IntroduceWrapper)`
+  display: inline-block;
+`;
+
+export const MWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50%;
+  flex-direction: column;
+
+  h1 {
+    width: 80%;
+    font-size: xx-large;
+    /* font-weight: 800; */
+    margin-bottom: 45px;
+    text-align: left;
+    margin-top: -10px;
+    font-family: 'LINESeedKR-Bd';
+  }
+
+  h3 {
+    width: 80%;
+    font-size: large;
+    font-weight: 500;
+    margin-bottom: 25px;
+    margin-top: -10px;
+    text-align: left;
+    font-family: 'LINESeedKR-Rg';
+  }
+`;
+
 export const IntroduceImage = styled.img<IntroduceImageProps>`
   width: 90%;
   content: url(${(props) => props.img});
+`;
+
+export const MIntroduceImage = styled(IntroduceImage)`
+  width: 80%;
 `;
 
 export const SubmitBtn = styled(Button)`
