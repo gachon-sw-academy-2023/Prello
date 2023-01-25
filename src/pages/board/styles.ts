@@ -46,7 +46,7 @@ export const ListWrapper = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
-
+export const RightWrapper = styled.div``;
 export const MobileListWrapper = styled(ListWrapper)`
   width: 350px;
 `;
