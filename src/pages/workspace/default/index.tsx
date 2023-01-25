@@ -5,14 +5,20 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
+import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 export default function WorkspaceDefault() {
   const navigate = useNavigate();
   return (
     <S.Container>
-      <SubHeader
-        divider={false}
-        profileImg="assets/authorization/pimfy_profile.png"
-      />
+      <Default>
+        <SubHeader
+          divider={false}
+          profileImg="assets/authorization/pimfy_profile.png"
+        />
+      </Default>
+      <Mobile>
+        <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
+      </Mobile>
       <S.ContentsWrapper>
         <S.Wrapper>
           <S.Title>나의 워크스페이스</S.Title>

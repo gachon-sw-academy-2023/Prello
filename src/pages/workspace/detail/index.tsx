@@ -1,7 +1,9 @@
+import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
+import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import * as S from './styles';
 
@@ -70,11 +72,16 @@ export default function WorkspaceDetail() {
 
   return (
     <S.Container>
-      <SubHeader
-        divider={true}
-        children="Workspace"
-        profileImg="assets/authorization/pimfy_profile.png"
-      />
+      <Default>
+        <SubHeader
+          divider={true}
+          children="Workspace"
+          profileImg="assets/authorization/pimfy_profile.png"
+        />
+      </Default>
+      <Mobile>
+        <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
+      </Mobile>
       <S.Wrapper>
         <SideBar memberInfo={members} />
         <S.RightContainer>
