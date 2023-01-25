@@ -4,61 +4,28 @@ import { ReactSortable } from 'react-sortablejs';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  min-height: 100vh;
+  background: #f5f5f5;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
-  height: 90%;
-  background: #f5f5f5;
+  padding-top: 65px;
 `;
 
-export const LeftWrapper = styled.div`
+export const MobileRightWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 20%;
-  padding: 20px 25px;
-  color: #4f4e4e;
-`;
-
-export const BarInfo = styled.div`
   width: 100%;
+  align-items: center;
+`;
+
+export const ListContainer = styled.div`
   display: flex;
 `;
-
-export const BarImg = styled.img`
-  height: 50px;
-  border-radius: 17px;
-`;
-
-export const WorkspaceName = styled.h1`
-  margin-left: 20px;
-  font-size: 20px;
-  font-weight: bold;
-`;
-
-export const MenuWrapper = styled.div`
-  height: 65%;
-`;
-
-export const Menu = styled.div`
-  font-size: 20px;
-  font-weight: bold;
+export const ListMobileContiner = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  padding: 10px;
-`;
-
-export const HorDivider = styled.div`
-  border-bottom: 0.5px solid #383838;
-  height: 1px;
-  margin: 20px 0px;
-`;
-
-export const RightWrapper = styled.div`
-  display: flex;
-  width: 80%;
+  flex-direction: column;
 `;
 
 export const ListWrapper = styled.div`
@@ -67,7 +34,7 @@ export const ListWrapper = styled.div`
   align-items: center;
   color: #606060;
 
-  width: 20%;
+  width: 250px;
   height: fit-content;
   padding: 40px 0px 20px 0px;
   background: #ffffff;
@@ -78,6 +45,10 @@ export const ListWrapper = styled.div`
   margin-top: 30px;
   justify-content: center;
   cursor: pointer;
+`;
+export const RightWrapper = styled.div``;
+export const MobileListWrapper = styled(ListWrapper)`
+  width: 350px;
 `;
 
 export const ListHeader = styled.div`
@@ -133,4 +104,9 @@ export const AddListBtn = styled.div`
 
 export const AddListWrapper = styled(ListWrapper)`
   padding: 15px 40px;
+`;
+
+export const MobileAddListWrapper = styled(ListWrapper)`
+  width: 350px;
+  padding: 15px;
 `;

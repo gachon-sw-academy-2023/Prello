@@ -5,6 +5,7 @@ import routes from '@/routes';
 import { useIndexedDB } from 'react-indexed-db';
 import { pwdRegex } from '@/utils/checkPassword';
 import { emailRegex } from '@/utils/checkEmail';
+import { Default, Mobile } from '@/utils/mediaQuery';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userSelector } from '@/utils/atom/userSelector';
 
@@ -69,22 +70,28 @@ function Login() {
     if (login && emailValidation && pwdValidation) {
       navigate(routes.WORKSPACEDEFAULT);
     }
-  });
+  }, [login, emailValidation, pwdValidation]);
   return (
     <S.Container>
-      <S.LeftWrapper>
-        <S.Img />
-      </S.LeftWrapper>
+      <Default>
+        <S.LeftWrapper>
+          <S.Img />
+        </S.LeftWrapper>
+      </Default>
       <S.RightWrapper>
         <S.Header>
-          <S.BackBtn>
-            <img />
-            <span>Back</span>
-          </S.BackBtn>
-          <p>
-            <span>I want to have an account!</span>
-            <S.StyledText>Sign Up</S.StyledText>
-          </p>
+          <Default>
+            <S.HeaderWrapper>
+              <S.BackBtn>
+                <img />
+                <span>Back</span>
+              </S.BackBtn>
+              <p>
+                <span>I want to have an account!</span>
+                <S.StyledText>Sign Up</S.StyledText>
+              </p>
+            </S.HeaderWrapper>
+          </Default>
         </S.Header>
 
         <S.Content>
@@ -112,15 +119,30 @@ function Login() {
             ></S.InputPwd>
             <S.BlankDiv />
 
-            <S.SubmitBtn
-              type="submit"
-              color="gradient"
-              radius="circle"
-              height="md"
-              width={160}
-            >
-              Sign In
-            </S.SubmitBtn>
+            <Default>
+              <S.SubmitBtn
+                type="submit"
+                color="gradient"
+                radius="circle"
+                height="md"
+                width={150}
+              >
+                Sign In
+              </S.SubmitBtn>
+            </Default>
+
+            <Mobile>
+              <S.SubmitBtn
+                type="submit"
+                color="gradient"
+                radius="circle"
+                height="md"
+                width={160}
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                Sign In
+              </S.SubmitBtn>
+            </Mobile>
           </S.Form>
         </S.Content>
       </S.RightWrapper>

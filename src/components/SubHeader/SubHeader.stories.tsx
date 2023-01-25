@@ -14,10 +14,12 @@ export const Default = Template.bind({});
 Default.args = {
   searchBar: false,
   profileImg: 'assets/authorization/pimfy_profile.png',
+  children: 'board name',
 };
 
 export const WithSearchBar = Template.bind({});
 WithSearchBar.args = {
   searchBar: true,
   profileImg: 'assets/authorization/pimfy_profile.png',
+  children: 'board name',
 };

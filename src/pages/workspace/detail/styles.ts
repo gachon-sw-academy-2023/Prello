@@ -11,15 +11,19 @@ type ItemProps = {
 type TitleProps = {
   margin: string;
 };
-const Container = styled.div`
+export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
   background-color: #f5f6f7;
-  display: flex;
 `;
-
+export const Wrapper = styled.div`
+  width: 100%;
+  background-color: #f5f6f7;
+  display: flex;
+  padding-top: 65px;
+`;
 // 구분선
-const Line = styled.div<TitleProps>`
+export const Line = styled.div<TitleProps>`
   width: 100%;
   height: 0.5px;
   margin-left: ${(props) => props.margin};
@@ -27,12 +31,12 @@ const Line = styled.div<TitleProps>`
 `;
 
 // 왼쪽 바 div
-const LeftContainer = styled.div`
+export const LeftContainer = styled.div`
   width: 20%;
   min-height: 100vh;
   padding: 20px 30px;
 `;
-const LeftContent = styled.div`
+export const LeftContent = styled.div`
   display: flex;
   width: 100%;
   margin: 15px 0px;
@@ -43,36 +47,36 @@ const LeftContent = styled.div`
   }
 `;
 
-const LeftContentNotHover = styled(LeftContent)`
+export const LeftContentNotHover = styled(LeftContent)`
   pointer-events: none;
 `;
-const Title = styled.h1<TitleProps>`
+export const Title = styled.h1<TitleProps>`
   font-size: 20px;
   font-weight: 600;
   font-family: 'LINESeedKR-Bd';
   margin: ${(props) => props.margin};
   color: #4f4e4e;
 `;
-const MembersWrapper = styled.div`
+export const MembersWrapper = styled.div`
   width: 100%;
   height: 60vh;
   overflow: auto;
   padding-left: 10px;
 `;
-const MemberWrapper = styled.div`
+export const MemberWrapper = styled.div`
   width: 100%;
   display: flex;
   padding-top: 10px;
 `;
 
 // 이미지
-const Image = styled.div<ImageProps>`
+export const Image = styled.div<ImageProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   background-size: cover;
   background-image: url(${(props) => props.img});
 `;
-const ProfileName = styled.p`
+export const ProfileName = styled.p`
   font-size: 15px;
   font-family: 'LINESeedKR-Rg';
   padding: 13px 10px 7px 10px;
@@ -80,30 +84,29 @@ const ProfileName = styled.p`
 `;
 
 //오른쪽 화면
-const RightContainer = styled.div`
+export const RightContainer = styled.div`
   width: 80%;
-  min-height: 100vh;
   padding: 30px 50px;
 `;
 
-const InfoContainer = styled.div`
+export const InfoContainer = styled.div`
   width: 100%;
   display: flex;
   padding-bottom: 30px;
 `;
 
-const WorkspaceImage = styled.div`
+export const WorkspaceImage = styled.div`
   width: 90px;
   height: 80px;
   background-size: cover;
   background-image: url('src/assets/workspace/sample-workspace-image.png');
 `;
 
-const InfoContents = styled.div`
+export const InfoContents = styled.div`
   width: 100%;
   padding-left: 15px;
 `;
-const ExplainText = styled.p`
+export const ExplainText = styled.p`
   font-size: 16px;
   font-family: 'LINESeedKR-Rg';
   margin: 20px 10px 7px 0;
@@ -111,11 +114,11 @@ const ExplainText = styled.p`
 `;
 
 // 보드 아이템
-const BoardContainer = styled.div`
+export const BoardContainer = styled.div`
   width: 100%;
   padding: 20px 0;
 `;
-const Item = styled.div<ItemProps>`
+export const Item = styled.div<ItemProps>`
   display: flex;
   align-items: ${(props) => (props.center ? 'center' : 'left')};
   flex-direction: row;
@@ -127,31 +130,10 @@ const Item = styled.div<ItemProps>`
   margin: 10px 0;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 `;
-const Icon = styled.div<ImageProps>`
+export const Icon = styled.div<ImageProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   background-size: cover;
   background-image: url(${(props) => props.img});
   margin: 7px 10px 10px 0;
 `;
-
-export {
-  Container,
-  Line,
-  LeftContainer,
-  LeftContent,
-  LeftContentNotHover,
-  Title,
-  MembersWrapper,
-  Image,
-  ProfileName,
-  RightContainer,
-  InfoContainer,
-  WorkspaceImage,
-  InfoContents,
-  ExplainText,
-  BoardContainer,
-  Item,
-  Icon,
-  MemberWrapper,
-};

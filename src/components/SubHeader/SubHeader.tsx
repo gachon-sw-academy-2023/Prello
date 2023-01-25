@@ -1,12 +1,17 @@
 import * as S from './SubHeader.style';
 import { SubHeaderProps } from './SubHeader.types';
-export const SubHeader = ({ profileImg, searchBar }: SubHeaderProps) => {
+export const SubHeader = ({
+  profileImg,
+  searchBar,
+  divider,
+  children,
+}: SubHeaderProps) => {
   return (
     <S.Header>
       <S.LeftHeaderDiv>
         <S.Title>Prello</S.Title>
-        <S.Divider />
-        <S.BoardName>First Board</S.BoardName>
+        {divider && <S.Divider />}
+        <S.BoardName>{children}</S.BoardName>
       </S.LeftHeaderDiv>
       <S.RightHeaderDiv>
         <S.SearchBar placeholder="Search" searchBar={searchBar} />
