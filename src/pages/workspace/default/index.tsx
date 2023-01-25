@@ -47,7 +47,7 @@ export default function WorkspaceDefault() {
               color={'primary'}
               shadow={true}
               onClick={() => {
-                navigate(routes.CREATEWORKSPACE);
+                onClickToggleModal();
               }}
             >
               + 새로운 워크스페이스
