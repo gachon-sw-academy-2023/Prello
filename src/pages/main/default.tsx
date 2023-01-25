@@ -12,9 +12,6 @@ import { useRecoilState } from 'recoil';
 import { userSelector } from '@/utils/atom/userSelector';
 import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
-type User = {
-  name: string;
-};
 
 export default function DefaultMain() {
   /* TODO: Recoil */
@@ -22,7 +19,6 @@ export default function DefaultMain() {
   const [updateHeader, setUpdateHeader] = useState<Boolean>();
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const handleNavigate = () => {};
 
   const throttledScroll = useMemo(
     () =>
