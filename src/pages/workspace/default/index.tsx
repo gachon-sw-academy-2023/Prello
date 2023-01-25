@@ -1,13 +1,17 @@
 import Button from '@/components/Button/Button';
+import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
+import { userSelector } from '@/utils/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import * as S from './styles';
-import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 export default function WorkspaceDefault() {
   const navigate = useNavigate();
+  const user = useRecoilValue(userSelector);
+  console.log(user);
   return (
     <S.Container>
       <Default>
