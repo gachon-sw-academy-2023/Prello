@@ -2,6 +2,7 @@ import Button from '@/components/Button/Button';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
+import routes from '@/routes';
 import { userSelector } from '@/utils/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
@@ -32,6 +33,9 @@ export default function WorkspaceDefault() {
               radius={'rounded'}
               color={'primary'}
               shadow={true}
+              onClick={() => {
+                navigate(routes.CREATEWORKSPACE);
+              }}
             >
               + 새로운 워크스페이스
             </Button>
@@ -42,6 +46,9 @@ export default function WorkspaceDefault() {
               radius={'rounded'}
               color={'primary'}
               shadow={true}
+              onClick={() => {
+                navigate(routes.CREATEWORKSPACE);
+              }}
             >
               + 새로운 워크스페이스
             </Button>
