@@ -1,5 +1,6 @@
+import Button from '@/components/Button/Button';
 import styled from '@emotion/styled';
-import { style } from '@mui/system';
+
 type ImageProps = {
   img: string;
   width: string;
@@ -123,6 +124,17 @@ export const RoundLineInput = styled.input`
   font-size: 16px;
   color: #4f4e4e;
 `;
+export const RoundInput = styled.input`
+  border-radius: 10px;
+  background-color: #f5f3f3;
+  border: none;
+  width: 100%;
+  height: fit-content;
+  font-family: 'LINESeedKR-Rg';
+  padding: 10px 10px;
+  font-size: 16px;
+  color: #4f4e4e;
+`;
 export const SaveButtonWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -133,4 +145,7 @@ export const SaveButtonWrapper = styled.div`
 export const EmptyBox = styled.div`
   width: 100%;
   height: 20px;
+`;
+export const DeleteButton = styled(Button)`
+  width: 100%;
 `;
