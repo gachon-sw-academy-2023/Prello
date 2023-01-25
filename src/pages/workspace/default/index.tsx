@@ -9,10 +9,18 @@ import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import * as S from './styles';
+import { useState, useCallback } from 'react';
+import CreateWorkspace from '../create';
+
 export default function WorkspaceDefault() {
-  const navigate = useNavigate();
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const user = useRecoilValue(userSelector);
-  console.log(user);
+  const navigate = useNavigate();
+
+  const onClickToggleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+
   return (
     <S.Container>
       <Default>
@@ -24,6 +32,11 @@ export default function WorkspaceDefault() {
       <Mobile>
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
+      {isOpenModal && (
+        <CreateWorkspace
+          onClickToggleModal={onClickToggleModal}
+        ></CreateWorkspace>
+      )}
       <S.ContentsWrapper>
         <S.Wrapper>
           <S.Title>나의 워크스페이스</S.Title>
@@ -47,7 +60,7 @@ export default function WorkspaceDefault() {
               color={'primary'}
               shadow={true}
               onClick={() => {
-                navigate(routes.CREATEWORKSPACE);
+                onClickToggleModal();
               }}
             >
               + 새로운 워크스페이스
