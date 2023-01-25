@@ -2,13 +2,11 @@ import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
-import * as S from './styles';
 import List from './Board';
+import * as S from './styles';
 
 export default function Board() {
   const [member, setMember] = useState([]);
@@ -18,15 +16,6 @@ export default function Board() {
       {
         id: lists.length,
         title: 'new list',
-      },
-    ]);
-  };
-  const handleAddItem = () => {
-    setItems([
-      ...items,
-      {
-        id: items.length,
-        content: '',
       },
     ]);
   };
@@ -40,18 +29,6 @@ export default function Board() {
   const [lists, setLists] = useState([
     { id: 1, title: 'todo' },
     { id: 2, title: 'done' },
-  ]);
-  const [state, setState] = useState([
-    { id: 1, name: 'shrek' },
-    { id: 2, name: 'fiona' },
-  ]);
-  const [items, setItems] = useState<any[]>([
-    { id: 1, content: 'a' },
-    { id: 2, content: 'b' },
-  ]);
-  const [items2, setItems2] = useState<any[]>([
-    { id: 3, content: 'c' },
-    { id: 4, content: 'd' },
   ]);
 
   const columns = document.querySelectorAll('.column');
