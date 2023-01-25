@@ -4,21 +4,13 @@ import { ReactSortable } from 'react-sortablejs';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  background: #f5f5f5;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
-  background: #f5f5f5;
-  height: 100%;
-  width: 100%;
-  margin-top: 65px;
-`;
-
-export const RightWrapper = styled.div`
-  display: flex;
-  background: #f5f5f5;
-  padding-right: 25px;
+  padding-top: 65px;
 `;
 
 export const MobileRightWrapper = styled.div`
@@ -54,7 +46,7 @@ export const ListWrapper = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
-
+export const RightWrapper = styled.div``;
 export const MobileListWrapper = styled(ListWrapper)`
   width: 350px;
 `;
