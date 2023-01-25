@@ -1,8 +1,8 @@
+import SimpleModal from '@/components/SimpleModal/SimpleModal';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
-import Modal from './modal';
 import * as S from './styles';
 export default function SignUp() {
   const [email, setEmail] = useState<string>('');
@@ -26,7 +26,7 @@ export default function SignUp() {
     console.log(passwordConfirm);
     console.log(nickname);
     if (emailValidation && pwdValidation && pwdConfirmValidation) {
-      onClickToggleModal;
+      handleModal();
       add({ email: email, password: password, nickname: nickname }).then(
         (event) => {
           console.log('ID Generated: ', event);
@@ -38,7 +38,7 @@ export default function SignUp() {
     }
   }
 
-  const onClickToggleModal = useCallback(() => {
+  const handleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
@@ -88,9 +88,9 @@ export default function SignUp() {
   return (
     <S.Container>
       {isOpenModal && (
-        <Modal onClickToggleModal={onClickToggleModal}>
+        <SimpleModal onClickToggleModal={handleModal}>
           회원가입이 완료되었습니다! 💖
-        </Modal>
+        </SimpleModal>
       )}
       <S.LeftWrapper>
         <S.CoverImg />
