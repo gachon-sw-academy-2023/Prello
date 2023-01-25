@@ -87,6 +87,29 @@ export const Item = styled.div`
   cursor: pointer;
 `;
 
+export const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  vertical-align: middle;
+`;
+
+export const FormInput = styled.input`
+  display: flex;
+  align-items: center;
+  padding: 0px 25px;
+  background: rgba(252, 164, 190, 0.23);
+  border-radius: 10px;
+  height: 35px;
+  width: 80%;
+  cursor: pointer;
+  width: 65%;
+  border: none;
+  outline: none;
+`;
+
 export const AddBtn = styled.div`
   display: flex;
   width: 80%;
