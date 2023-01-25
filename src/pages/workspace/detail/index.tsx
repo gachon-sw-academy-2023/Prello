@@ -70,6 +70,10 @@ export default function WorkspaceDetail() {
     },
   ];
 
+  const handleModal = () => {
+    console.log('click-test');
+  };
+
   return (
     <S.Container>
       <Default>
@@ -83,7 +87,7 @@ export default function WorkspaceDetail() {
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
       <S.Wrapper>
-        <SideBar memberInfo={members} />
+        <SideBar memberInfo={members} handleModal={handleModal} />
         <S.RightContainer>
           <S.InfoContainer>
             <WorkspaceImg
