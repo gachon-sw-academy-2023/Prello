@@ -5,7 +5,7 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
-import List from './Board';
+import List from './board';
 import * as S from './styles';
 
 export default function Board() {

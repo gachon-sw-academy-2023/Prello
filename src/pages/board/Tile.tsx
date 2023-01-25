@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Detail from './Item/detail';
 import * as S from './styles';
 
 interface ITileProps {
@@ -6,7 +7,13 @@ interface ITileProps {
 }
 
 const Tile: React.FC<ITileProps> = ({ children }) => {
-  return <S.Item>{children}</S.Item>;
+  const [open, setOpen] = useState(false);
+  return (
+    <S.Item onClick={() => setOpen(true)}>
+      {children}
+      {open && <Detail />}
+    </S.Item>
+  );
 };
 
 export default Tile;
