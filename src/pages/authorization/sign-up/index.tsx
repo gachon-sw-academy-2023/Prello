@@ -143,7 +143,13 @@ export default function SignUp() {
               </S.BackBtn>
               <p>
                 <span>I have an account!</span>
-                <S.Sspan>Login</S.Sspan>
+                <S.Sspan
+                  onClick={() => {
+                    navigate(routes.LOGIN);
+                  }}
+                >
+                  Login
+                </S.Sspan>
               </p>
             </S.HeaderWrapper>
           </Default>

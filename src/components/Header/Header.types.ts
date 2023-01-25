@@ -1,10 +1,8 @@
+import { IUser } from '@/utils/atom/user';
 import { HTMLAttributes } from 'react';
-type User = {
-  name: string;
-};
 
 export interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
-  user?: User;
+  user?: IUser;
   onLogin: () => void;
   onLogout: () => void;
   onCreateAccount: () => void;

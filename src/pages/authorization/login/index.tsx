@@ -68,7 +68,7 @@ function Login() {
     getByIndex('email', email).then(
       (personFromDB) => {
         setUser(personFromDB);
-        setTimeout(() => navigate(routes.WORKSPACEDEFAULT), 1000);
+        setTimeout(() => navigate(routes.MAIN), 1000);
       },
       (error) => {
         console.log(error);
@@ -102,7 +102,13 @@ function Login() {
               </S.BackBtn>
               <p>
                 <span>I want to have an account!</span>
-                <S.StyledText>Sign Up</S.StyledText>
+                <S.StyledText
+                  onClick={() => {
+                    navigate(routes.SIGNUP);
+                  }}
+                >
+                  Sign Up
+                </S.StyledText>
               </p>
             </S.HeaderWrapper>
           </Default>
