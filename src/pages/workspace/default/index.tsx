@@ -4,8 +4,12 @@ import * as S from './styles';
 import Button from '@/components/Button/Button';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { Mobile, Default } from '@/utils/mediaQuery';
+import { userSelector } from '@/utils/atom/userSelector';
+import { useRecoilValue } from 'recoil';
 export default function WorkspaceDefault() {
   const navigate = useNavigate();
+  const user = useRecoilValue(userSelector);
+  console.log(user);
   return (
     <S.Container>
       <S.Wrapper>

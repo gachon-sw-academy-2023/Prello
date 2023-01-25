@@ -5,12 +5,17 @@ import routes from '@/routes';
 import { useIndexedDB } from 'react-indexed-db';
 import { pwdRegex } from '@/utils/checkPassword';
 import { emailRegex } from '@/utils/checkEmail';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userSelector } from '@/utils/atom/userSelector';
+
 function Login() {
   const [login, setLogin] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [emailValidation, setEmailValidation] = useState<boolean>(true);
   const [pwdValidation, setPwdValidation] = useState<boolean>(true);
+  const [user, setUser] = useRecoilState(userSelector);
+
   const navigate = useNavigate();
   const { getByIndex } = useIndexedDB('user');
 
@@ -48,7 +53,7 @@ function Login() {
           getByIndex('email', email)
             .then(
               (personFromDB) => {
-                console.log(personFromDB);
+                setUser(personFromDB);
               },
               (error) => {
                 console.log(error);
