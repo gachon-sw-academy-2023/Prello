@@ -1,3 +1,4 @@
+import SimpleModal from '@/components/SimpleModal/SimpleModal';
 import routes from '@/routes';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
@@ -5,8 +6,10 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
+
 import { useNavigate } from 'react-router-dom';
 import Modal from './modal';
+
 import * as S from './styles';
 
 export default function SignUp() {
@@ -48,7 +51,7 @@ export default function SignUp() {
       if (response.status === 200) {
         handleSignUp();
         console.log(response.data.message);
-        onClickToggleModal();
+        handleModal();
       }
     } catch (error: any) {
       if (error.response.status === 409) {
@@ -71,7 +74,7 @@ export default function SignUp() {
     );
   };
 
-  const onClickToggleModal = useCallback(() => {
+  const handleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
@@ -130,9 +133,9 @@ export default function SignUp() {
   return (
     <S.Container>
       {isOpenModal && (
-        <Modal onClickToggleModal={onClickToggleModal}>
+        <SimpleModal onClickToggleModal={handleModal}>
           회원가입이 완료되었습니다! 💖
-        </Modal>
+        </SimpleModal>
       )}
       <Default>
         <S.LeftWrapper>
