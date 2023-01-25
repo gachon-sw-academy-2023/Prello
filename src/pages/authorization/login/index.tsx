@@ -65,7 +65,7 @@ function Login() {
     if (login && emailValidation && pwdValidation) {
       navigate(routes.WORKSPACEDEFAULT);
     }
-  });
+  }, [login, emailValidation, pwdValidation]);
   return (
     <S.Container>
       <Default>
