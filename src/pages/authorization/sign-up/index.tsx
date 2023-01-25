@@ -2,13 +2,11 @@ import SimpleModal from '@/components/SimpleModal/SimpleModal';
 import routes from '@/routes';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
-import { Default, Mobile } from '@/utils/mediaQuery';
+import { Default } from '@/utils/mediaQuery';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
-
 import { useNavigate } from 'react-router-dom';
-import Modal from './modal';
 
 import * as S from './styles';
 
@@ -28,13 +26,6 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   function handleSubmit() {
-    console.log(emailValidation);
-    console.log(pwdValidation);
-    console.log(pwdConfirmValidation);
-    console.log(email);
-    console.log(password);
-    console.log(passwordConfirm);
-    console.log(nickname);
     if (
       emailValidation &&
       pwdValidation &&

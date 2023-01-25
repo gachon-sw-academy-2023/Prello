@@ -1,13 +1,15 @@
-import { FormEvent, useEffect, useState } from 'react';
-import * as S from './styles';
-import { useNavigate } from 'react-router-dom';
+import SimpleModal from '@/components/SimpleModal/SimpleModal';
 import routes from '@/routes';
-import { useIndexedDB } from 'react-indexed-db';
-import { pwdRegex } from '@/utils/checkPassword';
-import { emailRegex } from '@/utils/checkEmail';
-import { Default, Mobile } from '@/utils/mediaQuery';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { userSelector } from '@/utils/atom/userSelector';
+import { emailRegex } from '@/utils/checkEmail';
+import { pwdRegex } from '@/utils/checkPassword';
+import { Default, Mobile } from '@/utils/mediaQuery';
+import axios from 'axios';
+import { FormEvent, useCallback, useState } from 'react';
+import { useIndexedDB } from 'react-indexed-db';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import * as S from './styles';
 
 function Login() {
   const [login, setLogin] = useState<boolean>(false);
@@ -16,6 +18,7 @@ function Login() {
   const [emailValidation, setEmailValidation] = useState<boolean>(true);
   const [pwdValidation, setPwdValidation] = useState<boolean>(true);
   const [user, setUser] = useRecoilState(userSelector);
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const { getByIndex } = useIndexedDB('user');
@@ -43,36 +46,47 @@ function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
     if (emailValidation && pwdValidation) {
-      fetch('/login', {
-        method: 'post',
-      }).then((res) => {
-        if (res.status === 200) {
-          setLogin(true);
-          getByIndex('email', email)
-            .then(
-              (personFromDB) => {
-                setUser(personFromDB);
-              },
-              (error) => {
-                console.log(error);
-              },
-            )
-            .catch((error) => console.log(error));
-        }
-      });
+      patchLogin();
     }
   };
 
-  useEffect(() => {
-    if (login && emailValidation && pwdValidation) {
-      navigate(routes.WORKSPACEDEFAULT);
+  const patchLogin = async () => {
+    try {
+      const response = await axios.post('/login');
+      if (response.status === 200) {
+        setLogin(true);
+        handleLogin();
+        handleModal();
+      }
+    } catch (error: any) {
+      console.log(error);
     }
-  }, [login, emailValidation, pwdValidation]);
+  };
+
+  const handleLogin = () => {
+    getByIndex('email', email).then(
+      (personFromDB) => {
+        setUser(personFromDB);
+        setTimeout(() => navigate(routes.WORKSPACEDEFAULT), 1000);
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  const handleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+
   return (
     <S.Container>
+      {isOpenModal && (
+        <SimpleModal onClickToggleModal={handleModal}>
+          로그인이 완료되었습니다! 💖
+        </SimpleModal>
+      )}
       <Default>
         <S.LeftWrapper>
           <S.Img />
