@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
 import List from './board';
+import Detail from './Item/detail';
 import * as S from './styles';
 
 export default function Board() {
@@ -41,6 +42,7 @@ export default function Board() {
 
   return (
     <S.Container>
+      <Detail />
       <Default>
         <WithSearchBar
           divider={true}
