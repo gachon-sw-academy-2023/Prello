@@ -9,6 +9,71 @@ import { useState } from 'react';
 import Modal from './modal';
 import * as S from './styles';
 
+interface IMember {
+  name: string;
+  profile: string;
+}
+
+interface IBoard {
+  title: string;
+}
+
+let members: IMember[] = [
+  {
+    name: 'dahye',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: 'leah',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: 'rylee',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버1',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버2',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버3',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버4',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버5',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버6',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버7',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버8',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+];
+
+let boards: IBoard[] = [
+  {
+    title: 'First Board',
+  },
+  {
+    title: 'Second Board',
+  },
+];
+
 export default function WorkspaceSetting() {
   const [workspaceName, setWorkspaceName] = useState<string>('PIMFY');
   const [changedWorkspaceName, setChangedWorkspaceName] =
@@ -26,68 +91,6 @@ export default function WorkspaceSetting() {
   function handleDelete() {
     setIsModalOpen(!isModalOpen);
   }
-
-  interface IMember {
-    name: string;
-    profile: string;
-  }
-  let members: IMember[] = [
-    {
-      name: 'dahye',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: 'leah',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: 'rylee',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버1',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버2',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버3',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버4',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버5',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버6',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버7',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버8',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-  ];
-  interface IBoard {
-    title: string;
-  }
-  let boards: IBoard[] = [
-    {
-      title: 'First Board',
-    },
-    {
-      title: 'Second Board',
-    },
-  ];
 
   return (
     <S.Container>
