@@ -9,6 +9,7 @@ const colors = {
   gradient: 'linear-gradient(to bottom, #fca4be 0%, #e5a4fc 100%)',
   empty: '#00000000',
   darkgray: '#4f4e4e',
+  notworking: '#C1BABC',
 } as const;
 
 export default colors;

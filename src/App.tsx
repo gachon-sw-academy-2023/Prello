@@ -6,9 +6,9 @@ import SignUp from './pages/authorization/sign-up';
 import Board from './pages/board';
 import Main from './pages/main';
 import NotFound from './pages/notFound';
-import CreateWorkspace from './pages/workspace/create';
 import WorkspaceDefault from './pages/workspace/default';
 import WorkspaceDetail from './pages/workspace/detail';
+import WorkspaceSetting from './pages/workspace/setting';
 import routes from './routes';
 import { DBConfig } from './utils/dbconfig';
 initDB(DBConfig);
@@ -54,8 +54,8 @@ function App() {
               element={<WorkspaceDetail />}
             />
             <Route
-              path={routes.CREATEWORKSPACE}
-              element={<CreateWorkspace />}
+              path={routes.WORKSPACESETTING}
+              element={<WorkspaceSetting />}
             />
             <Route path={'*'} element={<NotFound />} />
           </Routes>
