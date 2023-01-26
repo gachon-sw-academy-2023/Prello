@@ -2,21 +2,20 @@ import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
+import List from './Board';
 import * as S from './styles';
 
 export default function Board() {
   const [member, setMember] = useState([]);
-  const handleAddItem = () => {
-    setItems([
-      ...items,
+  const handleAddList = () => {
+    setLists([
+      ...lists,
       {
-        id: items.length,
-        content: '',
+        id: lists.length,
+        title: 'new list',
       },
     ]);
   };
@@ -27,13 +26,9 @@ export default function Board() {
       .then((res) => setMember(res.data));
   }, []);
 
-  const [items, setItems] = useState<any[]>([
-    { id: 1, content: 'a' },
-    { id: 2, content: 'b' },
-  ]);
-  const [items2, setItems2] = useState<any[]>([
-    { id: 3, content: 'c' },
-    { id: 4, content: 'd' },
+  const [lists, setLists] = useState([
+    { id: 1, title: 'todo' },
+    { id: 2, title: 'done' },
   ]);
 
   const columns = document.querySelectorAll('.column');
@@ -65,44 +60,11 @@ export default function Board() {
         <Default>
           <S.RightWrapper>
             <S.ListContainer className="column">
-              <S.ListWrapper draggable="true">
-                <S.ListHeader>
-                  <h1>To Do</h1>
-                  <span>
-                    <FontAwesomeIcon icon={faEllipsis} />
-                  </span>
-                </S.ListHeader>
-
-                <S.ItemWrapper list={items} setList={setItems} group="shared">
-                  {items.map((item) => (
-                    <S.Item key={item.id}>{item.content}</S.Item>
-                  ))}
-                </S.ItemWrapper>
-                <S.AddBtn onClick={handleAddItem}>
-                  <span>+</span>
-                  <S.AddBtnText>Add a card</S.AddBtnText>
-                </S.AddBtn>
-              </S.ListWrapper>
-
-              <S.ListWrapper draggable="true">
-                <S.ListHeader>
-                  <h1>Doing</h1>
-                  <span>
-                    <FontAwesomeIcon icon={faEllipsis} />
-                  </span>
-                </S.ListHeader>
-                <S.ItemWrapper list={items2} setList={setItems2} group="shared">
-                  {items2.map((item) => (
-                    <S.Item key={item.id}>{item.content}</S.Item>
-                  ))}
-                </S.ItemWrapper>
-                <S.AddBtn onClick={handleAddItem}>
-                  <span>+</span>
-                  <S.AddBtnText>Add a card</S.AddBtnText>
-                </S.AddBtn>
-              </S.ListWrapper>
+              {lists.map((list) => (
+                <List draggable="true" title={list.title} key={list.id} />
+              ))}
             </S.ListContainer>
-            <S.AddListWrapper>
+            <S.AddListWrapper onClick={handleAddList}>
               <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
             </S.AddListWrapper>
           </S.RightWrapper>
@@ -111,44 +73,11 @@ export default function Board() {
         <Mobile>
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
-              <S.MobileListWrapper draggable="true">
-                <S.ListHeader>
-                  <h1>To Do</h1>
-                  <span>
-                    <FontAwesomeIcon icon={faEllipsis} />
-                  </span>
-                </S.ListHeader>
-
-                <S.ItemWrapper list={items} setList={setItems} group="shared">
-                  {items.map((item) => (
-                    <S.Item key={item.id}>{item.content}</S.Item>
-                  ))}
-                </S.ItemWrapper>
-                <S.AddBtn onClick={handleAddItem}>
-                  <span>+</span>
-                  <S.AddBtnText>Add a card</S.AddBtnText>
-                </S.AddBtn>
-              </S.MobileListWrapper>
-
-              <S.MobileListWrapper draggable="true">
-                <S.ListHeader>
-                  <h1>Doing</h1>
-                  <span>
-                    <FontAwesomeIcon icon={faEllipsis} />
-                  </span>
-                </S.ListHeader>
-                <S.ItemWrapper list={items2} setList={setItems2} group="shared">
-                  {items2.map((item) => (
-                    <S.Item key={item.id}>{item.content}</S.Item>
-                  ))}
-                </S.ItemWrapper>
-                <S.AddBtn onClick={handleAddItem}>
-                  <span>+</span>
-                  <S.AddBtnText>Add a card</S.AddBtnText>
-                </S.AddBtn>
-              </S.MobileListWrapper>
+              {lists.map((list) => (
+                <List draggable="true" title={list.title} key={list.id} />
+              ))}
             </S.ListMobileContiner>
-            <S.MobileAddListWrapper>
+            <S.MobileAddListWrapper onClick={handleAddList}>
               <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
             </S.MobileAddListWrapper>
           </S.MobileRightWrapper>

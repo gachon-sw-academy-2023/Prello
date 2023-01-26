@@ -5,7 +5,7 @@ import { SubHeaderProps } from './SubHeader.types';
 export const Header = styled.div`
   display: flex;
   position: fixed;
-  height: 7%;
+  height: 65px;
   width: 100%;
   background: #ffffff;
   align-items: center;
