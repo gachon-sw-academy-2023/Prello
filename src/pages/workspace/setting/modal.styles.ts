@@ -12,7 +12,7 @@ export const ModalContainer = styled.div`
 `;
 
 export const DialogBox = styled.dialog`
-  width: 35%;
+  width: 40%;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@ export const CloseButton = styled.button`
   width: 30px;
   height: 30px;
   position: fixed;
-  right: 33.5%;
+  right: 31%;
   background-color: #fca4be;
   border-radius: 100px;
   font-size: 16px;
