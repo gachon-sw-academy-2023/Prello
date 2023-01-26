@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import Tile from './Tile';
-import * as S from './styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEllipsis, faX } from '@fortawesome/free-solid-svg-icons';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import * as S from './styles';
+import Tile from './Tile';
 
 interface IBoardProps {
   title: string;
