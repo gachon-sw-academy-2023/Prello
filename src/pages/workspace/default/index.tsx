@@ -17,7 +17,7 @@ export default function WorkspaceDefault() {
   const user = useRecoilValue(userSelector);
   const navigate = useNavigate();
 
-  const onClickToggleModal = useCallback(() => {
+  const handleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
@@ -33,9 +33,7 @@ export default function WorkspaceDefault() {
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {isOpenModal && (
-        <CreateWorkspace
-          onClickToggleModal={onClickToggleModal}
-        ></CreateWorkspace>
+        <CreateWorkspace onClickToggleModal={handleModal}></CreateWorkspace>
       )}
       <S.ContentsWrapper>
         <S.Wrapper>
@@ -47,7 +45,7 @@ export default function WorkspaceDefault() {
               color={'primary'}
               shadow={true}
               onClick={() => {
-                onClickToggleModal();
+                handleModal();
               }}
             >
               + 새로운 워크스페이스
@@ -60,7 +58,7 @@ export default function WorkspaceDefault() {
               color={'primary'}
               shadow={true}
               onClick={() => {
-                onClickToggleModal();
+                handleModal();
               }}
             >
               + 새로운 워크스페이스
