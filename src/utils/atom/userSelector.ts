@@ -2,7 +2,7 @@ import { selector } from 'recoil';
 import { IUser } from './user';
 import { userState } from './user';
 
-export const userSelector = selector<IUser | {}>({
+export const userSelector = selector<IUser>({
   key: 'userSelector',
   get: ({ get }) => {
     get(userState);
