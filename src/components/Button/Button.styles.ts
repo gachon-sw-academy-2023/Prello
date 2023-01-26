@@ -40,8 +40,14 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
           padding-top: 0.7rem;
           padding-bottom: 0.7rem;
         `
-      : css`
+      : height === 'lg'
+      ? css`
           font-size: 16px;
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+        `
+      : css`
+          font-size: 20px;
           padding-top: 1rem;
           padding-bottom: 1rem;
         `}

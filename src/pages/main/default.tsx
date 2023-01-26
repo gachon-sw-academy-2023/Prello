@@ -8,16 +8,17 @@ import introduce1 from '/assets/images/main/introduce1-temp.png';
 import introduce2 from '/assets/images/main/introduce2-temp.png';
 import introduce3 from '/assets/images/main/introduce3-temp.png';
 import introduce4 from '/assets/images/main/introduce4-temp.png';
-type User = {
-  name: string;
-};
+import { useRecoilState } from 'recoil';
+import { userSelector } from '@/utils/atom/userSelector';
+import { useNavigate } from 'react-router-dom';
+import routes from '@/routes';
 
 export default function DefaultMain() {
   /* TODO: Recoil */
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useRecoilState(userSelector);
   const [updateHeader, setUpdateHeader] = useState<Boolean>();
   const ref = useRef<HTMLInputElement>(null);
-  const handleNavigate = () => {};
+  const navigate = useNavigate();
 
   const throttledScroll = useMemo(
     () =>
@@ -46,17 +47,19 @@ export default function DefaultMain() {
       <Header
         user={user}
         onLogin={() => {
-          setUser({ name: 'PIMFY' });
+          navigate(routes.LOGIN);
         }}
         onLogout={() => {
-          setUser(undefined);
+          setUser({
+            id: 0,
+            email: '',
+            password: '',
+            nickname: '',
+          });
         }}
         onCreateAccount={() => {
-          setUser({ name: 'PIMFY' });
+          navigate(routes.SIGNUP);
         }}
-        // onLogin={() => handleLogin()}
-        // onLogout={() => handleLogout()}
-        // onCreateAccount={() => handleJoin()}
         color={updateHeader ? 'primary' : 'white'}
         backgroundColor={updateHeader ? 'white' : 'empty'}
       ></Header>
@@ -64,16 +67,33 @@ export default function DefaultMain() {
         <S.Content>
           <S.TitleImage></S.TitleImage>
           <S.MainImage></S.MainImage>
-          <S.SubmitBtn
-            height="lg"
-            width={100}
-            color="white"
-            textColor="black"
-            radius="circle"
-            onClick={handleNavigate}
-          >
-            Sign Up
-          </S.SubmitBtn>
+          {user.nickname !== '' ? (
+            <S.SubmitBtn
+              height="lg"
+              width={100}
+              color="white"
+              textColor="black"
+              radius="circle"
+              onClick={() => {
+                navigate(routes.WORKSPACEDEFAULT);
+              }}
+            >
+              바로 시작하기
+            </S.SubmitBtn>
+          ) : (
+            <S.SubmitBtn
+              height="lg"
+              width={100}
+              color="white"
+              textColor="black"
+              radius="circle"
+              onClick={() => {
+                navigate(routes.SIGNUP);
+              }}
+            >
+              회원가입
+            </S.SubmitBtn>
+          )}
         </S.Content>
       </S.Wrapper>
       <S.IntroduceWrapper ref={ref}>

@@ -2,15 +2,13 @@ import styled from '@emotion/styled';
 import { ReactSortable } from 'react-sortablejs';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   background: #f5f5f5;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
   padding-top: 65px;
+  height: 100vh;
 `;
 
 export const MobileRightWrapper = styled.div`
@@ -46,7 +44,11 @@ export const ListWrapper = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
-export const RightWrapper = styled.div``;
+export const RightWrapper = styled.div`
+  display: flex;
+  background: #f5f5f5;
+  padding-right: 25px;
+`;
 export const MobileListWrapper = styled(ListWrapper)`
   width: 350px;
 `;
@@ -83,6 +85,29 @@ export const Item = styled.div`
   margin-bottom: 10px;
   width: 80%;
   cursor: pointer;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  vertical-align: middle;
+`;
+
+export const FormInput = styled.input`
+  display: flex;
+  align-items: center;
+  padding: 0px 25px;
+  background: rgba(252, 164, 190, 0.23);
+  border-radius: 10px;
+  height: 35px;
+  width: 80%;
+  cursor: pointer;
+  width: 65%;
+  border: none;
+  outline: none;
 `;
 
 export const AddBtn = styled.div`

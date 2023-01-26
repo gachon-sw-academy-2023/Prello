@@ -6,6 +6,7 @@ import SignUp from './pages/authorization/sign-up';
 import Board from './pages/board';
 import Main from './pages/main';
 import NotFound from './pages/notFound';
+import CreateWorkspace from './pages/workspace/create';
 import WorkspaceDefault from './pages/workspace/default';
 import WorkspaceDetail from './pages/workspace/detail';
 import WorkspaceSetting from './pages/workspace/setting';
@@ -52,6 +53,10 @@ function App() {
             <Route
               path={routes.WORKSPACEDETAIL}
               element={<WorkspaceDetail />}
+            />
+            <Route
+              path={routes.CREATEWORKSPACE}
+              element={<CreateWorkspace />}
             />
             <Route
               path={routes.WORKSPACESETTING}
