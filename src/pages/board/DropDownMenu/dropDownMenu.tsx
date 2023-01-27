@@ -12,7 +12,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
 }) => {
   const [visible, setVisible] = useState<boolean>(true);
 
-  const handle = () => {
+  const handleItemMenu = () => {
     handleHideMenu();
     handleDeleteItems();
   };
@@ -25,7 +25,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
       {visible && (
         <ul>
           <li onClick={handleDeleteCard}>리스트 삭제</li>
-          <li onClick={handle}>아이템 전체 삭제</li>
+          <li onClick={handleItemMenu}>아이템 전체 삭제</li>
         </ul>
       )}
     </S.Container>
