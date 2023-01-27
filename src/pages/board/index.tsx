@@ -3,9 +3,9 @@ import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
-import List from './Board';
+import List from './List/List';
 import * as S from './styles';
 
 export default function Board() {
@@ -39,6 +39,11 @@ export default function Board() {
     });
   });
 
+  const handleDeleteCard = (e: any) => {
+    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.style.display =
+      'none';
+  };
+
   return (
     <S.Container>
       <Default>
@@ -61,7 +66,11 @@ export default function Board() {
           <S.RightWrapper>
             <S.ListContainer className="column">
               {lists.map((list) => (
-                <List draggable="true" title={list.title} key={list.id} />
+                <List
+                  title={list.title}
+                  key={list.id}
+                  handleDeleteCard={handleDeleteCard}
+                />
               ))}
             </S.ListContainer>
             <S.AddListWrapper onClick={handleAddList}>
@@ -74,7 +83,7 @@ export default function Board() {
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
               {lists.map((list) => (
-                <List draggable="true" title={list.title} key={list.id} />
+                <List title={list.title} key={list.id} />
               ))}
             </S.ListMobileContiner>
             <S.MobileAddListWrapper onClick={handleAddList}>

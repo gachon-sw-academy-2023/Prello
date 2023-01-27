@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import Tile from './Tile';
-import * as S from './styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEllipsis, faX } from '@fortawesome/free-solid-svg-icons';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import DropDownMenu from '../DropDownMenu/dropDownMenu';
+import * as S from '../styles';
+import Tile from '../Tile/Tile';
 
 interface IBoardProps {
   title: string;
+  handleDeleteCard: () => void;
 }
 
 interface ICard {
@@ -14,8 +16,9 @@ interface ICard {
   text: string;
 }
 
-const Board: React.FC<IBoardProps> = ({ title }) => {
-  const [showForm, setShowForm] = useState(false);
+const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const [cards, setCards] = useState<ICard[]>([]);
 
@@ -31,15 +34,33 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
     setText('');
   };
 
+  const handleDeleteItems = () => {
+    setCards([]);
+    setShowForm(false);
+  };
+
   return (
     <div>
       <Default>
         <S.ListWrapper draggable="true">
           <S.ListHeader>
             <h1>{title}</h1>
-            <span>
-              <FontAwesomeIcon icon={faEllipsis} onClick={() => setCards([])} />
-            </span>
+            <div
+              style={{
+                position: 'relative',
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faEllipsis}
+                onClick={() => setShowMenu(!showMenu)}
+              />
+              {showMenu && (
+                <DropDownMenu
+                  handleDeleteCard={handleDeleteCard}
+                  handleDeleteItems={handleDeleteItems}
+                />
+              )}
+            </div>
           </S.ListHeader>
           <S.ItemWrapper
             group="shared"
@@ -120,4 +141,4 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
   );
 };
 
-export default Board;
+export default List;
