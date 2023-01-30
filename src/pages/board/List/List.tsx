@@ -40,6 +40,11 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
     setShowForm(false);
   };
 
+  const handleCancel = () => {
+    setShowForm(false);
+    setText('');
+  };
+
   return (
     <div>
       <Default>
@@ -90,7 +95,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
                 onChange={(e) => setText(e.target.value)}
               />
               <button type="submit">✅</button>
-              <button type="submit" onClick={() => setShowForm(false)}>
+              <button type="submit" onClick={() => handleCancel()}>
                 ⛔
               </button>
             </S.Form>
