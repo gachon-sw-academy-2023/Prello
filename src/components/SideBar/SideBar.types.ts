@@ -5,4 +5,5 @@ interface IMember {
 }
 export interface SideBarProps extends HTMLAttributes<HTMLDivElement> {
   memberInfo: Array<IMember>;
+  handleModal?: () => void;
 }

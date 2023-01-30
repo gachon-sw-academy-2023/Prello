@@ -8,6 +8,7 @@ import Main from './pages/main';
 import NotFound from './pages/notFound';
 import WorkspaceDefault from './pages/workspace/default';
 import WorkspaceDetail from './pages/workspace/detail';
+import WorkspaceSetting from './pages/workspace/setting';
 import routes from './routes';
 import { DBConfig } from './utils/dbconfig';
 initDB(DBConfig);
@@ -51,6 +52,10 @@ function App() {
             <Route
               path={routes.WORKSPACEDETAIL}
               element={<WorkspaceDetail />}
+            />
+            <Route
+              path={routes.WORKSPACESETTING}
+              element={<WorkspaceSetting />}
             />
             <Route path={'*'} element={<NotFound />} />
           </Routes>

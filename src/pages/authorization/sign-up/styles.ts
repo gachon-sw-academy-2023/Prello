@@ -50,6 +50,7 @@ export const BackImg = styled.img`
 export const Sspan = styled.span`
   color: #553bf1;
   margin-left: 5px;
+  cursor: pointer;
 `;
 
 export const Content = styled.div`

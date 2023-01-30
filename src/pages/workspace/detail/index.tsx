@@ -6,69 +6,77 @@ import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import * as S from './styles';
+import { useState, useCallback } from 'react';
+import InviteModal from '@/components/InviteModal/InviteModal';
+
+interface IMember {
+  name: string;
+  profile: string;
+}
+let members: IMember[] = [
+  {
+    name: 'dahye',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: 'leah',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: 'rylee',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버1',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버2',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버3',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버4',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버5',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버6',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버7',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+  {
+    name: '멤버8',
+    profile: '/assets/workspace/sample-profile-image.png',
+  },
+];
+interface IBoard {
+  title: string;
+}
+let boards: IBoard[] = [
+  {
+    title: 'First Board',
+  },
+  {
+    title: 'Second Board',
+  },
+];
 
 export default function WorkspaceDetail() {
-  interface IMember {
-    name: string;
-    profile: string;
-  }
-  let members: IMember[] = [
-    {
-      name: 'dahye',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: 'leah',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: 'rylee',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버1',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버2',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버3',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버4',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버5',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버6',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버7',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버8',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-  ];
-  interface IBoard {
-    title: string;
-  }
-  let boards: IBoard[] = [
-    {
-      title: 'First Board',
-    },
-    {
-      title: 'Second Board',
-    },
-  ];
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+
+  const handleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
 
   return (
     <S.Container>
@@ -82,8 +90,11 @@ export default function WorkspaceDetail() {
       <Mobile>
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
+      {isOpenModal && (
+        <InviteModal onClickToggleModal={handleModal}></InviteModal>
+      )}
       <S.Wrapper>
-        <SideBar memberInfo={members} />
+        <SideBar memberInfo={members} handleModal={handleModal} />
         <S.RightContainer>
           <S.InfoContainer>
             <WorkspaceImg

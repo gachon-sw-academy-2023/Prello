@@ -16,10 +16,10 @@ export const Header = ({
         <h1>PRELLO</h1>
       </div>
       <div>
-        {user ? (
+        {user?.nickname !== '' ? (
           <div>
             <span>
-              Welcome, <b>{user.name}</b>!
+              Welcome, <b>{user?.nickname}</b>!
             </span>
             <Button
               height="md"
