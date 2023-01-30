@@ -2,13 +2,14 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { ReactSortable } from 'react-sortablejs';
 import DropDownMenu from '../DropDownMenu/dropDownMenu';
 import * as S from '../styles';
 import Tile from '../Tile/Tile';
 
 interface IBoardProps {
   title: string;
-  handleDeleteCard: () => void;
+  handleDeleteCard: (e: any) => void;
 }
 
 interface ICard {
@@ -62,7 +63,8 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
               )}
             </div>
           </S.ListHeader>
-          <S.ItemWrapper
+          <ReactSortable
+            className="itemWrapper"
             group="shared"
             animation={200}
             delay={1}
@@ -74,7 +76,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
             {cards.map((card: ICard) => (
               <Tile key={card.id}>{card.text}</Tile>
             ))}
-          </S.ItemWrapper>
+          </ReactSortable>
           {!showForm && (
             <S.AddBtn onClick={() => setShowForm(true)}>
               <span>+</span>
@@ -104,7 +106,8 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
               <FontAwesomeIcon icon={faEllipsis} />
             </span>
           </S.ListHeader>
-          <S.ItemWrapper
+          <ReactSortable
+            className="itemWrapper"
             group="shared"
             animation={200}
             delay={1}
@@ -116,7 +119,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
             {cards.map((card: ICard) => (
               <Tile key={card.id}>{card.text}</Tile>
             ))}
-          </S.ItemWrapper>
+          </ReactSortable>
           {!showForm && (
             <S.AddBtn onClick={() => setShowForm(true)}>
               <span>+</span>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import * as S from './styles';
 
 interface IDropMenu {
-  handleDeleteCard: () => void;
+  handleDeleteCard: (e: any) => void;
   handleDeleteItems: () => void;
 }
 

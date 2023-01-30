@@ -83,7 +83,11 @@ export default function Board() {
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
               {lists.map((list) => (
-                <List title={list.title} key={list.id} />
+                <List
+                  title={list.title}
+                  key={list.id}
+                  handleDeleteCard={handleDeleteCard}
+                />
               ))}
             </S.ListMobileContiner>
             <S.MobileAddListWrapper onClick={handleAddList}>

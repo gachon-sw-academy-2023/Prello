@@ -43,6 +43,14 @@ export const ListWrapper = styled.div`
   margin-top: 30px;
   justify-content: center;
   cursor: pointer;
+
+  .itemWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 5px;
+    width: 100%;
+  }
 `;
 export const RightWrapper = styled.div`
   display: flex;
@@ -66,13 +74,6 @@ export const ListHeader = styled.div`
   span {
     font-size: 10px;
   }
-`;
-export const ItemWrapper = styled(ReactSortable)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 5px;
-  width: 100%;
 `;
 
 export const Item = styled.div`
