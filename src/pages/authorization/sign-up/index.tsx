@@ -3,6 +3,7 @@ import routes from '@/routes';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
+import { text } from '@fortawesome/fontawesome-svg-core';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
@@ -16,6 +17,7 @@ export default function SignUp() {
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [modalText, setModalText] = useState<string>('');
   const [emailValidation, setEmailValidation] = useState<boolean>(true);
   const [pwdValidation, setPwdValidation] = useState<boolean>(true);
   const [pwdConfirmValidation, setPwdConfirmValidation] =
@@ -37,32 +39,31 @@ export default function SignUp() {
   }
 
   const patchSignUp = async () => {
+    let user = {
+      email: email,
+      password: password,
+      nickname: nickname,
+    };
+
     try {
-      const response = await axios.post('/sign-up', email);
+      const response = await axios.post('/sign-up', user);
       if (response.status === 200) {
-        handleSignUp();
-        console.log(response.data.message);
+        setModalText('회원가입이 완료되었습니다! 💖');
         handleModal();
+        setTimeout(() => navigate(routes.LOGIN), 1000);
       }
     } catch (error: any) {
       if (error.response.status === 409) {
         console.log(error.response.data.message);
-
-        /* TODO:  모달창으로 이메일 중복 알림 및 처리*/
+        setModalText('중복된 이메일입니다! 다른 이메일로 가입해 주세요! ✋');
+        handleModal();
+      }
+      if (error.response.status === 500) {
+        console.log(error.response.data.message);
+        setModalText('오류가 발생했습니다. 다시 시도해 주세요!');
+        handleModal();
       }
     }
-  };
-
-  const handleSignUp = () => {
-    add({ email: email, password: password, nickname: nickname }).then(
-      (event) => {
-        console.log('ID Generated: ', event);
-        setTimeout(() => navigate(routes.LOGIN), 1000);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
   };
 
   const handleModal = useCallback(() => {
@@ -124,9 +125,7 @@ export default function SignUp() {
   return (
     <S.Container>
       {isOpenModal && (
-        <SimpleModal onClickToggleModal={handleModal}>
-          회원가입이 완료되었습니다! 💖
-        </SimpleModal>
+        <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
       )}
       <Default>
         <S.LeftWrapper>
