@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { WrapperProps } from '../Footer/Footer.types';
+import { WrapperProps } from '../../Footer/Footer.types';
 
 export const ModalContainer = styled.div`
   width: 100%;

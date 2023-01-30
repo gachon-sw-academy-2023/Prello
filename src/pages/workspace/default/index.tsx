@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import * as S from './styles';
 import { useState, useCallback } from 'react';
-import CreateWorkspace from '../create';
+import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal';
 
 export default function WorkspaceDefault() {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -33,7 +33,7 @@ export default function WorkspaceDefault() {
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {isOpenModal && (
-        <CreateWorkspace onClickToggleModal={handleModal}></CreateWorkspace>
+        <CreateWorkspace setOpenModal={setOpenModal}></CreateWorkspace>
       )}
       <S.ContentsWrapper>
         <S.Wrapper>
