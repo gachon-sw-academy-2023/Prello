@@ -7,7 +7,8 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import * as S from './styles';
 import { useState, useCallback } from 'react';
-import InviteModal from '@/components/InviteModal/InviteModal';
+import InviteModal from '@/components/Modals/InviteModal/InviteModal';
+import { useNavigate } from 'react-router-dom';
 
 interface IMember {
   name: string;
@@ -72,12 +73,16 @@ let boards: IBoard[] = [
 ];
 
 export default function WorkspaceDetail() {
+  const navigate = useNavigate();
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
 
   const handleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
+  const handleNavigate = () => {
+    navigate('/workspace-setting');
+  };
   return (
     <S.Container>
       <Default>
@@ -90,11 +95,13 @@ export default function WorkspaceDetail() {
       <Mobile>
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
-      {isOpenModal && (
-        <InviteModal onClickToggleModal={handleModal}></InviteModal>
-      )}
+      {isOpenModal && <InviteModal setOpenModal={setOpenModal}></InviteModal>}
       <S.Wrapper>
-        <SideBar memberInfo={members} handleModal={handleModal} />
+        <SideBar
+          memberInfo={members}
+          onModal={handleModal}
+          onNavigate={handleNavigate}
+        />
         <S.RightContainer>
           <S.InfoContainer>
             <WorkspaceImg

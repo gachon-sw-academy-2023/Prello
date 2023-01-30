@@ -1,14 +1,11 @@
-import React, { PropsWithChildren, useState } from 'react';
-import * as S from './styles';
-import { styled } from '@mui/material/styles';
-import Chip from '@mui/material/Chip';
-import Paper from '@mui/material/Paper';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
+import Chip from '@mui/material/Chip';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import React, { useState } from 'react';
+import * as S from './CreateModal.style';
 
-interface ModalDefaultType {
-  onClickToggleModal: () => void;
-}
 interface ChipData {
   key: number;
   label: string;
@@ -28,6 +25,10 @@ export const CreateWorkspace = (props: any) => {
     { key: 4, label: 'test5@gmail.com' },
   ]);
 
+  const handleModal = () => {
+    props.setOpenModal(false);
+  };
+
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
@@ -43,7 +44,7 @@ export const CreateWorkspace = (props: any) => {
   };
 
   return (
-    <Modal size="lg" onClickToggleModal={() => props.setOpenModal(false)}>
+    <Modal size="lg" onClickToggleModal={handleModal}>
       <S.MainWrapper>
         <S.colWrapper ratio={15}>
           <div>임시</div>

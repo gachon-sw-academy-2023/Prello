@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import * as S from './styles';
 import { useState, useCallback } from 'react';
-import CreateWorkspace from '../create';
+import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal';
 
 export default function WorkspaceDefault() {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);

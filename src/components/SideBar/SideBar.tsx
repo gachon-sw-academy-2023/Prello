@@ -8,7 +8,7 @@ interface IMember {
   profile: string;
 }
 
-const SideBar = ({ memberInfo, handleModal }: SideBarProps) => {
+const SideBar = ({ memberInfo, onModal, onNavigate }: SideBarProps) => {
   return (
     <S.LeftContainer>
       <S.LeftContentNotHover>
@@ -32,7 +32,7 @@ const SideBar = ({ memberInfo, handleModal }: SideBarProps) => {
           height="xlg"
           color="empty"
           textColor="darkgray"
-          onClick={handleModal}
+          onClick={onModal}
         >
           Members
         </Button>
@@ -56,7 +56,14 @@ const SideBar = ({ memberInfo, handleModal }: SideBarProps) => {
           height={'20px'}
           img={'/assets/workspace/setting-icon.png'}
         ></S.Icon>
-        <SubTitle>Setting</SubTitle>
+        <Button
+          height="xlg"
+          color="empty"
+          textColor="darkgray"
+          onClick={onNavigate}
+        >
+          Setting
+        </Button>
       </S.LeftContent>
     </S.LeftContainer>
   );
