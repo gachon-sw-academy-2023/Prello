@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import DropDownMenu from '../DropDownMenu/dropDownMenu';
 import * as S from '../styles';
-import Tile from '../Tile/Tile';
+import Item from '../Item/Item';
 
 interface IBoardProps {
   title: string;
@@ -80,7 +80,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
             list={cards}
           >
             {cards.map((card: ICard) => (
-              <Tile key={card.id}>{card.text}</Tile>
+              <Item key={card.id}>{card.text}</Item>
             ))}
           </ReactSortable>
           {!showForm && (
@@ -126,7 +126,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
             list={cards}
           >
             {cards.map((card: ICard) => (
-              <Tile key={card.id}>{card.text}</Tile>
+              <Item key={card.id}>{card.text}</Item>
             ))}
           </ReactSortable>
           {!showForm && (

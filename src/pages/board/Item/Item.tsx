@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import Detail from '../Item/detail';
+import Detail from '../ItemModal/detail';
 import * as S from '../styles';
 
 interface ITileProps {
   children: React.ReactNode;
 }
 
-const Tile: React.FC<ITileProps> = ({ children }) => {
+const Item: React.FC<ITileProps> = ({ children }) => {
   const [open, setOpen] = useState(false);
   return (
     <S.Item onClick={() => setOpen(true)}>
@@ -16,4 +16,4 @@ const Tile: React.FC<ITileProps> = ({ children }) => {
   );
 };
 
-export default Tile;
+export default Item;
