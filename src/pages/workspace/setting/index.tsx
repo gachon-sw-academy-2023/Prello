@@ -6,7 +6,7 @@ import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { useState } from 'react';
-import Modal from './modal';
+import Modal from '@/components/Modal/Modal';
 import * as S from './styles';
 
 interface IMember {
