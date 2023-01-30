@@ -67,12 +67,14 @@ export const ListHeader = styled.div`
   justify-content: space-between;
   margin-bottom: 15px;
 
-  h1 {
+  input {
+    border: none;
     font-weight: bold;
-  }
-
-  span {
-    font-size: 10px;
+    font-size: 18px;
+    width: 80%;
+    ::placeholder {
+      font-size: 15px;
+    }
   }
 `;
 
@@ -135,4 +137,8 @@ export const AddListWrapper = styled(ListWrapper)`
 export const MobileAddListWrapper = styled(ListWrapper)`
   width: 350px;
   padding: 15px;
+`;
+
+export const MenuBtn = styled.div`
+  position: 'relative';
 `;

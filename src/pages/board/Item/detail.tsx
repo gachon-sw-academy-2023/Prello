@@ -1,21 +1,19 @@
-import dayjs, { Dayjs } from 'dayjs';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import * as S from './styles';
-import { useState } from 'react';
 import {
   Chip,
-  FormControl,
   InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
   SelectChangeEvent,
 } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs, { Dayjs } from 'dayjs';
+import { useState } from 'react';
+import * as S from './styles';
 export default function Detail() {
   const [value, setValue] = useState<Dayjs | null>(dayjs('2022-04-07'));
   const [personName, setPersonName] = useState<string[]>([]);
@@ -102,32 +100,23 @@ export default function Detail() {
         <S.Wrapper>
           <S.Comment>
             <S.CommentTitle>comments</S.CommentTitle>
-            <S.InputComment
-              placeholder="Type something here…"
-              minRows={3}
-              endDecorator={
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: 'var(--Textarea-paddingBlock)',
-                    pt: 'var(--Textarea-paddingBlock)',
-                    borderTop: '1px solid ',
-                    borderColor: 'rgba(0, 0, 0, 0.1)',
-                    flex: 'auto',
-                  }}
-                >
-                  <Button
-                    sx={{
-                      ml: 'auto',
-                      backgroundColor: '#fca4be',
-                      color: 'white',
-                    }}
-                  >
-                    Send
-                  </Button>
-                </Box>
-              }
-            />
+            <S.CommentWrapper>
+              <S.MyComment>
+                <S.ProfileImg />
+                <S.InputComment placeholder="Add a comment..." />
+              </S.MyComment>
+              <S.PostBtn>Post</S.PostBtn>
+            </S.CommentWrapper>
+            <S.MemberComment>
+              <S.ProfileImg />
+              <S.MemberCommentWrapper>
+                <h1>Member 1</h1>
+                <p>
+                  comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...
+                </p>
+              </S.MemberCommentWrapper>
+            </S.MemberComment>
+            <S.LoadBtn>Load More</S.LoadBtn>
           </S.Comment>
           <S.Info>
             <LocalizationProvider dateAdapter={AdapterDayjs}>

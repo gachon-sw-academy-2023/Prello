@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Chip, Textarea } from '@mui/joy';
+import { Chip } from '@mui/joy';
 
 export const Background = styled.div`
   width: 100vw;
@@ -48,7 +48,7 @@ export const ItemName = styled.span`
 `;
 
 export const Description = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 `;
 
 export const Wrapper = styled.div`
@@ -59,6 +59,7 @@ export const Wrapper = styled.div`
 
 export const Comment = styled.div`
   width: 70%;
+  margin-top: 25px;
 `;
 
 export const CommentTitle = styled.h1`
@@ -66,8 +67,74 @@ export const CommentTitle = styled.h1`
   font-weight: 600;
 `;
 
-export const InputComment = styled(Textarea)`
-  border: 2px solid #fca4be;
+export const CommentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const MyComment = styled.div`
+  display: flex;
+`;
+
+export const ProfileImg = styled.img`
+  content: url('/assets/workspace/sample-profile-image.png');
+  width: 7%;
+  height: 7%;
+  margin-right: 15px;
+`;
+
+export const InputComment = styled.textarea`
+  width: 90%;
+  height: 100px;
+  border: 1px solid rgba(45, 57, 76, 0.1);
+  resize: none;
+  padding: 20px;
+  :focus {
+    outline: none;
+  }
+`;
+
+export const MemberComment = styled.div`
+  display: flex;
+  margin-top: 25px;
+`;
+
+export const MemberCommentWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  word-break: keep-all;
+
+  h1 {
+    color: #385898;
+    font-weight: 600;
+  }
+
+  p {
+    width: 90%;
+    margin-top: 5px;
+    word-wrap: break-word;
+  }
+`;
+
+export const Btn = styled.button`
+  border-radius: 2px;
+  margin-top: 10px;
+  padding: 10px 20px;
+`;
+
+export const PostBtn = styled(Btn)`
+  background-color: #fca4be;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: 5px;
+  color: #ffffff;
+`;
+
+export const LoadBtn = styled(Btn)`
+  width: 100%;
+  background: #f1f2f3;
+  margin-top: 25px;
 `;
 
 export const Info = styled.div`

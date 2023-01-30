@@ -50,12 +50,11 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
       <Default>
         <S.ListWrapper draggable="true">
           <S.ListHeader>
-            <h1>{title}</h1>
-            <div
-              style={{
-                position: 'relative',
-              }}
-            >
+            <input
+              defaultValue={title}
+              placeholder={'카드 제목을 입력해주세요'}
+            />
+            <S.MenuBtn>
               <FontAwesomeIcon
                 icon={faEllipsis}
                 onClick={() => setShowMenu(!showMenu)}
@@ -66,7 +65,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
                   handleDeleteItems={handleDeleteItems}
                 />
               )}
-            </div>
+            </S.MenuBtn>
           </S.ListHeader>
           <ReactSortable
             className="itemWrapper"

@@ -21,7 +21,7 @@ export default function Board() {
       ...lists,
       {
         id: lists.length,
-        title: 'new list',
+        title: '',
       },
     ]);
   };
@@ -54,7 +54,6 @@ export default function Board() {
 
   return (
     <S.Container>
-      <Detail />
       <Default>
         <WithSearchBar
           divider={true}
