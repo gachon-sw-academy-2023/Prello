@@ -89,7 +89,7 @@ export default function Board() {
         <Mobile>
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
-              {lists.map((list) => (
+              {lists.map((list: ICard) => (
                 <List
                   title={list.title}
                   key={list.id}
