@@ -28,7 +28,6 @@ export const handlers = [
       users.find(({ email }) => email === req.body.email) !== undefined
         ? (isExist = true)
         : (isExist = false);
-      console.log(isExist);
     });
 
     if (isExist) {

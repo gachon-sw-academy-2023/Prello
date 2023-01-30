@@ -3,7 +3,6 @@ import routes from '@/routes';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
-import { text } from '@fortawesome/fontawesome-svg-core';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useIndexedDB } from 'react-indexed-db';
@@ -24,7 +23,6 @@ export default function SignUp() {
     useState<boolean>(true);
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(true);
 
-  const { add } = useIndexedDB('user');
   const navigate = useNavigate();
 
   function handleSubmit() {
@@ -35,6 +33,9 @@ export default function SignUp() {
       nicknameValidation
     ) {
       patchSignUp();
+    } else {
+      setModalText('입력 조건을 확인해주세요!');
+      handleModal();
     }
   }
 
@@ -164,6 +165,7 @@ export default function SignUp() {
               placeholder="Type here"
               onChange={handleChangeEmail}
               onBlur={emailInput}
+              data-testid="email"
             ></S.InputEmail>
             <S.Warning>
               <p hidden={emailValidation}>이메일 형식을 확인해주세요.</p>
@@ -174,6 +176,7 @@ export default function SignUp() {
               type="password"
               onChange={handleChangePassword}
               onBlur={pwdInput}
+              data-testid="password"
             ></S.InputPwd>
             <S.Warning>
               <p hidden={pwdValidation}>
@@ -186,6 +189,7 @@ export default function SignUp() {
               type="password"
               onChange={handleChangePasswordConfirm}
               onBlur={pwdConfirmInput}
+              data-testid="passwordConfirm"
             ></S.InputPwd>
             <S.Warning>
               <p hidden={pwdConfirmValidation}>
@@ -197,6 +201,7 @@ export default function SignUp() {
             <S.InputNickname
               type="text"
               onChange={handleChangeNickname}
+              data-testid="nickname"
             ></S.InputNickname>
             <S.Warning>
               <p hidden={nicknameValidation}>
@@ -210,6 +215,15 @@ export default function SignUp() {
               radius="circle"
               onClick={handleSubmit}
               width={160}
+              data-testid="submit"
+              disable={
+                !(
+                  email.length > 0 &&
+                  password.length > 0 &&
+                  passwordConfirm.length > 0 &&
+                  nickname.length > 0
+                )
+              }
             >
               Done
             </S.SubmitBtn>
