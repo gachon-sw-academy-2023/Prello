@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as S from './styles';
 
 interface IDropMenu {
@@ -12,6 +12,23 @@ const DropDownMenu: React.FC<IDropMenu> = ({
 }) => {
   const [visible, setVisible] = useState<boolean>(true);
 
+  const wrapperRef = useRef<any>();
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  });
+
+  const handleClickOutside = (event: any) => {
+    if (wrapperRef && !wrapperRef.current.contains(event.target)) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+  };
+
   const handleItemMenu = () => {
     handleHideMenu();
     handleDeleteItems();
@@ -21,7 +38,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
 
   return (
-    <S.Container>
+    <S.Container ref={wrapperRef}>
       {visible && (
         <ul>
           <li onClick={handleDeleteCard}>리스트 삭제</li>
