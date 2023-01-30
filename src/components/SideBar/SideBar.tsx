@@ -2,12 +2,13 @@ import * as S from './SideBar.styles';
 import { SideBarProps } from './SideBar.types';
 import SubTitle from '../SubTitle/SubTitle';
 import WorkspaceImg from '../WorkspaceImg/WorkspaceImg';
+import Button from '../Button/Button';
 interface IMember {
   name: string;
   profile: string;
 }
 
-const SideBar = ({ memberInfo }: SideBarProps) => {
+const SideBar = ({ memberInfo, handleModal }: SideBarProps) => {
   return (
     <S.LeftContainer>
       <S.LeftContentNotHover>
@@ -27,7 +28,14 @@ const SideBar = ({ memberInfo }: SideBarProps) => {
           height={'20px'}
           img={'/assets/workspace/user-icon.png'}
         ></S.Icon>
-        <SubTitle>Members</SubTitle>
+        <Button
+          height="xlg"
+          color="empty"
+          textColor="darkgray"
+          onClick={handleModal}
+        >
+          Members
+        </Button>
       </S.LeftContent>
       <S.MembersWrapper>
         {memberInfo.map((member: IMember) => (

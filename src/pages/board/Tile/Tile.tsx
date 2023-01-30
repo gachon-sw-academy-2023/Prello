@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Detail from './Item/detail';
-import * as S from './styles';
+import Detail from '../Item/detail';
+import * as S from '../styles';
 
 interface ITileProps {
   children: React.ReactNode;

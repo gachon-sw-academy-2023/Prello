@@ -2,16 +2,25 @@ import Button from '@/components/Button/Button';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
+import routes from '@/routes';
 import { userSelector } from '@/utils/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import * as S from './styles';
+import { useState, useCallback } from 'react';
+import CreateWorkspace from '../create';
+
 export default function WorkspaceDefault() {
-  const navigate = useNavigate();
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const user = useRecoilValue(userSelector);
-  console.log(user);
+  const navigate = useNavigate();
+
+  const handleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+
   return (
     <S.Container>
       <Default>
@@ -23,6 +32,9 @@ export default function WorkspaceDefault() {
       <Mobile>
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
+      {isOpenModal && (
+        <CreateWorkspace onClickToggleModal={handleModal}></CreateWorkspace>
+      )}
       <S.ContentsWrapper>
         <S.Wrapper>
           <S.Title>나의 워크스페이스</S.Title>
@@ -32,6 +44,9 @@ export default function WorkspaceDefault() {
               radius={'rounded'}
               color={'primary'}
               shadow={true}
+              onClick={() => {
+                handleModal();
+              }}
             >
               + 새로운 워크스페이스
             </Button>
@@ -42,6 +57,9 @@ export default function WorkspaceDefault() {
               radius={'rounded'}
               color={'primary'}
               shadow={true}
+              onClick={() => {
+                handleModal();
+              }}
             >
               + 새로운 워크스페이스
             </Button>

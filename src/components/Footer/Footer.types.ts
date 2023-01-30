@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 export type WrapperProps = {
-  ratio: number;
+  ratio?: number;
 };
 
 export type FooterImageProps = {
