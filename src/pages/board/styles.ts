@@ -7,7 +7,8 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   padding-top: 65px;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 50px;
 `;
 
 export const MobileRightWrapper = styled.div`
@@ -18,6 +19,7 @@ export const MobileRightWrapper = styled.div`
 `;
 
 export const ListContainer = styled.div`
+  margin-left: 250px;
   display: flex;
 `;
 export const ListMobileContiner = styled.div`
