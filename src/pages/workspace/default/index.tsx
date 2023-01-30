@@ -33,7 +33,7 @@ export default function WorkspaceDefault() {
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {isOpenModal && (
-        <CreateWorkspace onClickToggleModal={handleModal}></CreateWorkspace>
+        <CreateWorkspace setOpenModal={setOpenModal}></CreateWorkspace>
       )}
       <S.ContentsWrapper>
         <S.Wrapper>
