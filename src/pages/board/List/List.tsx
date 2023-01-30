@@ -23,16 +23,18 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
   const [text, setText] = useState<string>('');
   const [cards, setCards] = useState<ICard[]>([]);
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = (e: { target: any; preventDefault: () => void }) => {
     e.preventDefault();
 
-    const card = {
-      id: cards.length + 1,
-      text,
-    };
+    if (text.length !== 0) {
+      const card = {
+        id: cards.length + 1,
+        text,
+      };
 
-    setCards([...cards, card]);
-    setText('');
+      setCards([...cards, card]);
+      setText('');
+    }
   };
 
   const handleDeleteItems = () => {
@@ -92,11 +94,14 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
               <S.FormInput
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                placeholder="아이템 입력하기"
               />
-              <button type="submit">✅</button>
-              <button type="submit" onClick={() => handleCancel()}>
-                ⛔
-              </button>
+              <S.BtnWrapper>
+                <button type="submit">Add Item</button>
+                <button type="submit" onClick={() => handleCancel()}>
+                  Cancel
+                </button>
+              </S.BtnWrapper>
             </S.Form>
           )}
         </S.ListWrapper>
@@ -135,11 +140,14 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
               <S.FormInput
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                placeholder="아이템 입력하기"
               />
-              <button type="submit">✅</button>
-              <button type="submit" onClick={() => setShowForm(false)}>
-                ⛔
-              </button>
+              <S.BtnWrapper>
+                <button type="submit">✅</button>
+                <button type="submit" onClick={() => setShowForm(false)}>
+                  ⛔
+                </button>
+              </S.BtnWrapper>
             </S.Form>
           )}
         </S.MobileListWrapper>

@@ -3,9 +3,8 @@ import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
-import Detail from './Item/detail';
 import List from './List/List';
 import * as S from './styles';
 
