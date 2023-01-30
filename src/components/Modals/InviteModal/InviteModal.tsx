@@ -1,6 +1,11 @@
+import SubTitle from '@/components/SubTitle/SubTitle';
 import { useState } from 'react';
-import Button from '../../Button/Button';
 import Modal from '../../Modal/Modal';
+import {
+  DeleteButton,
+  EmptyBox,
+  RoundInput,
+} from '../DeleteModal/DeleteModal.styles';
 import * as S from './InviteModal.styles';
 
 export default function InviteModal(props: any) {
@@ -15,7 +20,8 @@ export default function InviteModal(props: any) {
   return (
     <Modal onClickToggleModal={handleModal}>
       <S.RowWrapper ratio={20}>
-        <h1>초대할 팀원의 이메일을 적어주세요.</h1>
+        <SubTitle size="md">초대할 팀원의 이메일을 적어주세요.</SubTitle>
+        <EmptyBox />
       </S.RowWrapper>
       <S.RowWrapper>
         <S.TextWrapper>
@@ -26,26 +32,26 @@ export default function InviteModal(props: any) {
           <S.StyledText>pimfy@gmail.com</S.StyledText>
           <S.StyledTextRight>이메일 발송 완료</S.StyledTextRight>
         </S.TextWrapper>
+        <EmptyBox />
       </S.RowWrapper>
       <S.RowWrapper>
-        <S.StyledInput
+        <RoundInput
           type="text"
           value={email}
           placeholder="이메일"
           onChange={handleChangeEmail}
-        ></S.StyledInput>
+        ></RoundInput>
+        <EmptyBox />
       </S.RowWrapper>
-      <S.RowWrapper ratio={20}>
-        <Button
-          height="lg"
-          width={225}
-          radius={'rounded'}
-          color={'primary'}
-          shadow={true}
-        >
-          워크스페이스 생성
-        </Button>
-      </S.RowWrapper>
+      <DeleteButton
+        shadow={true}
+        color="primary"
+        height="md"
+        width={0}
+        onClick={handleModal}
+      >
+        초대하기
+      </DeleteButton>
     </Modal>
   );
 }
