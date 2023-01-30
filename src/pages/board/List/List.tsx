@@ -2,11 +2,14 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import * as S from './styles';
-import Tile from './Tile';
+import { ReactSortable } from 'react-sortablejs';
+import DropDownMenu from '../DropDownMenu/dropDownMenu';
+import * as S from '../styles';
+import Tile from '../Tile/Tile';
 
 interface IBoardProps {
   title: string;
+  handleDeleteCard: (e: any) => void;
 }
 
 interface ICard {
@@ -14,8 +17,9 @@ interface ICard {
   text: string;
 }
 
-const Board: React.FC<IBoardProps> = ({ title }) => {
-  const [showForm, setShowForm] = useState(false);
+const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const [cards, setCards] = useState<ICard[]>([]);
 
@@ -31,17 +35,41 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
     setText('');
   };
 
+  const handleDeleteItems = () => {
+    setCards([]);
+    setShowForm(false);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setText('');
+  };
+
   return (
     <div>
       <Default>
         <S.ListWrapper draggable="true">
           <S.ListHeader>
             <h1>{title}</h1>
-            <span>
-              <FontAwesomeIcon icon={faEllipsis} />
-            </span>
+            <div
+              style={{
+                position: 'relative',
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faEllipsis}
+                onClick={() => setShowMenu(!showMenu)}
+              />
+              {showMenu && (
+                <DropDownMenu
+                  handleDeleteCard={handleDeleteCard}
+                  handleDeleteItems={handleDeleteItems}
+                />
+              )}
+            </div>
           </S.ListHeader>
-          <S.ItemWrapper
+          <ReactSortable
+            className="itemWrapper"
             group="shared"
             animation={200}
             delay={1}
@@ -53,7 +81,7 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
             {cards.map((card: ICard) => (
               <Tile key={card.id}>{card.text}</Tile>
             ))}
-          </S.ItemWrapper>
+          </ReactSortable>
           {!showForm && (
             <S.AddBtn onClick={() => setShowForm(true)}>
               <span>+</span>
@@ -67,7 +95,7 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
                 onChange={(e) => setText(e.target.value)}
               />
               <button type="submit">✅</button>
-              <button type="submit" onClick={() => setShowForm(false)}>
+              <button type="submit" onClick={() => handleCancel()}>
                 ⛔
               </button>
             </S.Form>
@@ -83,7 +111,8 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
               <FontAwesomeIcon icon={faEllipsis} />
             </span>
           </S.ListHeader>
-          <S.ItemWrapper
+          <ReactSortable
+            className="itemWrapper"
             group="shared"
             animation={200}
             delay={1}
@@ -95,7 +124,7 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
             {cards.map((card: ICard) => (
               <Tile key={card.id}>{card.text}</Tile>
             ))}
-          </S.ItemWrapper>
+          </ReactSortable>
           {!showForm && (
             <S.AddBtn onClick={() => setShowForm(true)}>
               <span>+</span>
@@ -120,4 +149,4 @@ const Board: React.FC<IBoardProps> = ({ title }) => {
   );
 };
 
-export default Board;
+export default List;

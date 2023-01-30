@@ -3,10 +3,15 @@ import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
-import List from './Board';
+import List from './List/List';
 import * as S from './styles';
+
+interface ICard {
+  id: number;
+  title: string;
+}
 
 export default function Board() {
   const [member, setMember] = useState([]);
@@ -26,18 +31,25 @@ export default function Board() {
       .then((res) => setMember(res.data));
   }, []);
 
-  const [lists, setLists] = useState([
+  useEffect(() => {
+    const columns = document.querySelectorAll('.column');
+    columns.forEach((column: any) => {
+      new Sortable(column, {
+        animation: 150,
+        ghostClass: 'blue-background-class',
+      });
+    });
+  });
+
+  const [lists, setLists] = useState<ICard[]>([
     { id: 1, title: 'todo' },
     { id: 2, title: 'done' },
   ]);
 
-  const columns = document.querySelectorAll('.column');
-  columns.forEach((column: any) => {
-    new Sortable(column, {
-      animation: 150,
-      ghostClass: 'blue-background-class',
-    });
-  });
+  const handleDeleteCard = (e: any) => {
+    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.style.display =
+      'none';
+  };
 
   return (
     <S.Container>
@@ -60,8 +72,12 @@ export default function Board() {
         <Default>
           <S.RightWrapper>
             <S.ListContainer className="column">
-              {lists.map((list) => (
-                <List draggable="true" title={list.title} key={list.id} />
+              {lists.map((list: ICard) => (
+                <List
+                  title={list.title}
+                  key={list.id}
+                  handleDeleteCard={handleDeleteCard}
+                />
               ))}
             </S.ListContainer>
             <S.AddListWrapper onClick={handleAddList}>
@@ -74,7 +90,11 @@ export default function Board() {
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
               {lists.map((list) => (
-                <List draggable="true" title={list.title} key={list.id} />
+                <List
+                  title={list.title}
+                  key={list.id}
+                  handleDeleteCard={handleDeleteCard}
+                />
               ))}
             </S.ListMobileContiner>
             <S.MobileAddListWrapper onClick={handleAddList}>
