@@ -19,6 +19,7 @@ function Login() {
   const [pwdValidation, setPwdValidation] = useState<boolean>(true);
   const [user, setUser] = useRecoilState(userSelector);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [modalText, setModalText] = useState<string>('');
 
   const navigate = useNavigate();
   const { getByIndex } = useIndexedDB('user');
@@ -52,28 +53,28 @@ function Login() {
   };
 
   const patchLogin = async () => {
+    const data = {
+      email: email,
+      password: password,
+    };
     try {
-      const response = await axios.post('/login');
+      const response = await axios.post('/login', data);
+      console.log(response);
       if (response.status === 200) {
-        setLogin(true);
-        handleLogin();
+        setModalText('로그인이 완료되었습니다! 💖');
         handleModal();
+        navigate(routes.MAIN);
       }
     } catch (error: any) {
-      console.log(error);
+      if (error.response.status === 400) {
+        setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
+        handleModal();
+      }
+      if (error.response.status === 401) {
+        setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
+        handleModal();
+      }
     }
-  };
-
-  const handleLogin = () => {
-    getByIndex('email', email).then(
-      (personFromDB) => {
-        setUser(personFromDB);
-        setTimeout(() => navigate(routes.MAIN), 1000);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
   };
 
   const handleModal = useCallback(() => {
@@ -83,9 +84,7 @@ function Login() {
   return (
     <S.Container>
       {isOpenModal && (
-        <SimpleModal onClickToggleModal={handleModal}>
-          로그인이 완료되었습니다! 💖
-        </SimpleModal>
+        <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
       )}
       <Default>
         <S.LeftWrapper>
