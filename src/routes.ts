@@ -1,4 +1,4 @@
-const routes = {
+const ROUTES = {
   MAIN: '/',
   LOGIN: '/login',
   SIGNUP: '/sign-up',
@@ -8,4 +8,4 @@ const routes = {
   CREATEWORKSPACE: '/create-workspace',
   WORKSPACESETTING: '/workspace-setting',
 };
-export default routes;
+export default ROUTES;

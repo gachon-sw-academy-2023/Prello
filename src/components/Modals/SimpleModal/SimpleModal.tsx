@@ -8,9 +8,7 @@ function SimpleModal({
   children,
 }: PropsWithChildren<SimpleModalProps>) {
   setTimeout(() => {
-    if (onClickToggleModal) {
-      onClickToggleModal();
-    }
+    onClickToggleModal?.();
   }, 2000);
   return (
     <S.ModalContainer>
