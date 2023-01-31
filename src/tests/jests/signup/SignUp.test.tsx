@@ -62,7 +62,32 @@ describe('SignUp Test', () => {
     expect((nickname as HTMLInputElement).value).toBe('pimfy');
   });
 
-  it('Button Enable/Disable Test', async () => {
+  it('Button Enable Test', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <BrowserRouter>
+        <RecoilRoot>
+          <SignUp></SignUp>
+        </RecoilRoot>
+      </BrowserRouter>,
+    );
+
+    const email = screen.getByTestId('email');
+    const password = screen.getByTestId('password');
+    const passwordConfirm = screen.getByTestId('passwordConfirm');
+    const nickname = screen.getByTestId('nickname');
+    const submit = screen.getByTestId('submit');
+
+    await user.type(email, 'test@gmail.com');
+    await user.type(password, 'Qwer1234!');
+    await user.type(passwordConfirm, 'Qwer1234!');
+    await user.type(nickname, 'pimfy');
+
+    expect(submit).toBeEnabled();
+  });
+
+  it('Button Disable Test', async () => {
     const user = userEvent.setup();
 
     render(
@@ -86,7 +111,20 @@ describe('SignUp Test', () => {
     await user.type(passwordConfirm, 'Qwer1234!');
     await user.type(nickname, 'pimfy');
 
-    expect(submit).toBeEnabled();
+    await user.clear(email);
+    expect(submit).toBeDisabled();
+
+    await user.type(email, 'test@gmail.com');
+    await user.clear(password);
+    expect(submit).toBeDisabled();
+
+    await user.type(password, 'Qwer1234!');
+    await user.clear(passwordConfirm);
+    expect(submit).toBeDisabled();
+
+    await user.type(passwordConfirm, 'Qwer1234!');
+    await user.clear(nickname);
+    expect(submit).toBeDisabled();
   });
 
   it('Button Click Test', async () => {
