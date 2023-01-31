@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
+import memberList from './data/getMemberData.json';
 const { getAll } = useIndexedDB('user');
 
 export const handlers = [
@@ -16,6 +17,7 @@ export const handlers = [
       ]),
     );
   }),
+
   rest.post('/login', (req, res, ctx) => {
     return res(ctx.status(200), ctx.cookie('auth-token', 'tokenIsHere'));
   }),

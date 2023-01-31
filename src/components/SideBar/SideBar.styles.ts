@@ -39,6 +39,7 @@ export const LeftContainer = styled.div`
   max-height: 100vh;
   padding: 20px 30px;
   position: fixed;
+  background: #f5f5f5;
 `;
 export const LeftContent = styled.div`
   display: flex;

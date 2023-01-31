@@ -16,19 +16,17 @@ interface ICard {
 export default function Board() {
   const [member, setMember] = useState([]);
   const handleAddList = () => {
-    setLists([
-      ...lists,
-      {
-        id: lists.length,
+    axios
+      .post('/list', {
+        id: lists.length + 1,
         title: '',
-      },
-    ]);
+      })
+      .then((res) => setLists(res.data));
   };
 
   useEffect(() => {
-    axios
-      .get('https://pimfy-prello.netlify.app/getMemberData.json')
-      .then((res) => setMember(res.data));
+    axios.get('/members').then((res) => setMember(res.data));
+    axios.get('/list').then((res) => setLists(res.data));
   }, []);
 
   useEffect(() => {
@@ -41,10 +39,7 @@ export default function Board() {
     });
   });
 
-  const [lists, setLists] = useState<ICard[]>([
-    { id: 1, title: 'todo' },
-    { id: 2, title: 'done' },
-  ]);
+  const [lists, setLists] = useState<ICard[]>([]);
 
   const handleDeleteCard = (e: any) => {
     e.target.parentElement.parentElement.parentElement.parentElement.parentElement.style.display =
