@@ -3,7 +3,7 @@ import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import routes from '@/routes';
-import { userSelector } from '@/utils/atom/userSelector';
+import { userSelector } from '@/recoil/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';

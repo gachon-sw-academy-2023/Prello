@@ -9,7 +9,7 @@ import introduce2 from '/assets/images/main/introduce2-temp.png';
 import introduce3 from '/assets/images/main/introduce3-temp.png';
 import introduce4 from '/assets/images/main/introduce4-temp.png';
 import { useRecoilState } from 'recoil';
-import { userSelector } from '@/utils/atom/userSelector';
+import { userSelector } from '@/recoil/atom/userSelector';
 import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 

@@ -1,4 +1,4 @@
-import { IUser } from '@/utils/atom/user';
+import { IUser } from '@/recoil/atom/user';
 import { HTMLAttributes } from 'react';
 
 export interface HeaderProps extends HTMLAttributes<HTMLDivElement> {

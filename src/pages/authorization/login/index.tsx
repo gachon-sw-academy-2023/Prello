@@ -1,6 +1,6 @@
 import SimpleModal from '@/components/SimpleModal/SimpleModal';
 import routes from '@/routes';
-import { userSelector } from '@/utils/atom/userSelector';
+import { userSelector } from '@/recoil/atom/userSelector';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import { Default, Mobile } from '@/utils/mediaQuery';

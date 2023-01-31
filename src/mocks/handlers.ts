@@ -35,4 +35,10 @@ export const handlers = [
 
     return res(ctx.status(200), ctx.json({ message: 'SignUp Success!' }));
   }),
+  rest.post('/workspace/create', async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({ message: '워크스페이스 생성 완료' }),
+    );
+  }),
 ];
