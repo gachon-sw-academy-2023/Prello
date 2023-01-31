@@ -6,6 +6,8 @@ import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import * as S from './CreateModal.style';
 import axios from 'axios';
+import { userSelector } from '@/recoil/atom/userSelector';
+import { useRecoilState } from 'recoil';
 
 interface ChipData {
   key: number;
@@ -16,6 +18,8 @@ const ListItem = styled('li')(({ theme }) => ({
 }));
 
 export const CreateWorkspace = (props: any) => {
+  const [user, setUser] = useRecoilState(userSelector);
+  console.log(user.email);
   const [name, setName] = useState<string>('');
   const [summary, setSummary] = useState<string>('');
   const [newEmail, setNewEmail] = useState<string>('');
@@ -53,14 +57,20 @@ export const CreateWorkspace = (props: any) => {
   };
 
   const handleCreate = () => {
-    if (name !== '' && summary !== '') {
+    if (name !== '' && summary !== '' && emailList.length > 0) {
       patchCreate();
     }
   };
 
   const patchCreate = async () => {
+    let info = {
+      owner: 'test@gmail.com', //recoil-persist 변경 필요
+      name: name,
+      summary: summary,
+      memberInfo: emailList,
+    };
     try {
-      const response = await axios.post('/workspace/create');
+      const response = await axios.post('/workspace/create', info);
       if (response.status === 200) {
         props.setOpenModal(false);
       }

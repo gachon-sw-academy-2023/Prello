@@ -1,7 +1,6 @@
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
 const { getAll, add } = useIndexedDB('user');
-
 export const handlers = [
   rest.get('/user', (req, res, ctx) => {
     return res(
@@ -21,7 +20,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.cookie('auth-token', 'tokenIsHere'));
   }),
 
-  rest.post('/sign-up', async (req, res, ctx) => {
+  rest.post('/sign-up', async (req: any, res, ctx) => {
     let isExist;
     await getAll().then((users) => {
       console.log(users.find(({ email }) => email === req.body.email));
@@ -43,11 +42,5 @@ export const handlers = [
         );
       }
     }
-  }),
-  rest.post('/workspace/create', async (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({ message: '워크스페이스 생성 완료' }),
-    );
   }),
 ];
