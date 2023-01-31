@@ -62,7 +62,7 @@ function Login() {
       if (response.status === 200) {
         setModalText('로그인이 완료되었습니다! 💖');
         handleModal();
-        navigate(routes.MAIN);
+        setTimeout(() => navigate(routes.MAIN), 1000);
       }
     } catch (error: any) {
       if (error.response.status === 400) {
