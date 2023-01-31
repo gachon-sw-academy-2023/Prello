@@ -5,7 +5,6 @@ import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
-import { useIndexedDB } from 'react-indexed-db';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
@@ -16,13 +15,13 @@ export default function SignUp() {
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [modalText, setModalText] = useState<string>('');
   const [emailValidation, setEmailValidation] = useState<boolean>(true);
   const [pwdValidation, setPwdValidation] = useState<boolean>(true);
   const [pwdConfirmValidation, setPwdConfirmValidation] =
     useState<boolean>(true);
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(true);
 
-  const { add } = useIndexedDB('user');
   const navigate = useNavigate();
 
   function handleSubmit() {
@@ -33,36 +32,38 @@ export default function SignUp() {
       nicknameValidation
     ) {
       patchSignUp();
+    } else {
+      setModalText('입력 조건을 확인해주세요!');
+      handleModal();
     }
   }
 
   const patchSignUp = async () => {
+    const user = {
+      email: email,
+      password: password,
+      nickname: nickname,
+    };
+
     try {
-      const response = await axios.post('/sign-up', email);
+      const response = await axios.post('/sign-up', user);
       if (response.status === 200) {
-        handleSignUp();
-        console.log(response.data.message);
+        setModalText('회원가입이 완료되었습니다! 💖');
         handleModal();
+        setTimeout(() => navigate(routes.LOGIN), 1000);
       }
     } catch (error: any) {
       if (error.response.status === 409) {
         console.log(error.response.data.message);
-
-        /* TODO:  모달창으로 이메일 중복 알림 및 처리*/
+        setModalText('중복된 이메일입니다! 다른 이메일로 가입해 주세요! ✋');
+        handleModal();
+      }
+      if (error.response.status === 500) {
+        console.log(error.response.data.message);
+        setModalText('오류가 발생했습니다. 다시 시도해 주세요!');
+        handleModal();
       }
     }
-  };
-
-  const handleSignUp = () => {
-    add({ email: email, password: password, nickname: nickname }).then(
-      (event) => {
-        console.log('ID Generated: ', event);
-        setTimeout(() => navigate(routes.LOGIN), 1000);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
   };
 
   const handleModal = useCallback(() => {
@@ -124,9 +125,7 @@ export default function SignUp() {
   return (
     <S.Container>
       {isOpenModal && (
-        <SimpleModal onClickToggleModal={handleModal}>
-          회원가입이 완료되었습니다! 💖
-        </SimpleModal>
+        <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
       )}
       <Default>
         <S.LeftWrapper>
@@ -165,6 +164,7 @@ export default function SignUp() {
               placeholder="Type here"
               onChange={handleChangeEmail}
               onBlur={emailInput}
+              data-testid="email"
             ></S.InputEmail>
             <S.Warning>
               <p hidden={emailValidation}>이메일 형식을 확인해주세요.</p>
@@ -173,8 +173,10 @@ export default function SignUp() {
             <label>Password</label>
             <S.InputPwd
               type="password"
+              placeholder="Type here"
               onChange={handleChangePassword}
               onBlur={pwdInput}
+              data-testid="password"
             ></S.InputPwd>
             <S.Warning>
               <p hidden={pwdValidation}>
@@ -185,8 +187,10 @@ export default function SignUp() {
             <label>Password Confirm</label>
             <S.InputPwd
               type="password"
+              placeholder="Type here"
               onChange={handleChangePasswordConfirm}
               onBlur={pwdConfirmInput}
+              data-testid="passwordConfirm"
             ></S.InputPwd>
             <S.Warning>
               <p hidden={pwdConfirmValidation}>
@@ -197,7 +201,9 @@ export default function SignUp() {
             <label>Nickname</label>
             <S.InputNickname
               type="text"
+              placeholder="Type here"
               onChange={handleChangeNickname}
+              data-testid="nickname"
             ></S.InputNickname>
             <S.Warning>
               <p hidden={nicknameValidation}>
@@ -211,6 +217,15 @@ export default function SignUp() {
               radius="circle"
               onClick={handleSubmit}
               width={160}
+              data-testid="submit"
+              disable={
+                !(
+                  email.length > 0 &&
+                  password.length > 0 &&
+                  passwordConfirm.length > 0 &&
+                  nickname.length > 0
+                )
+              }
             >
               Done
             </S.SubmitBtn>

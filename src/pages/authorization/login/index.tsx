@@ -133,6 +133,7 @@ function Login() {
             <S.InputPwd
               type="password"
               value={password}
+              placeholder="Type here"
               onChange={handleChangePassword}
               onBlur={pwdInput}
               required
