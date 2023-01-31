@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import * as S from './CreateModal.style';
+import axios from 'axios';
 
 interface ChipData {
   key: number;
@@ -17,6 +18,8 @@ const ListItem = styled('li')(({ theme }) => ({
 export const CreateWorkspace = (props: any) => {
   const [name, setName] = useState<string>('');
   const [summary, setSummary] = useState<string>('');
+  const [newEmail, setNewEmail] = useState<string>('');
+  const [emailList, setEmailList] = useState<string[]>([]);
   const [chipData, setChipData] = useState<readonly ChipData[]>([
     { key: 0, label: 'test@gmail.com' },
     { key: 1, label: 'test2@gmail.com' },
@@ -28,19 +31,42 @@ export const CreateWorkspace = (props: any) => {
   const handleModal = () => {
     props.setOpenModal(false);
   };
-
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-
   const handleChangeSummary = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSummary(e.target.value);
   };
-
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewEmail(e.target.value);
+  };
+  const handleInvite = () => {
+    if (newEmail !== '' && !emailList.includes(newEmail)) {
+      setEmailList(emailList.concat(newEmail));
+      setNewEmail('');
+    }
+  };
   const handleDelete = (chipToDelete: ChipData) => () => {
     setChipData((chips) =>
       chips.filter((chip) => chip.key !== chipToDelete.key),
     );
+  };
+
+  const handleCreate = () => {
+    if (name !== '' && summary !== '') {
+      patchCreate();
+    }
+  };
+
+  const patchCreate = async () => {
+    try {
+      const response = await axios.post('/workspace/create');
+      if (response.status === 200) {
+        props.setOpenModal(false);
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
@@ -73,8 +99,12 @@ export const CreateWorkspace = (props: any) => {
           초대할 팀원의 이메일을 적어주세요.
         </S.StyledText>
         <S.InviteWrapper>
-          <S.StyledEmailInput></S.StyledEmailInput>
-          <S.InviteBtn>초대 이메일 전송</S.InviteBtn>
+          <S.StyledEmailInput
+            type="text"
+            value={newEmail}
+            onChange={handleChangeEmail}
+          ></S.StyledEmailInput>
+          <S.InviteBtn onClick={handleInvite}>초대 이메일 전송</S.InviteBtn>
         </S.InviteWrapper>
         <Paper
           elevation={0}
@@ -86,20 +116,26 @@ export const CreateWorkspace = (props: any) => {
             m: 0,
           }}
         >
-          {chipData.map((data) => {
+          {emailList.map((data) => {
             return (
-              <ListItem key={data.key}>
+              <ListItem key={data}>
                 <Chip
                   sx={{ backgroundColor: '#E9F8F9', p: 1 }}
-                  label={data.label}
-                  onDelete={handleDelete(data)}
+                  label={data}
+                  // onDelete={handleDelete(data)}
                 />
               </ListItem>
             );
           })}
         </Paper>
         <S.BtnWrapper>
-          <Button width={50} radius={'rounded'} color={'primary'} shadow={true}>
+          <Button
+            width={50}
+            radius={'rounded'}
+            color={'primary'}
+            shadow={true}
+            onClick={handleCreate}
+          >
             워크스페이스 생성
           </Button>
         </S.BtnWrapper>
