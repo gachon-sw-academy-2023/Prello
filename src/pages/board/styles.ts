@@ -155,3 +155,9 @@ export const BtnWrapper = styled.div`
     margin-left: 15px;
   }
 `;
+
+export const ItemContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;

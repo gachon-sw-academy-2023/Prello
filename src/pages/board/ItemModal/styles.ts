@@ -1,27 +1,8 @@
 import styled from '@emotion/styled';
 import { Chip } from '@mui/joy';
 
-export const Background = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
-export const Modal = styled.div`
-  background-color: white;
-  position: fixed;
-  top: 10%;
-  left: 15%;
-  width: 70%;
-  height: 80%;
-  padding: 80px;
-`;
-
 export const Title = styled.div`
+  width: 100%;
   height: 20%;
 `;
 
@@ -48,7 +29,7 @@ export const ItemName = styled.span`
 `;
 
 export const Description = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 `;
 
 export const Wrapper = styled.div`
@@ -140,7 +121,7 @@ export const LoadBtn = styled(Btn)`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 15px;
+  padding-top: 40px;
   margin-left: 25px;
   width: 30%;
 `;
