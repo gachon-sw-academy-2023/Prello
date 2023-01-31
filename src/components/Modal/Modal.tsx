@@ -1,13 +1,12 @@
-import React, { PropsWithChildren } from 'react';
-import * as S from './modal.styles';
-interface ModalDefaultType {
-  onClickToggleModal: () => void;
-}
+import { PropsWithChildren } from 'react';
+import * as S from './Modal.style';
+import { ModalProps } from './Modal.types';
 
 function Modal({
   onClickToggleModal,
+  size = 'md',
   children,
-}: PropsWithChildren<ModalDefaultType>) {
+}: PropsWithChildren<ModalProps>) {
   function handleClick(e: React.MouseEvent) {
     e.preventDefault();
 
@@ -17,7 +16,7 @@ function Modal({
   }
   return (
     <S.ModalContainer>
-      <S.DialogBox>
+      <S.DialogBox size={size}>
         <S.CloseButton onClick={handleClick}>✖</S.CloseButton>
         {children}
       </S.DialogBox>
@@ -25,4 +24,5 @@ function Modal({
     </S.ModalContainer>
   );
 }
+
 export default Modal;

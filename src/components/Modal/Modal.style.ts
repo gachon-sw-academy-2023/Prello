@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { style } from '@mui/system';
+import { css } from '@emotion/react';
+import { ModalProps } from './Modal.types';
 
 export const ModalContainer = styled.div`
   width: 100%;
@@ -10,9 +11,7 @@ export const ModalContainer = styled.div`
   position: fixed;
   z-index: 100;
 `;
-
-export const DialogBox = styled.dialog`
-  width: 40%;
+export const DialogBox = styled.dialog<ModalProps>`
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -23,20 +22,31 @@ export const DialogBox = styled.dialog`
   box-sizing: border-box;
   background-color: white;
   z-index: 10000;
+  ${({ size }) =>
+    size === 'sm'
+      ? css`
+          width: 25%;
+        `
+      : size === 'md'
+      ? css`
+          width: 40%;
+        `
+      : css`
+          width: 50%;
+        `}
 `;
-
 export const CloseButton = styled.button`
   width: 30px;
   height: 30px;
-  position: fixed;
-  right: 31%;
+  position: absolute;
+  right: 16px;
   background-color: #fca4be;
   border-radius: 100px;
   font-size: 16px;
   font-family: 'LINESeedKR-Rg';
   color: white;
+  border: none;
 `;
-
 export const Backdrop = styled.div`
   width: 100vw;
   height: 100vh;

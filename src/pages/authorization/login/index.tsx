@@ -1,4 +1,4 @@
-import SimpleModal from '@/components/SimpleModal/SimpleModal';
+import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
 import routes from '@/routes';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { emailRegex } from '@/utils/checkEmail';
