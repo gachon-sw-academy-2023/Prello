@@ -89,7 +89,7 @@ describe('SignUp Test', () => {
     expect(submit).toBeEnabled();
   });
 
-  it('Mocking Test', async () => {
+  it('Button Click Test', async () => {
     const user = userEvent.setup();
 
     render(
@@ -106,12 +106,11 @@ describe('SignUp Test', () => {
     const nickname = screen.getByTestId('nickname');
     const submit = screen.getByTestId('submit');
 
-    await user.type(email, 'asdfghjklh@gmail.com');
+    await user.type(email, 'test@gmail.com');
     await user.type(password, 'Qwer1234!');
     await user.type(passwordConfirm, 'Qwer1234!');
     await user.type(nickname, 'pimfy');
 
-    await user.click(submit);
-    // await waitFor(() => screen.getByText('회원가입이 완료되었습니다! 💖.'));
+    user.click(submit);
   });
 });

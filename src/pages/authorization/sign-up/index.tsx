@@ -5,7 +5,6 @@ import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
-import { useIndexedDB } from 'react-indexed-db';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
@@ -40,7 +39,7 @@ export default function SignUp() {
   }
 
   const patchSignUp = async () => {
-    let user = {
+    const user = {
       email: email,
       password: password,
       nickname: nickname,
@@ -125,13 +124,9 @@ export default function SignUp() {
 
   return (
     <S.Container>
-      <div data-testid="modal">
-        {isOpenModal && (
-          <SimpleModal onClickToggleModal={handleModal}>
-            {modalText}
-          </SimpleModal>
-        )}
-      </div>
+      {isOpenModal && (
+        <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
+      )}
       <Default>
         <S.LeftWrapper>
           <S.CoverImg />
