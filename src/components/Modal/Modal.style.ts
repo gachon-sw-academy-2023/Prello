@@ -35,7 +35,7 @@ export const DialogBox = styled.dialog<ModalProps>`
         `
       : css`
           width: 60%;
-          padding: 50px 50px;
+          padding: 40px 50px;
         `}
 `;
 export const CloseButton = styled.button<ModalProps>`
@@ -45,7 +45,7 @@ export const CloseButton = styled.button<ModalProps>`
   ${({ size }) =>
     size === 'lg'
       ? css`
-          right: 6%;
+          right: 4%;
         `
       : css`
           right: 16px;
