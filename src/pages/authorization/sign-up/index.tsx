@@ -125,9 +125,13 @@ export default function SignUp() {
 
   return (
     <S.Container>
-      {isOpenModal && (
-        <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
-      )}
+      <div data-testid="modal">
+        {isOpenModal && (
+          <SimpleModal onClickToggleModal={handleModal}>
+            {modalText}
+          </SimpleModal>
+        )}
+      </div>
       <Default>
         <S.LeftWrapper>
           <S.CoverImg />
@@ -174,6 +178,7 @@ export default function SignUp() {
             <label>Password</label>
             <S.InputPwd
               type="password"
+              placeholder="Type here"
               onChange={handleChangePassword}
               onBlur={pwdInput}
               data-testid="password"
@@ -187,6 +192,7 @@ export default function SignUp() {
             <label>Password Confirm</label>
             <S.InputPwd
               type="password"
+              placeholder="Type here"
               onChange={handleChangePasswordConfirm}
               onBlur={pwdConfirmInput}
               data-testid="passwordConfirm"
@@ -200,6 +206,7 @@ export default function SignUp() {
             <label>Nickname</label>
             <S.InputNickname
               type="text"
+              placeholder="Type here"
               onChange={handleChangeNickname}
               data-testid="nickname"
             ></S.InputNickname>
