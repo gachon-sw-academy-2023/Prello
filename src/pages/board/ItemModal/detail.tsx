@@ -17,7 +17,7 @@ import { useState } from 'react';
 import * as S from './styles';
 
 export const Detail = ({ setOpen }: any) => {
-  const [value, setValue] = useState<Dayjs | null>(dayjs('2022-04-07'));
+  const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
   const [personName, setPersonName] = useState<string[]>([]);
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -128,6 +128,7 @@ export const Detail = ({ setOpen }: any) => {
               openTo="year"
               views={['year', 'month', 'day']}
               value={value}
+              inputFormat={'YYYY/MM/DD'}
               onChange={(newValue) => {
                 setValue(newValue);
               }}
