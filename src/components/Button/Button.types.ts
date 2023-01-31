@@ -8,5 +8,6 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   radius?: 'square' | 'circle' | 'rounded';
   textColor?: 'white' | 'black' | 'primary' | 'darkgray';
   shadow?: boolean;
+  disable?: boolean;
   onClick?: () => void;
 }

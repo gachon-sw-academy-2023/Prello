@@ -89,6 +89,7 @@ export const RightContainer = styled.div`
   margin-right: auto;
   width: 80%;
   padding: 30px;
+  margin-left: 250px;
 `;
 
 export const InfoContainer = styled.div`

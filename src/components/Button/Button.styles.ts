@@ -15,6 +15,7 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
   padding-right: ${({ width }) => width}px;
   text-align: center;
   font-family: 'LINESeedKR-Bd';
+
   ${({ radius }) =>
     radius === 'square'
       ? css`
@@ -56,4 +57,9 @@ export const Container = styled.button<Omit<ButtonProps, 'children'>>`
     css`
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
     `}
+
+    &:disabled {
+    background: none;
+    background-color: #d9d9d9;
+  }
 `;

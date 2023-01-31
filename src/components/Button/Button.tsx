@@ -8,6 +8,7 @@ const Button = ({
   textColor = 'white',
   width = 15,
   shadow = false,
+  disable = false,
   children,
 
   ...rest
@@ -21,6 +22,7 @@ const Button = ({
       radius={radius}
       textColor={textColor}
       shadow={shadow}
+      disabled={disable}
     >
       {children}
     </S.Container>
