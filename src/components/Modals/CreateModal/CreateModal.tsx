@@ -6,10 +6,11 @@ import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import * as S from './CreateModal.style';
 
-interface ChipData {
+interface IInvitedEmail {
   key: number;
   label: string;
 }
+
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
@@ -17,7 +18,7 @@ const ListItem = styled('li')(({ theme }) => ({
 export const CreateWorkspace = (props: any) => {
   const [name, setName] = useState<string>('');
   const [summary, setSummary] = useState<string>('');
-  const [chipData, setChipData] = useState<readonly ChipData[]>([
+  const [invitedEmails, setInviteEmails] = useState<readonly IInvitedEmail[]>([
     { key: 0, label: 'test@gmail.com' },
     { key: 1, label: 'test2@gmail.com' },
     { key: 2, label: 'test3@gmail.com' },
@@ -37,9 +38,9 @@ export const CreateWorkspace = (props: any) => {
     setSummary(e.target.value);
   };
 
-  const handleDelete = (chipToDelete: ChipData) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key),
+  const handleDelete = (chipToDelete: IInvitedEmail) => () => {
+    setInviteEmails((emails) =>
+      emails.filter((email) => email.key !== chipToDelete.key),
     );
   };
 
@@ -86,7 +87,7 @@ export const CreateWorkspace = (props: any) => {
             m: 0,
           }}
         >
-          {chipData.map((data) => {
+          {invitedEmails.map((data) => {
             return (
               <ListItem key={data.key}>
                 <Chip

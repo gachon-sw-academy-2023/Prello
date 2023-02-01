@@ -1,5 +1,5 @@
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
-import routes from '@/routes';
+import ROUTES from '@/routes';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
@@ -50,7 +50,7 @@ export default function SignUp() {
       if (response.status === 200) {
         setModalText('회원가입이 완료되었습니다! 💖');
         handleModal();
-        setTimeout(() => navigate(routes.LOGIN), 1000);
+        setTimeout(() => navigate(ROUTES.LOGIN), 1000);
       }
     } catch (error: any) {
       if (error.response.status === 409) {
@@ -144,7 +144,7 @@ export default function SignUp() {
                 <span>I have an account!</span>
                 <S.Sspan
                   onClick={() => {
-                    navigate(routes.LOGIN);
+                    navigate(ROUTES.LOGIN);
                   }}
                 >
                   Login

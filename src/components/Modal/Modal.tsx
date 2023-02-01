@@ -9,10 +9,7 @@ function Modal({
 }: PropsWithChildren<ModalProps>) {
   function handleClick(e: React.MouseEvent) {
     e.preventDefault();
-
-    if (onClickToggleModal) {
-      onClickToggleModal();
-    }
+    onClickToggleModal?.();
   }
   return (
     <S.ModalContainer>

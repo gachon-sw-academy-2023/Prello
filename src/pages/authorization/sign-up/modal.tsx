@@ -10,9 +10,7 @@ function Modal({
   children,
 }: PropsWithChildren<IModalDefaultType>) {
   setTimeout(() => {
-    if (onClickToggleModal) {
-      onClickToggleModal();
-    }
+    onClickToggleModal?.();
   }, 2000);
   return (
     <S.ModalContainer>

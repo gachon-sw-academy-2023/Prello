@@ -1,5 +1,5 @@
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
-import routes from '@/routes';
+import ROUTES from '@/routes';
 import { userSelector } from '@/utils/atom/userSelector';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
@@ -62,7 +62,7 @@ function Login() {
       if (response.status === 200) {
         setModalText('로그인이 완료되었습니다! 💖');
         handleModal();
-        setTimeout(() => navigate(routes.MAIN), 1000);
+        setTimeout(() => navigate(ROUTES.MAIN), 1000);
       }
     } catch (error: any) {
       if (error.response.status === 400) {
@@ -102,7 +102,7 @@ function Login() {
                 <span>I want to have an account!</span>
                 <S.StyledText
                   onClick={() => {
-                    navigate(routes.SIGNUP);
+                    navigate(ROUTES.SIGNUP);
                   }}
                 >
                   Sign Up
@@ -134,7 +134,6 @@ function Login() {
               value={password}
               placeholder="Type here"
               onChange={handleChangePassword}
-              placeholder="Type here"
               onBlur={pwdInput}
               required
               data-testid="password"
