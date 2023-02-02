@@ -26,24 +26,24 @@ export default function WorkspaceDefault() {
   }, [isOpenModal]);
 
   useEffect(() => {
-    const fetchWorkspaces = async () => {
-      try {
-        setError(null);
-        setWorkspaces(null);
-        setLoading(true);
-
-        const response = await axios.get('/workspace');
-        if (response.status === 200) {
-          setWorkspaces(response.data);
-        }
-      } catch (error: any) {
-        setError(error);
-      }
-      setLoading(false);
-    };
-
     fetchWorkspaces();
   }, []);
+
+  const fetchWorkspaces = async () => {
+    try {
+      setError(null);
+      setWorkspaces(null);
+      setLoading(true);
+
+      const response = await axios.get('/workspace');
+      if (response.status === 200) {
+        setWorkspaces(response.data);
+      }
+    } catch (error: any) {
+      setError(error);
+    }
+    setLoading(false);
+  };
 
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>에러가 발생했습니다</div>;
@@ -61,7 +61,10 @@ export default function WorkspaceDefault() {
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {isOpenModal && (
-        <CreateWorkspace setOpenModal={setOpenModal}></CreateWorkspace>
+        <CreateWorkspace
+          setOpenModal={setOpenModal}
+          fetchWorkspaces={fetchWorkspaces}
+        ></CreateWorkspace>
       )}
       <S.ContentsWrapper>
         <S.Wrapper>

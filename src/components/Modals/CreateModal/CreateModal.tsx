@@ -62,6 +62,7 @@ export const CreateWorkspace = (props: any) => {
       const response = await axios.post('/workspace/create', info);
       if (response.status === 200) {
         props.setOpenModal(false);
+        props.fetchWorkspaces();
       }
     } catch (error: any) {
       console.log(error);
