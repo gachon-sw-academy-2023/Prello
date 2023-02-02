@@ -9,11 +9,6 @@ import axios from 'axios';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { useRecoilState } from 'recoil';
 
-interface IInvitedEmail {
-  key: number;
-  label: string;
-}
-
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
@@ -26,13 +21,6 @@ export const CreateWorkspace = (props: any) => {
   const [newEmail, setNewEmail] = useState<string>('');
   const [inviteBtnStatus, setInviteBtnStatus] = useState<boolean>(true);
   const [emailList, setEmailList] = useState<string[]>([]);
-  const [invitedEmails, setInviteEmails] = useState<readonly IInvitedEmail[]>([
-    { key: 0, label: 'test@gmail.com' },
-    { key: 1, label: 'test2@gmail.com' },
-    { key: 2, label: 'test3@gmail.com' },
-    { key: 3, label: 'test4@gmail.com' },
-    { key: 4, label: 'test5@gmail.com' },
-  ]);
 
   const handleModal = () => {
     props.setOpenModal(false);
@@ -68,7 +56,7 @@ export const CreateWorkspace = (props: any) => {
 
   const patchCreate = async () => {
     let info = {
-      owner: 'test@gmail.com', //recoil-persist 변경 필요
+      owner: user.email,
       name: name,
       summary: summary,
       memberInfo: emailList,
@@ -86,9 +74,6 @@ export const CreateWorkspace = (props: any) => {
   return (
     <Modal size="lg" onClickToggleModal={handleModal}>
       <S.MainWrapper>
-        <S.colWrapper ratio={15}>
-          <div>임시</div>
-        </S.colWrapper>
         <S.colWrapper ratio={75}>
           <S.StyledInput
             type="text"
@@ -105,7 +90,6 @@ export const CreateWorkspace = (props: any) => {
             className="sub"
           ></S.StyledInput>
         </S.colWrapper>
-        <S.colWrapper ratio={10}></S.colWrapper>
       </S.MainWrapper>
       <S.SubWrapper>
         <S.StyledText>멤버 초대하기</S.StyledText>
