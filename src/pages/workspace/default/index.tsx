@@ -9,17 +9,45 @@ import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import * as S from './styles';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal';
+import axios from 'axios';
 
 export default function WorkspaceDefault() {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const user = useRecoilValue(userSelector);
   const navigate = useNavigate();
+  const [workspaces, setWorkspaces] = useState<any>();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
+
+  useEffect(() => {
+    const fetchWorkspaces = async () => {
+      try {
+        setError(null);
+        setWorkspaces(null);
+        setLoading(true);
+
+        const response = await axios.get('/workspace');
+        if (response.status === 200) {
+          setWorkspaces(response.data);
+        }
+      } catch (error: any) {
+        setError(error);
+      }
+      setLoading(false);
+    };
+
+    fetchWorkspaces();
+  }, []);
+
+  if (loading) return <div>로딩중..</div>;
+  if (error) return <div>에러가 발생했습니다</div>;
+  if (!workspaces) return null;
 
   return (
     <S.Container>
@@ -63,33 +91,26 @@ export default function WorkspaceDefault() {
         </S.Wrapper>
 
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4} md={3}>
-            <S.Item
-              onClick={() => {
-                navigate('/workspace-detail');
-              }}
-            >
-              <S.GradientBG></S.GradientBG>
-              <S.ItemContents>
-                <S.Title>MOKA</S.Title>
-                <S.ItemBoardName>First Board</S.ItemBoardName>
-                <S.ProfileImages>
-                  <ProfileImg image="/assets/workspace/sample-profile-image.png" />
-                  <ProfileImg image="/assets/workspace/sample-profile-image.png" />
-                  <ProfileImg image="/assets/workspace/sample-profile-image.png" />
-                </S.ProfileImages>
-              </S.ItemContents>
-            </S.Item>
-          </Grid>
-          <Grid item xs={12} sm={4} md={3}>
-            <S.Item></S.Item>
-          </Grid>
-          <Grid item xs={12} sm={4} md={3}>
-            <S.Item></S.Item>
-          </Grid>
-          <Grid item xs={12} sm={4} md={3}>
-            <S.Item></S.Item>
-          </Grid>
+          {workspaces.map((workspace: any) => (
+            <Grid item xs={12} sm={4} md={3} key={workspace.id}>
+              <S.Item
+                onClick={() => {
+                  navigate('/workspace-detail');
+                }}
+              >
+                <S.GradientBG></S.GradientBG>
+                <S.ItemContents>
+                  <S.Title>{workspace.name}</S.Title>
+                  <S.ItemBoardName>{workspace.summary}</S.ItemBoardName>
+                  <S.ProfileImages>
+                    <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+                    <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+                    <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+                  </S.ProfileImages>
+                </S.ItemContents>
+              </S.Item>
+            </Grid>
+          ))}
         </Grid>
       </S.ContentsWrapper>
     </S.Container>

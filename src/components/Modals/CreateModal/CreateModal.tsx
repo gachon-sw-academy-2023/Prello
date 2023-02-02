@@ -9,11 +9,6 @@ import axios from 'axios';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { useRecoilState } from 'recoil';
 
-interface IInvitedEmail {
-  key: number;
-  label: string;
-}
-
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
@@ -25,13 +20,6 @@ export const CreateWorkspace = (props: any) => {
   const [summary, setSummary] = useState<string>('');
   const [newEmail, setNewEmail] = useState<string>('');
   const [emailList, setEmailList] = useState<string[]>([]);
-  const [invitedEmails, setInviteEmails] = useState<readonly IInvitedEmail[]>([
-    { key: 0, label: 'test@gmail.com' },
-    { key: 1, label: 'test2@gmail.com' },
-    { key: 2, label: 'test3@gmail.com' },
-    { key: 3, label: 'test4@gmail.com' },
-    { key: 4, label: 'test5@gmail.com' },
-  ]);
 
   const handleModal = () => {
     props.setOpenModal(false);
