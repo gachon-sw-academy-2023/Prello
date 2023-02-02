@@ -9,10 +9,11 @@ import axios from 'axios';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { useRecoilState } from 'recoil';
 
-interface ChipData {
+interface IInvitedEmail {
   key: number;
   label: string;
 }
+
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
@@ -24,7 +25,7 @@ export const CreateWorkspace = (props: any) => {
   const [summary, setSummary] = useState<string>('');
   const [newEmail, setNewEmail] = useState<string>('');
   const [emailList, setEmailList] = useState<string[]>([]);
-  const [chipData, setChipData] = useState<readonly ChipData[]>([
+  const [invitedEmails, setInviteEmails] = useState<readonly IInvitedEmail[]>([
     { key: 0, label: 'test@gmail.com' },
     { key: 1, label: 'test2@gmail.com' },
     { key: 2, label: 'test3@gmail.com' },
@@ -50,11 +51,11 @@ export const CreateWorkspace = (props: any) => {
       setNewEmail('');
     }
   };
-  const handleDelete = (chipToDelete: ChipData) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key),
-    );
-  };
+  // const handleDelete = (chipToDelete: ChipData) => () => {
+  //   setChipData((chips) =>
+  //     chips.filter((chip) => chip.key !== chipToDelete.key),
+  //   );
+  // };
 
   const handleCreate = () => {
     if (name !== '' && summary !== '' && emailList.length > 0) {

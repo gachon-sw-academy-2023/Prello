@@ -16,8 +16,21 @@ export const handlers = [
     );
   }),
 
-  rest.post('/login', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.cookie('auth-token', 'tokenIsHere'));
+  rest.post('/login', async (req: any, res, ctx) => {
+    let password;
+    let user;
+    await getAll().then((users) => {
+      user = users.find(({ email }) => email === req.body.email);
+    });
+
+    if (user) {
+      if (req.body.password === user.password) {
+        return res(ctx.status(200), ctx.json({ message: 'Login Success!' }));
+      }
+      return res(ctx.status(401), ctx.json({ message: 'Anauthorized' }));
+    }
+
+    return res(ctx.status(400), ctx.json({ message: 'Unregistered Account' }));
   }),
 
   rest.post('/sign-up', async (req: any, res, ctx) => {

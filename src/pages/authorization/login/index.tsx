@@ -1,12 +1,11 @@
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
-import routes from '@/routes';
+import ROUTES from '@/routes';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
 import { FormEvent, useCallback, useState } from 'react';
-import { useIndexedDB } from 'react-indexed-db';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import * as S from './styles';
@@ -19,16 +18,18 @@ function Login() {
   const [pwdValidation, setPwdValidation] = useState<boolean>(true);
   const [user, setUser] = useRecoilState(userSelector);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [modalText, setModalText] = useState<string>('');
 
   const navigate = useNavigate();
-  const { getByIndex } = useIndexedDB('user');
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
+
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
+
   const emailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value.match(emailRegex) || e.target.value === null) {
       setEmailValidation(false);
@@ -36,6 +37,7 @@ function Login() {
       setEmailValidation(true);
     }
   };
+
   const pwdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value.match(pwdRegex) || e.target.value === null) {
       setPwdValidation(false);
@@ -46,34 +48,32 @@ function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (emailValidation && pwdValidation) {
-      patchLogin();
-    }
+    patchLogin();
   };
 
   const patchLogin = async () => {
+    const data = {
+      email: email,
+      password: password,
+    };
     try {
-      const response = await axios.post('/login');
+      const response = await axios.post('/login', data);
+      console.log(response);
       if (response.status === 200) {
-        setLogin(true);
-        handleLogin();
+        setModalText('로그인이 완료되었습니다! 💖');
         handleModal();
+        setTimeout(() => navigate(ROUTES.MAIN), 1000);
       }
     } catch (error: any) {
-      console.log(error);
+      if (error.response.status === 400) {
+        setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
+        handleModal();
+      }
+      if (error.response.status === 401) {
+        setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
+        handleModal();
+      }
     }
-  };
-
-  const handleLogin = () => {
-    getByIndex('email', email).then(
-      (personFromDB) => {
-        setUser(personFromDB);
-        setTimeout(() => navigate(routes.MAIN), 1000);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
   };
 
   const handleModal = useCallback(() => {
@@ -83,9 +83,7 @@ function Login() {
   return (
     <S.Container>
       {isOpenModal && (
-        <SimpleModal onClickToggleModal={handleModal}>
-          로그인이 완료되었습니다! 💖
-        </SimpleModal>
+        <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
       )}
       <Default>
         <S.LeftWrapper>
@@ -104,7 +102,7 @@ function Login() {
                 <span>I want to have an account!</span>
                 <S.StyledText
                   onClick={() => {
-                    navigate(routes.SIGNUP);
+                    navigate(ROUTES.SIGNUP);
                   }}
                 >
                   Sign Up
@@ -126,6 +124,7 @@ function Login() {
               onChange={handleChangeEmail}
               onBlur={emailInput}
               required
+              data-testid="email"
             ></S.InputEmail>
             <S.BlankDiv />
 
@@ -137,33 +136,25 @@ function Login() {
               onChange={handleChangePassword}
               onBlur={pwdInput}
               required
+              data-testid="password"
             ></S.InputPwd>
             <S.BlankDiv />
 
-            <Default>
-              <S.SubmitBtn
-                type="submit"
-                color="gradient"
-                radius="circle"
-                height="md"
-                width={150}
-              >
-                Sign In
-              </S.SubmitBtn>
-            </Default>
-
-            <Mobile>
-              <S.SubmitBtn
-                type="submit"
-                color="gradient"
-                radius="circle"
-                height="md"
-                width={160}
-                style={{ whiteSpace: 'nowrap' }}
-              >
-                Sign In
-              </S.SubmitBtn>
-            </Mobile>
+            <S.SubmitBtn
+              type="submit"
+              color="gradient"
+              radius="circle"
+              width={160}
+              data-testid="submit"
+              // disable={
+              //   !(
+              //     email.length > 0 &&
+              //     password.length > 0 &&
+              //   )
+              // }
+            >
+              Login
+            </S.SubmitBtn>
           </S.Form>
         </S.Content>
       </S.RightWrapper>

@@ -38,6 +38,7 @@ export const LeftContainer = styled.div`
   width: 250px;
   max-height: 100vh;
   padding: 20px 30px;
+  position: fixed;
 `;
 export const LeftContent = styled.div`
   display: flex;

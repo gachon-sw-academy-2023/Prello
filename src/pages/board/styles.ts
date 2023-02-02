@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { ReactSortable } from 'react-sortablejs';
 
 export const Container = styled.div`
   background: #f5f5f5;
@@ -8,7 +7,8 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   padding-top: 65px;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 50px;
 `;
 
 export const MobileRightWrapper = styled.div`
@@ -19,6 +19,7 @@ export const MobileRightWrapper = styled.div`
 `;
 
 export const ListContainer = styled.div`
+  margin-left: 250px;
   display: flex;
 `;
 export const ListMobileContiner = styled.div`
@@ -67,12 +68,15 @@ export const ListHeader = styled.div`
   justify-content: space-between;
   margin-bottom: 15px;
 
-  h1 {
+  input {
+    border: none;
     font-weight: bold;
-  }
+    font-size: 18px;
+    width: 80%;
 
-  span {
-    font-size: 10px;
+    ::placeholder {
+      font-size: 15px;
+    }
   }
 `;
 
@@ -90,11 +94,12 @@ export const Item = styled.div`
 
 export const Form = styled.form`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   align-content: center;
   vertical-align: middle;
+  width: 80%;
 `;
 
 export const FormInput = styled.input`
@@ -104,9 +109,8 @@ export const FormInput = styled.input`
   background: rgba(252, 164, 190, 0.23);
   border-radius: 10px;
   height: 35px;
-  width: 80%;
+  width: 100%;
   cursor: pointer;
-  width: 65%;
   border: none;
   outline: none;
 `;
@@ -135,4 +139,25 @@ export const AddListWrapper = styled(ListWrapper)`
 export const MobileAddListWrapper = styled(ListWrapper)`
   width: 350px;
   padding: 15px;
+`;
+
+export const MenuBtn = styled.div`
+  position: 'relative';
+`;
+
+export const BtnWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  justify-content: end;
+  button {
+    color: #fca4be;
+    margin-left: 15px;
+  }
+`;
+
+export const ItemContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
 `;

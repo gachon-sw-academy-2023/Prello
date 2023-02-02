@@ -11,7 +11,7 @@ import introduce4 from '/assets/images/main/introduce4-temp.png';
 import { useRecoilState } from 'recoil';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { useNavigate } from 'react-router-dom';
-import routes from '@/routes';
+import ROUTES from '@/routes';
 
 export default function MobileMain() {
   const [user, setUser] = useRecoilState(userSelector);
@@ -46,7 +46,7 @@ export default function MobileMain() {
       <Header
         user={user}
         onLogin={() => {
-          navigate(routes.LOGIN);
+          navigate(ROUTES.LOGIN);
         }}
         onLogout={() => {
           setUser({
@@ -57,7 +57,7 @@ export default function MobileMain() {
           });
         }}
         onCreateAccount={() => {
-          navigate(routes.SIGNUP);
+          navigate(ROUTES.SIGNUP);
         }}
         color={updateHeader ? 'primary' : 'white'}
         backgroundColor={updateHeader ? 'white' : 'empty'}
@@ -74,7 +74,7 @@ export default function MobileMain() {
               textColor="black"
               radius="circle"
               onClick={() => {
-                navigate(routes.WORKSPACEDEFAULT);
+                navigate(ROUTES.WORKSPACEDEFAULT);
               }}
             >
               바로 시작하기
@@ -87,7 +87,7 @@ export default function MobileMain() {
               textColor="black"
               radius="circle"
               onClick={() => {
-                navigate(routes.SIGNUP);
+                navigate(ROUTES.SIGNUP);
               }}
             >
               회원가입

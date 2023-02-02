@@ -10,6 +10,8 @@ export const ModalContainer = styled.div`
   justify-content: center;
   position: fixed;
   z-index: 100;
+  left: 0;
+  top: 0;
 `;
 export const DialogBox = styled.dialog<ModalProps>`
   height: fit-content;
@@ -32,14 +34,22 @@ export const DialogBox = styled.dialog<ModalProps>`
           width: 40%;
         `
       : css`
-          width: 50%;
+          width: 60%;
+          padding: 40px 50px;
         `}
 `;
-export const CloseButton = styled.button`
+export const CloseButton = styled.button<ModalProps>`
   width: 30px;
   height: 30px;
   position: absolute;
-  right: 16px;
+  ${({ size }) =>
+    size === 'lg'
+      ? css`
+          right: 4%;
+        `
+      : css`
+          right: 16px;
+        `}
   background-color: #fca4be;
   border-radius: 100px;
   font-size: 16px;
@@ -52,6 +62,7 @@ export const Backdrop = styled.div`
   height: 100vh;
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.5);
 `;

@@ -9,15 +9,14 @@ function Modal({
 }: PropsWithChildren<ModalProps>) {
   function handleClick(e: React.MouseEvent) {
     e.preventDefault();
-
-    if (onClickToggleModal) {
-      onClickToggleModal();
-    }
+    onClickToggleModal?.();
   }
   return (
     <S.ModalContainer>
       <S.DialogBox size={size}>
-        <S.CloseButton onClick={handleClick}>✖</S.CloseButton>
+        <S.CloseButton onClick={handleClick} size={size}>
+          ✖
+        </S.CloseButton>
         {children}
       </S.DialogBox>
       <S.Backdrop onClick={handleClick} />
