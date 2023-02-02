@@ -42,19 +42,19 @@ export const CreateWorkspace = (props: any) => {
       setNewEmail('');
     }
   };
-  const handleDelete = (chipToDelete: string) => () => {
-    setEmailList((chips) => chips.filter((chip) => chip !== chipToDelete));
+  const handleDelete = (emailToDelete: string) => () => {
+    setEmailList((emails) => emails.filter((email) => email !== emailToDelete));
   };
 
   const handleCreate = () => {
     if (name.length === 0 || summary.length === 0) {
       setErrorText('워크스페이스 이름 및 설명을 입력해주세요!');
     } else {
-      patchCreate();
+      fetchCreate();
     }
   };
 
-  const patchCreate = async () => {
+  const fetchCreate = async () => {
     let info = {
       owner: user.email,
       name: name,
