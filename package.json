@@ -38,6 +38,7 @@
     "react-router-dom": "^6.6.2",
     "react-sortablejs": "^6.1.4",
     "recoil": "^0.7.6",
+    "recoil-persist": "^4.2.0",
     "sortablejs": "^1.15.0",
     "vite-plugin-linter": "^2.0.2",
     "vite-plugin-pages": "^0.28.0"
