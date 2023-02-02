@@ -1,14 +1,14 @@
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
+import InviteModal from '@/components/Modals/InviteModal/InviteModal';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
-import * as S from './styles';
-import { useState, useCallback } from 'react';
-import InviteModal from '@/components/Modals/InviteModal/InviteModal';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as S from './styles';
 
 interface IMember {
   name: string;
@@ -76,9 +76,9 @@ export default function WorkspaceDetail() {
   const navigate = useNavigate();
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
 
-  const handleModal = useCallback(() => {
+  const handleModal = () => {
     setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
+  };
 
   const handleNavigate = () => {
     navigate('/workspace-setting');
