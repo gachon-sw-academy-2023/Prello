@@ -25,5 +25,10 @@ export const DBConfig = {
         },
       ],
     },
+    {
+      store: 'card',
+      storeConfig: { keyPath: 'id', autoIncrement: true },
+      storeSchema: [{ name: 'title', keypath: 'title' }],
+    },
   ],
 };

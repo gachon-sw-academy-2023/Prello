@@ -3,14 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 import * as S from './styles';
 
 interface IDropMenu {
-  handleDeleteCard: (e: any) => void;
   handleDeleteItems: () => void;
+  cardId: number;
 }
 
-const DropDownMenu: React.FC<IDropMenu> = ({
-  handleDeleteCard,
-  handleDeleteItems,
-}) => {
+const DropDownMenu: React.FC<IDropMenu> = ({ handleDeleteItems, cardId }) => {
   const [visible, setVisible] = useState<boolean>(true);
 
   const wrapperRef = useRef<any>();
@@ -36,6 +33,10 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
   const handleHideMenu = () => {
     setVisible(false);
+  };
+
+  const handleDeleteCard = () => {
+    axios.post('/list/delete', { cardId }).then((res) => console.log(res));
   };
 
   return (

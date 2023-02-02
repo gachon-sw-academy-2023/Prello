@@ -14,15 +14,8 @@ interface ICard {
 }
 
 export default function Board() {
+  const [lists, setLists] = useState<ICard[]>([]);
   const [member, setMember] = useState([]);
-  const handleAddList = () => {
-    axios
-      .post('/list', {
-        id: lists.length + 1,
-        title: '',
-      })
-      .then((res) => setLists(res.data));
-  };
 
   useEffect(() => {
     axios.get('/members').then((res) => setMember(res.data));
@@ -39,13 +32,14 @@ export default function Board() {
     });
   });
 
-  const [lists, setLists] = useState<ICard[]>([]);
-
-  const handleDeleteCard = (e: any) => {
-    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.style.display =
-      'none';
+  const handleAddList = () => {
+    axios
+      .post('/list', {
+        id: lists.length + 1,
+        title: '',
+      })
+      .then((res) => setLists(res.data));
   };
-
   return (
     <S.Container>
       <Default>
@@ -68,11 +62,7 @@ export default function Board() {
           <S.RightWrapper>
             <S.ListContainer className="column">
               {lists.map((list: ICard) => (
-                <List
-                  title={list.title}
-                  key={list.id}
-                  handleDeleteCard={handleDeleteCard}
-                />
+                <List title={list.title} key={list.id} cardId={list.id} />
               ))}
             </S.ListContainer>
             <S.AddListWrapper onClick={handleAddList}>
@@ -85,11 +75,7 @@ export default function Board() {
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
               {lists.map((list: ICard) => (
-                <List
-                  title={list.title}
-                  key={list.id}
-                  handleDeleteCard={handleDeleteCard}
-                />
+                <List title={list.title} key={list.id} cardId={list.id} />
               ))}
             </S.ListMobileContiner>
             <S.MobileAddListWrapper onClick={handleAddList}>
