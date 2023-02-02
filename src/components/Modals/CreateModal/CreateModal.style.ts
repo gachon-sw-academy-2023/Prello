@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import colors from '@/styles/colors';
 
 export type WrapperProps = {
   ratio: number;
@@ -79,6 +80,9 @@ export const StyledText = styled.h1`
   &.sub {
     font-family: 'LINESeedKR-Rg';
   }
+  &.error {
+    color: red;
+  }
 `;
 
 export const StyledEmailInput = styled.input`
@@ -108,7 +112,10 @@ export const InviteBtn = styled.button`
   min-height: 35px;
   border-radius: 0.5rem;
   margin-left: 1%;
-  background-color: lightgray;
+  background-color: #fca4be;
   color: white;
   font-family: 'LINESeedKR-Rg';
+  :disabled {
+    background-color: lightgray;
+  }
 `;

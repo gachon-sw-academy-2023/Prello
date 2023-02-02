@@ -58,9 +58,11 @@ function Login() {
     };
     try {
       const response = await axios.post('/login', data);
-      console.log(response);
+      console.log(response.data.user);
       if (response.status === 200) {
         setModalText('로그인이 완료되었습니다! 💖');
+        setUser(response.data.user);
+        console.log(user);
         handleModal();
         setTimeout(() => navigate(ROUTES.MAIN), 1000);
       }
