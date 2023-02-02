@@ -28,7 +28,10 @@ export const DBConfig = {
     {
       store: 'card',
       storeConfig: { keyPath: 'id', autoIncrement: true },
-      storeSchema: [{ name: 'title', keypath: 'title' }],
+      storeSchema: [
+        { name: 'title', keypath: 'title' },
+        { name: 'order', keypath: 'order' },
+      ],
     },
   ],
 };

@@ -4,13 +4,14 @@ import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useIndexedDB } from 'react-indexed-db';
 import Sortable from 'sortablejs';
 import List from './List/List';
 import * as S from './styles';
-
 interface ICard {
   id: number;
   title: string;
+  order: number;
 }
 
 export default function Board() {
@@ -28,15 +29,22 @@ export default function Board() {
       new Sortable(column, {
         animation: 150,
         ghostClass: 'blue-background-class',
+        onUpdate({ oldIndex, newIndex }) {
+          axios.post('/list/updateIndex', { oldIndex, newIndex });
+        },
       });
     });
   });
 
+  const UpdateList = () => {
+    axios.get('/list').then((res) => setLists(res.data));
+  };
+
   const handleAddList = () => {
     axios
       .post('/list', {
-        id: lists.length + 1,
         title: '',
+        order: lists.length,
       })
       .then((res) => setLists(res.data));
   };
@@ -61,9 +69,16 @@ export default function Board() {
         <Default>
           <S.RightWrapper>
             <S.ListContainer className="column">
-              {lists.map((list: ICard) => (
-                <List title={list.title} key={list.id} cardId={list.id} />
-              ))}
+              {lists
+                .sort((a, b) => a.order - b.order)
+                .map((list: ICard) => (
+                  <List
+                    title={list.title}
+                    key={list.id}
+                    cardId={list.id}
+                    UpdateList={UpdateList}
+                  />
+                ))}
             </S.ListContainer>
             <S.AddListWrapper onClick={handleAddList}>
               <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
@@ -75,7 +90,12 @@ export default function Board() {
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
               {lists.map((list: ICard) => (
-                <List title={list.title} key={list.id} cardId={list.id} />
+                <List
+                  title={list.title}
+                  key={list.id}
+                  cardId={list.id}
+                  UpdateList={UpdateList}
+                />
               ))}
             </S.ListMobileContiner>
             <S.MobileAddListWrapper onClick={handleAddList}>

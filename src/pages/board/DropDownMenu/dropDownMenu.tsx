@@ -4,10 +4,15 @@ import * as S from './styles';
 
 interface IDropMenu {
   handleDeleteItems: () => void;
+  UpdateList: () => void;
   cardId: number;
 }
 
-const DropDownMenu: React.FC<IDropMenu> = ({ handleDeleteItems, cardId }) => {
+const DropDownMenu: React.FC<IDropMenu> = ({
+  handleDeleteItems,
+  UpdateList,
+  cardId,
+}) => {
   const [visible, setVisible] = useState<boolean>(true);
 
   const wrapperRef = useRef<any>();
@@ -36,7 +41,8 @@ const DropDownMenu: React.FC<IDropMenu> = ({ handleDeleteItems, cardId }) => {
   };
 
   const handleDeleteCard = () => {
-    axios.post('/list/delete', { cardId }).then((res) => console.log(res));
+    axios.post('/list/delete', { cardId });
+    UpdateList();
   };
 
   return (

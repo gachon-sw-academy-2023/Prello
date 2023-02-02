@@ -11,6 +11,7 @@ import axios from 'axios';
 interface IBoardProps {
   title: string;
   cardId: number;
+  UpdateList: () => void;
 }
 
 interface ICard {
@@ -18,7 +19,7 @@ interface ICard {
   text: string;
 }
 
-const List: React.FC<IBoardProps> = ({ title, cardId }) => {
+const List: React.FC<IBoardProps> = ({ title, cardId, UpdateList }) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
@@ -69,6 +70,7 @@ const List: React.FC<IBoardProps> = ({ title, cardId }) => {
               />
               {showMenu && (
                 <DropDownMenu
+                  UpdateList={UpdateList}
                   handleDeleteItems={handleDeleteItems}
                   cardId={cardId}
                 />
