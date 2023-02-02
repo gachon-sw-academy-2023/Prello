@@ -98,7 +98,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
               />
               <S.BtnWrapper>
                 <button type="submit">Add Item</button>
-                <button type="submit" onClick={() => handleCancel()}>
+                <button type="submit" onClick={handleCancel}>
                   Cancel
                 </button>
               </S.BtnWrapper>

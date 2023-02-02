@@ -1,7 +1,6 @@
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
-import memberList from './data/getMemberData.json';
-const { getAll } = useIndexedDB('user');
+const { getAll, add } = useIndexedDB('user');
 
 export const handlers = [
   rest.get('/user', (req, res, ctx) => {
@@ -18,23 +17,44 @@ export const handlers = [
     );
   }),
 
-  rest.post('/login', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.cookie('auth-token', 'tokenIsHere'));
+  rest.post('/login', async (req, res, ctx) => {
+    let password;
+    let user;
+    await getAll().then((users) => {
+      user = users.find(({ email }) => email === req.body.email);
+    });
+
+    if (user) {
+      if (req.body.password === user.password) {
+        return res(ctx.status(200), ctx.json({ message: 'Login Success!' }));
+      }
+      return res(ctx.status(401), ctx.json({ message: 'Anauthorized' }));
+    }
+
+    return res(ctx.status(400), ctx.json({ message: 'Unregistered Account' }));
   }),
+
   rest.post('/sign-up', async (req, res, ctx) => {
     let isExist;
     await getAll().then((users) => {
-      console.log(users.find(({ email }) => email === req.body));
-      users.find(({ email }) => email === req.body) !== undefined
+      console.log(users.find(({ email }) => email === req.body.email));
+      users.find(({ email }) => email === req.body.email) !== undefined
         ? (isExist = true)
         : (isExist = false);
-      console.log(isExist);
     });
 
     if (isExist) {
       return res(ctx.status(409), ctx.json({ message: 'Registered Email!' }));
+    } else {
+      try {
+        await add({ ...req.body });
+        return res(ctx.status(200), ctx.json({ message: 'SignUp Success!' }));
+      } catch (error) {
+        return res(
+          ctx.status(500),
+          ctx.json({ message: 'Store in DB Failed!' }),
+        );
+      }
     }
-
-    return res(ctx.status(200), ctx.json({ message: 'SignUp Success!' }));
   }),
 ];
