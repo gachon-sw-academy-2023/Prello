@@ -38,7 +38,11 @@ export const dataHandlers = [
     if (req.body.oldIndex < req.body.newIndex) {
       AllList.map((list) => {
         if (list.order <= req.body.newIndex) {
-          update({ title: list.title, id: list.id, order: list.order - 1 });
+          update({
+            title: list.title,
+            id: list.id,
+            order: Math.max(0, list.order - 1),
+          });
         }
       });
     } else {
