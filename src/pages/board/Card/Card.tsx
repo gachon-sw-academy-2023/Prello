@@ -7,6 +7,7 @@ import DropDownMenu from '../DropDownMenu/dropDownMenu';
 import * as S from '../styles';
 import Item from '../Item/Item';
 import axios from 'axios';
+import { orderBy } from 'cypress/types/lodash';
 
 interface ICardProp {
   title: string;
@@ -37,7 +38,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
     if (text.length !== 0) {
       const item = {
         title: text,
-        order: items.length + 1,
+        order: items.length,
         cardId,
       };
 
@@ -103,18 +104,24 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             setList={setItems}
             list={items}
             onEnd={(e) => {
-              axios.post('/item/update-card-index', {
-                id: parseInt(e.item.id),
-                oldIndex: parseInt(e.from.id),
-                newIndex: parseInt(e.to.id),
-              });
+              axios
+                .post('/item/update-index', {
+                  id: parseInt(e.item.id),
+                  oldCardIndex: parseInt(e.from.id),
+                  newCardIndex: parseInt(e.to.id),
+                  oldIndex: e.oldIndex,
+                  newIndex: e.newIndex,
+                })
+                .then((res) => setItems(res.data));
             }}
           >
-            {items.map((item: IItem) => (
-              <Item key={item.id} itemId={item.id}>
-                {item.title}
-              </Item>
-            ))}
+            {items
+              .sort((a, b) => a.order - b.order)
+              .map((item: IItem) => (
+                <Item key={item.id} itemId={item.id}>
+                  {item.title}
+                </Item>
+              ))}
           </ReactSortable>
           {!showForm && (
             <S.AddBtn onClick={() => setShowForm(true)}>

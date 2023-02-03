@@ -33,16 +33,49 @@ export const itemHandlers = [
     return res(ctx.status(200), ctx.json(AllList));
   }),
 
-  rest.post('/item/update-card-index', async (req: any, res, ctx) => {
+  rest.post('/item/update-index', async (req: any, res, ctx) => {
     const target = await getByID(req.body.id);
+    deleteRecord(target.id);
+    target.order = req.body.newIndex;
+    target.cardId = req.body.newCardIndex;
 
-    update({
-      title: target.title,
-      id: target.id,
-      order: target.order,
-      cardId: req.body.newIndex,
-    });
+    const cardList = (await getAll()).filter(
+      (list) => list.cardId == req.body.oldCardIndex,
+    );
 
-    return res(ctx.status(200));
+    if (req.body.newCardIndex == req.body.oldCardIndex) {
+      cardList.map((list) => {
+        if (list.order <= req.body.newIndex) {
+          update({
+            title: list.title,
+            id: list.id,
+            order: Math.max(0, list.order - 1),
+            cardId: list.cardId,
+          });
+        }
+      });
+    } else {
+      cardList.map((list) => {
+        if (
+          req.body.newIndex <= list.order &&
+          list.order <= req.body.oldIndex
+        ) {
+          update({
+            title: list.title,
+            id: list.id,
+            order: list.order + 1,
+            cardId: list.cardId,
+          });
+        }
+      });
+    }
+
+    add(target);
+
+    const result = (await getAll()).filter(
+      (list) => list.cardId == req.body.oldCardIndex,
+    );
+
+    return res(ctx.status(200), ctx.json(result));
   }),
 ];
