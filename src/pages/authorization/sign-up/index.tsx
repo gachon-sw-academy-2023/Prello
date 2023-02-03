@@ -4,7 +4,7 @@ import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
 import axios from 'axios';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
@@ -66,9 +66,9 @@ export default function SignUp() {
     }
   };
 
-  const handleModal = useCallback(() => {
+  const handleModal = () => {
     setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
+  };
 
   const emailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.match(emailRegex)) {

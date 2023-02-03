@@ -9,29 +9,18 @@ import axios from 'axios';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { useRecoilState } from 'recoil';
 
-interface IInvitedEmail {
-  key: number;
-  label: string;
-}
-
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
 export const CreateWorkspace = (props: any) => {
   const [user, setUser] = useRecoilState(userSelector);
-  console.log(user.email);
+  const [errorText, setErrorText] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [summary, setSummary] = useState<string>('');
   const [newEmail, setNewEmail] = useState<string>('');
+  const [inviteBtnStatus, setInviteBtnStatus] = useState<boolean>(true);
   const [emailList, setEmailList] = useState<string[]>([]);
-  const [invitedEmails, setInviteEmails] = useState<readonly IInvitedEmail[]>([
-    { key: 0, label: 'test@gmail.com' },
-    { key: 1, label: 'test2@gmail.com' },
-    { key: 2, label: 'test3@gmail.com' },
-    { key: 3, label: 'test4@gmail.com' },
-    { key: 4, label: 'test5@gmail.com' },
-  ]);
 
   const handleModal = () => {
     props.setOpenModal(false);
@@ -44,28 +33,30 @@ export const CreateWorkspace = (props: any) => {
   };
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewEmail(e.target.value);
+    setInviteBtnStatus(false);
   };
   const handleInvite = () => {
     if (newEmail !== '' && !emailList.includes(newEmail)) {
       setEmailList(emailList.concat(newEmail));
+      setInviteBtnStatus(true);
       setNewEmail('');
     }
   };
-  // const handleDelete = (chipToDelete: ChipData) => () => {
-  //   setChipData((chips) =>
-  //     chips.filter((chip) => chip.key !== chipToDelete.key),
-  //   );
-  // };
+  const handleDelete = (emailToDelete: string) => () => {
+    setEmailList((emails) => emails.filter((email) => email !== emailToDelete));
+  };
 
   const handleCreate = () => {
-    if (name !== '' && summary !== '' && emailList.length > 0) {
-      patchCreate();
+    if (name.length === 0 || summary.length === 0) {
+      setErrorText('워크스페이스 이름 및 설명을 입력해주세요!');
+    } else {
+      fetchCreate();
     }
   };
 
-  const patchCreate = async () => {
+  const fetchCreate = async () => {
     let info = {
-      owner: 'test@gmail.com', //recoil-persist 변경 필요
+      owner: user.email,
       name: name,
       summary: summary,
       memberInfo: emailList,
@@ -83,9 +74,6 @@ export const CreateWorkspace = (props: any) => {
   return (
     <Modal size="lg" onClickToggleModal={handleModal}>
       <S.MainWrapper>
-        <S.colWrapper ratio={15}>
-          <div>임시</div>
-        </S.colWrapper>
         <S.colWrapper ratio={75}>
           <S.StyledInput
             type="text"
@@ -102,7 +90,6 @@ export const CreateWorkspace = (props: any) => {
             className="sub"
           ></S.StyledInput>
         </S.colWrapper>
-        <S.colWrapper ratio={10}></S.colWrapper>
       </S.MainWrapper>
       <S.SubWrapper>
         <S.StyledText>멤버 초대하기</S.StyledText>
@@ -115,7 +102,9 @@ export const CreateWorkspace = (props: any) => {
             value={newEmail}
             onChange={handleChangeEmail}
           ></S.StyledEmailInput>
-          <S.InviteBtn onClick={handleInvite}>초대 이메일 전송</S.InviteBtn>
+          <S.InviteBtn onClick={handleInvite} disabled={inviteBtnStatus}>
+            초대 이메일 전송
+          </S.InviteBtn>
         </S.InviteWrapper>
         <Paper
           elevation={0}
@@ -133,7 +122,7 @@ export const CreateWorkspace = (props: any) => {
                 <Chip
                   sx={{ backgroundColor: '#E9F8F9', p: 1 }}
                   label={data}
-                  // onDelete={handleDelete(data)}
+                  onDelete={handleDelete(data)}
                 />
               </ListItem>
             );
@@ -149,6 +138,7 @@ export const CreateWorkspace = (props: any) => {
           >
             워크스페이스 생성
           </Button>
+          <S.StyledText className="error">{errorText}</S.StyledText>
         </S.BtnWrapper>
       </S.SubWrapper>
     </Modal>
