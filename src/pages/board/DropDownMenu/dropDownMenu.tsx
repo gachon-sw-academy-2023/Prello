@@ -41,7 +41,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
 
   const handleDeleteCard = () => {
-    axios.post('/list/delete', { cardId });
+    axios.post('/card/delete', { cardId }).catch((error) => alert(error));
     UpdateList();
   };
 

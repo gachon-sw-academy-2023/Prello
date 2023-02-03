@@ -4,9 +4,8 @@ import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useIndexedDB } from 'react-indexed-db';
 import Sortable from 'sortablejs';
-import List from './List/List';
+import List from './Card/Card';
 import * as S from './styles';
 interface ICard {
   id: number;
@@ -19,8 +18,11 @@ export default function Board() {
   const [member, setMember] = useState([]);
 
   useEffect(() => {
-    axios.get('/members').then((res) => setMember(res.data));
-    axios.get('/list').then((res) => setLists(res.data));
+    axios
+      .get('/members/list')
+      .then((res) => setMember(res.data))
+      .catch((error) => alert(error));
+    UpdateList();
   }, []);
 
   useEffect(() => {
@@ -30,23 +32,29 @@ export default function Board() {
         animation: 150,
         ghostClass: 'blue-background-class',
         onUpdate({ oldIndex, newIndex }) {
-          axios.post('/list/updateIndex', { oldIndex, newIndex });
+          axios
+            .post('/card/update-index', { oldIndex, newIndex })
+            .catch((error) => alert(error));
         },
       });
     });
   });
 
   const UpdateList = () => {
-    axios.get('/list').then((res) => setLists(res.data));
+    axios
+      .get('/card')
+      .then((res) => setLists(res.data))
+      .catch((error) => alert(error));
   };
 
   const handleAddList = () => {
     axios
-      .post('/list', {
+      .post('/card/create', {
         title: '',
         order: lists.length,
       })
-      .then((res) => setLists(res.data));
+      .then((res) => setLists(res.data))
+      .catch((error) => alert(error));
   };
   return (
     <S.Container>

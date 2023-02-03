@@ -8,7 +8,7 @@ import * as S from '../styles';
 import Item from '../Item/Item';
 import axios from 'axios';
 
-interface IBoardProps {
+interface ICardProp {
   title: string;
   cardId: number;
   UpdateList: () => void;
@@ -19,7 +19,7 @@ interface ICard {
   text: string;
 }
 
-const List: React.FC<IBoardProps> = ({ title, cardId, UpdateList }) => {
+const List: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
@@ -50,7 +50,9 @@ const List: React.FC<IBoardProps> = ({ title, cardId, UpdateList }) => {
   };
 
   const handleChangeTitle = (e: any) => {
-    axios.post('/list/changeTitle', { title: e.target.value, cardId });
+    axios
+      .post('/card/update-title', { title: e.target.value, cardId })
+      .catch((error) => alert(error));
   };
 
   return (
