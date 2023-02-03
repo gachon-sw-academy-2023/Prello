@@ -14,19 +14,28 @@ import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal'
 import * as S from './styles';
 
 function UserImages(props: any) {
+  const remain = props.members.length - 3;
+
   if (props.members.length > 3)
     return (
-      <>
+      <S.ProfileImages>
         <ProfileImg image="/assets/workspace/sample-profile-image.png" />
         <ProfileImg image="/assets/workspace/sample-profile-image.png" />
-        <ProfileImg image="/assets/workspace/sample-profile-image.png" />
-      </>
+        <ProfileImg image="/assets/workspace/sample-profile-image.png" />외{' '}
+        {remain} 명
+      </S.ProfileImages>
     );
-  props.members.map(() => {
-    return <ProfileImg image="/assets/workspace/sample-profile-image.png" />;
-  });
 
-  return <></>;
+  return (
+    <S.ProfileImages>
+      {props.members.map((member: string, index: number) => (
+        <ProfileImg
+          key={index}
+          image="/assets/workspace/sample-profile-image.png"
+        />
+      ))}
+    </S.ProfileImages>
+  );
 }
 
 export default function WorkspaceDefault() {
@@ -53,7 +62,6 @@ export default function WorkspaceDefault() {
       setPWorkspaces(null);
       setLoading(true);
 
-      console.log(user.email);
       const response = await axios.get('/workspace/list', {
         params: {
           email: user.email,
@@ -141,9 +149,7 @@ export default function WorkspaceDefault() {
                 <S.ItemContents>
                   <S.Title>{workspace.name}</S.Title>
                   <S.ItemBoardName>{workspace.summary}</S.ItemBoardName>
-                  <S.ProfileImages>
-                    <UserImages members={workspace.memberInfo}></UserImages>
-                  </S.ProfileImages>
+                  <UserImages members={workspace.memberInfo}></UserImages>
                 </S.ItemContents>
               </S.Item>
             </Grid>
@@ -160,9 +166,7 @@ export default function WorkspaceDefault() {
                 <S.ItemContents>
                   <S.Title>{workspace.name}</S.Title>
                   <S.ItemBoardName>{workspace.summary}</S.ItemBoardName>
-                  <S.ProfileImages>
-                    <UserImages members={workspace.memberInfo}></UserImages>
-                  </S.ProfileImages>
+                  <UserImages members={workspace.memberInfo}></UserImages>
                 </S.ItemContents>
               </S.Item>
             </Grid>
