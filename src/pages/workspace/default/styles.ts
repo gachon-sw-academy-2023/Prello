@@ -28,6 +28,7 @@ export const Title = styled.h1`
 export const SubTitle = styled(Title)`
   font-size: 18px;
   font-weight: 400;
+  margin-top: 10px;
 `;
 
 export const CreateButton = styled.button`

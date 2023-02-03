@@ -4,16 +4,16 @@ import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import { YoutubeSearchedFor } from '@mui/icons-material';
 import Grid from '@mui/material/Grid';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import * as S from './styles';
-import { useState, useCallback, useEffect } from 'react';
 import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal';
-import axios from 'axios';
+import * as S from './styles';
 
 function UserImages(props: any) {
-  console.log(props.members);
   if (props.members.length > 3)
     return (
       <>
@@ -53,14 +53,24 @@ export default function WorkspaceDefault() {
       setPWorkspaces(null);
       setLoading(true);
 
-      const response = await axios.get('/workspace/list');
+      console.log(user.email);
+      const response = await axios.get('/workspace/list', {
+        params: {
+          email: user.email,
+        },
+      });
+
       if (response.status === 200) {
         setCWorkspaces(response.data);
       }
 
-      const response2 = await axios.get('/workspace/list/participate');
+      const response2 = await axios.get('/workspace/list/participate', {
+        params: {
+          email: user.email,
+        },
+      });
       if (response2.status === 200) {
-        setPWorkspaces(response.data);
+        setPWorkspaces(response2.data);
       }
     } catch (error: any) {
       setError(error);
@@ -74,7 +84,7 @@ export default function WorkspaceDefault() {
 
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>에러가 발생했습니다</div>;
-  if (!pWorkspaces && !cWorkspaces) return null;
+  if (!cWorkspaces || !pWorkspaces) return null;
 
   return (
     <S.Container>
@@ -120,7 +130,9 @@ export default function WorkspaceDefault() {
           </Default>
         </S.Wrapper>
 
-        <S.SubTitle>생성한 워크스페이스</S.SubTitle>
+        <S.SubTitle hidden={!cWorkspaces.length}>
+          생성한 워크스페이스
+        </S.SubTitle>
         <Grid container spacing={2}>
           {cWorkspaces.map((workspace: any) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
@@ -137,7 +149,9 @@ export default function WorkspaceDefault() {
             </Grid>
           ))}
         </Grid>
-        <S.SubTitle>참여한 워크스페이스</S.SubTitle>
+        <S.SubTitle hidden={!pWorkspaces.length}>
+          참여한 워크스페이스
+        </S.SubTitle>
         <Grid container spacing={2}>
           {pWorkspaces.map((workspace: any) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
