@@ -26,12 +26,19 @@ export const handlers = [
 
     if (user) {
       if (req.body.password === user.password) {
-        return res(ctx.status(200), ctx.json({ user }));
+        return res(ctx.status(200), ctx.delay(2000), ctx.json({ user }));
       }
-      return res(ctx.status(401), ctx.json({ message: 'Anauthorized' }));
+      return res(
+        ctx.status(401),
+        ctx.delay(2000),
+        ctx.json({ message: 'Anauthorized' }),
+      );
     }
-
-    return res(ctx.status(400), ctx.json({ message: 'Unregistered Account' }));
+    return res(
+      ctx.status(400),
+      ctx.delay(2000),
+      ctx.json({ message: 'Unregistered Account' }),
+    );
   }),
 
   rest.post('/sign-up', async (req: any, res, ctx) => {
