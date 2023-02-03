@@ -5,30 +5,24 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
-import List from './List/List';
+import List from './Card/Card';
 import * as S from './styles';
-
 interface ICard {
   id: number;
   title: string;
+  order: number;
 }
 
 export default function Board() {
+  const [lists, setLists] = useState<ICard[]>([]);
   const [member, setMember] = useState([]);
-  const handleAddList = () => {
-    setLists([
-      ...lists,
-      {
-        id: lists.length,
-        title: '',
-      },
-    ]);
-  };
 
   useEffect(() => {
     axios
-      .get('https://pimfy-prello.netlify.app/getMemberData.json')
-      .then((res) => setMember(res.data));
+      .get('/members/list')
+      .then((res) => setMember(res.data))
+      .catch((error) => alert(error));
+    UpdateList();
   }, []);
 
   useEffect(() => {
@@ -37,20 +31,31 @@ export default function Board() {
       new Sortable(column, {
         animation: 150,
         ghostClass: 'blue-background-class',
+        onUpdate({ oldIndex, newIndex }) {
+          axios
+            .post('/card/update-index', { oldIndex, newIndex })
+            .catch((error) => alert(error));
+        },
       });
     });
   });
 
-  const [lists, setLists] = useState<ICard[]>([
-    { id: 1, title: 'todo' },
-    { id: 2, title: 'done' },
-  ]);
-
-  const handleDeleteCard = (e: any) => {
-    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.style.display =
-      'none';
+  const UpdateList = () => {
+    axios
+      .get('/card')
+      .then((res) => setLists(res.data))
+      .catch((error) => alert(error));
   };
 
+  const handleAddList = () => {
+    axios
+      .post('/card/create', {
+        title: '',
+        order: lists.length,
+      })
+      .then((res) => setLists(res.data))
+      .catch((error) => alert(error));
+  };
   return (
     <S.Container>
       <Default>
@@ -72,13 +77,16 @@ export default function Board() {
         <Default>
           <S.RightWrapper>
             <S.ListContainer className="column">
-              {lists.map((list: ICard) => (
-                <List
-                  title={list.title}
-                  key={list.id}
-                  handleDeleteCard={handleDeleteCard}
-                />
-              ))}
+              {lists
+                .sort((a, b) => a.order - b.order)
+                .map((list: ICard) => (
+                  <List
+                    title={list.title}
+                    key={list.id}
+                    cardId={list.id}
+                    UpdateList={UpdateList}
+                  />
+                ))}
             </S.ListContainer>
             <S.AddListWrapper onClick={handleAddList}>
               <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
@@ -93,7 +101,8 @@ export default function Board() {
                 <List
                   title={list.title}
                   key={list.id}
-                  handleDeleteCard={handleDeleteCard}
+                  cardId={list.id}
+                  UpdateList={UpdateList}
                 />
               ))}
             </S.ListMobileContiner>
