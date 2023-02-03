@@ -6,7 +6,7 @@ import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
 
@@ -83,6 +83,14 @@ export default function WorkspaceDetail() {
   const handleNavigate = () => {
     navigate('/workspace-setting');
   };
+
+  const handleCreate = () => {
+    boards.push({ title: '' });
+    console.log(boards);
+  };
+
+  useEffect(() => {}, [handleCreate]);
+
   return (
     <S.Container>
       <Default>
@@ -124,7 +132,7 @@ export default function WorkspaceDetail() {
                 </Grid>
               ))}
               <Grid item xs={12} sm={6} md={4}>
-                <S.Item center={true} color={'#fffcff'}>
+                <S.Item center={true} color={'#fffcff'} onClick={handleCreate}>
                   <S.Image
                     width={'50px'}
                     height={'50px'}
