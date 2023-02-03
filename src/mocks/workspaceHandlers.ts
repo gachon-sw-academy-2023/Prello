@@ -23,7 +23,7 @@ export const workspaceHandlers = [
     }
   }),
 
-  rest.get('/workspace', async (req, res, ctx) => {
+  rest.get('/workspace/list', async (req, res, ctx) => {
     let PWorkspaces: IWorkspace[] = [];
 
     const email = 'test@gmail.com';

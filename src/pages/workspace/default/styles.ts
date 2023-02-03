@@ -68,6 +68,8 @@ export const ItemBoardName = styled.h1`
 export const ProfileImages = styled.div`
   display: flex;
   justify-content: flex-start;
+  text-align: center;
+  align-items: center;
 `;
 export const ProfileImage = styled.div`
   width: 40px;

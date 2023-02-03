@@ -13,6 +13,23 @@ import { useState, useCallback, useEffect } from 'react';
 import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal';
 import axios from 'axios';
 
+function UserImages(props: any) {
+  console.log(props.members);
+  if (props.members.length > 3)
+    return (
+      <>
+        <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+        <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+        <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+      </>
+    );
+  props.members.map(() => {
+    return <ProfileImg image="/assets/workspace/sample-profile-image.png" />;
+  });
+
+  return <></>;
+}
+
 export default function WorkspaceDefault() {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const user = useRecoilValue(userSelector);
@@ -35,7 +52,7 @@ export default function WorkspaceDefault() {
       setWorkspaces(null);
       setLoading(true);
 
-      const response = await axios.get('/workspace');
+      const response = await axios.get('/workspace/list');
       if (response.status === 200) {
         setWorkspaces(response.data);
       }
@@ -43,6 +60,10 @@ export default function WorkspaceDefault() {
       setError(error);
     }
     setLoading(false);
+  };
+
+  const handleNavigate = () => {
+    navigate('/workspace-detail');
   };
 
   if (loading) return <div>로딩중..</div>;
@@ -95,20 +116,14 @@ export default function WorkspaceDefault() {
 
         <Grid container spacing={2}>
           {workspaces.map((workspace: any) => (
-            <Grid item xs={12} sm={4} md={3} key={workspace.id}>
-              <S.Item
-                onClick={() => {
-                  navigate('/workspace-detail');
-                }}
-              >
+            <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
+              <S.Item onClick={handleNavigate}>
                 <S.GradientBG></S.GradientBG>
                 <S.ItemContents>
                   <S.Title>{workspace.name}</S.Title>
                   <S.ItemBoardName>{workspace.summary}</S.ItemBoardName>
                   <S.ProfileImages>
-                    <ProfileImg image="/assets/workspace/sample-profile-image.png" />
-                    <ProfileImg image="/assets/workspace/sample-profile-image.png" />
-                    <ProfileImg image="/assets/workspace/sample-profile-image.png" />
+                    <UserImages members={workspace.memberInfo}></UserImages>
                   </S.ProfileImages>
                 </S.ItemContents>
               </S.Item>
