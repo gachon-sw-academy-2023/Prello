@@ -62,26 +62,17 @@ let members: IMember[] = [
   },
 ];
 interface IBoard {
+  id: number;
   title: string;
+  workspaceId: number;
 }
-// let boards: IBoard[] = [
-//   {
-//     title: 'First Board',
-//   },
-//   {
-//     title: 'Second Board',
-//   },
-// ];
 
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [newItem, setNewItem] = useState<boolean>(false);
-  const [boards, setBoards] = useState<IBoard[]>([
-    { title: 'first Board' },
-    { title: 'Second Board' },
-  ]);
+  const [boards, setBoards] = useState<IBoard[]>([]);
 
   const handleModal = () => {
     setOpenModal(!isOpenModal);
@@ -92,9 +83,7 @@ export default function WorkspaceDetail() {
   };
 
   const handleCreate = () => {
-    // setBoards(boards.concat({ title: title }));
     setNewItem(true);
-    console.log(boards);
   };
 
   const fetchCreate = async () => {
@@ -115,10 +104,27 @@ export default function WorkspaceDetail() {
       setNewItem(false);
     }
   };
-
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
+  const fetchBoardList = async () => {
+    try {
+      const response = await axios.get('/board/list');
+      if (response.status === 200) {
+        console.log(response.data);
+        setBoards(response.data);
+      }
+    } catch (error: any) {
+      // setError(error);
+      console.log(error);
+    }
+    console.log('보드', boards);
+    // setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchBoardList();
+  }, [newItem]);
 
   return (
     <S.Container>
@@ -163,10 +169,10 @@ export default function WorkspaceDetail() {
                 </S.Item>
               </Grid>
               {boards.map((board) => (
-                <Grid item xs={12} sm={6} md={4} key={board.title}>
+                <Grid item xs={12} sm={6} md={4} key={board.id}>
                   <S.Item center={false} color={'#ffe7ee'}>
                     <S.TitleInput
-                      defaultValue={board.title}
+                      value={board.title}
                       disabled={true}
                     ></S.TitleInput>
                   </S.Item>
