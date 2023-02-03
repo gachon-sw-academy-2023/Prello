@@ -4,13 +4,13 @@ import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import { YoutubeSearchedFor } from '@mui/icons-material';
 import Grid from '@mui/material/Grid';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal';
+import WorkSpaceSkeleton from '../skeleton';
 import * as S from './styles';
 
 function UserImages(props: any) {
@@ -35,6 +35,31 @@ function UserImages(props: any) {
         />
       ))}
     </S.ProfileImages>
+  );
+}
+
+function WorkSpaceContainer(props: any) {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate('/workspace-detail');
+  };
+
+  return (
+    <Grid container spacing={2}>
+      {props.workspaces.map((workspace: any) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
+          <S.Item onClick={handleNavigate}>
+            <S.GradientBG></S.GradientBG>
+            <S.ItemContents>
+              <S.Title>{workspace.name}</S.Title>
+              <S.ItemBoardName>{workspace.summary}</S.ItemBoardName>
+              <UserImages members={workspace.memberInfo}></UserImages>
+            </S.ItemContents>
+          </S.Item>
+        </Grid>
+      ))}
+    </Grid>
   );
 }
 
@@ -83,14 +108,10 @@ export default function WorkspaceDefault() {
     } catch (error: any) {
       setError(error);
     }
-    setLoading(false);
+    setTimeout(() => setLoading(false), 2000);
   };
 
-  const handleNavigate = () => {
-    navigate('/workspace-detail');
-  };
-
-  if (loading) return <div>로딩중..</div>;
+  if (loading) return <WorkSpaceSkeleton></WorkSpaceSkeleton>;
   if (error) return <div>에러가 발생했습니다</div>;
   if (!cWorkspaces || !pWorkspaces) return null;
 
@@ -141,37 +162,11 @@ export default function WorkspaceDefault() {
         <S.SubTitle hidden={!cWorkspaces.length}>
           생성한 워크스페이스
         </S.SubTitle>
-        <Grid container spacing={2}>
-          {cWorkspaces.map((workspace: any) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
-              <S.Item onClick={handleNavigate}>
-                <S.GradientBG></S.GradientBG>
-                <S.ItemContents>
-                  <S.Title>{workspace.name}</S.Title>
-                  <S.ItemBoardName>{workspace.summary}</S.ItemBoardName>
-                  <UserImages members={workspace.memberInfo}></UserImages>
-                </S.ItemContents>
-              </S.Item>
-            </Grid>
-          ))}
-        </Grid>
+        <WorkSpaceContainer workspaces={cWorkspaces}></WorkSpaceContainer>
         <S.SubTitle hidden={!pWorkspaces.length}>
           참여한 워크스페이스
         </S.SubTitle>
-        <Grid container spacing={2}>
-          {pWorkspaces.map((workspace: any) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
-              <S.Item onClick={handleNavigate}>
-                <S.GradientBG></S.GradientBG>
-                <S.ItemContents>
-                  <S.Title>{workspace.name}</S.Title>
-                  <S.ItemBoardName>{workspace.summary}</S.ItemBoardName>
-                  <UserImages members={workspace.memberInfo}></UserImages>
-                </S.ItemContents>
-              </S.Item>
-            </Grid>
-          ))}
-        </Grid>
+        <WorkSpaceContainer workspaces={pWorkspaces}></WorkSpaceContainer>
       </S.ContentsWrapper>
     </S.Container>
   );
