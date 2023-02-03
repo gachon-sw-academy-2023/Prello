@@ -1,7 +1,7 @@
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import DropDownMenu from '../DropDownMenu/dropDownMenu';
 import * as S from '../styles';
@@ -14,34 +14,47 @@ interface ICardProp {
   UpdateList: () => void;
 }
 
-interface ICard {
+interface IItem {
   id: number;
-  text: string;
+  title: string;
+  order: number;
+  cardId: number;
 }
 
-const List: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
+const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
-  const [cards, setCards] = useState<ICard[]>([]);
+  const [items, setItems] = useState<IItem[]>([]);
+
+  useEffect(() => {
+    axios.get(`/list/item/${cardId}`).then((res) => setItems(res.data));
+  }, []);
 
   const handleSubmit = (e: { target: any; preventDefault: () => void }) => {
     e.preventDefault();
 
     if (text.length !== 0) {
-      const card = {
-        id: cards.length + 1,
-        text,
+      const item = {
+        title: text,
+        order: items.length + 1,
+        cardId,
       };
 
-      setCards([...cards, card]);
+      axios
+        .post('/item/create', {
+          ...item,
+        })
+        .then((res) => setItems(res.data));
+
       setText('');
     }
   };
 
   const handleDeleteItems = () => {
-    setCards([]);
+    setItems([]);
     setShowForm(false);
+    axios.post('/item/clear', { cardId }).then((res) => console.log(res));
   };
 
   const handleCancel = () => {
@@ -86,11 +99,11 @@ const List: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             delay={1}
             swap
             multiDrag
-            setList={setCards}
-            list={cards}
+            setList={setItems}
+            list={items}
           >
-            {cards.map((card: ICard) => (
-              <Item key={card.id}>{card.text}</Item>
+            {items.map((card: IItem) => (
+              <Item key={card.id}>{card.title}</Item>
             ))}
           </ReactSortable>
           {!showForm && (
@@ -132,11 +145,11 @@ const List: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             delay={1}
             swap
             multiDrag
-            setList={setCards}
-            list={cards}
+            setList={setItems}
+            list={items}
           >
-            {cards.map((card: ICard) => (
-              <Item key={card.id}>{card.text}</Item>
+            {items.map((card: IItem) => (
+              <Item key={card.id}>{card.title}</Item>
             ))}
           </ReactSortable>
           {!showForm && (
@@ -166,4 +179,4 @@ const List: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   );
 };
 
-export default List;
+export default Card;

@@ -5,13 +5,12 @@ import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
-import { useCallback, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import * as S from './styles';
-import { useState, useCallback, useEffect } from 'react';
 import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal';
-import axios from 'axios';
+import * as S from './styles';
 
 function UserImages(props: any) {
   console.log(props.members);

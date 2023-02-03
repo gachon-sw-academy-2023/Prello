@@ -1,11 +1,11 @@
 import { rest } from 'msw';
-import memberList from './data/getMemberData.json';
+import memberList from '../data/getMemberData.json';
 import { useIndexedDB } from 'react-indexed-db';
 
 const { getAll, add, deleteRecord, update, getByID, getByIndex } =
   useIndexedDB('card');
 
-export const dataHandlers = [
+export const cardHandlers = [
   rest.get('/members/list', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(memberList));
   }),
@@ -35,7 +35,11 @@ export const dataHandlers = [
   rest.post('/card/update-title', async (req: any, res, ctx) => {
     try {
       const target = await getByID(req.body.cardId);
-      update({ title: req.body.title, id: target.id, order: target.order });
+      update({
+        title: req.body.title,
+        id: target.id,
+        order: target.order,
+      });
       return res(ctx.status(200));
     } catch {
       return res(ctx.status(500), ctx.json({ message: 'Fail to Update Data' }));
