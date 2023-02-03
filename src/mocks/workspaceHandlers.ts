@@ -29,10 +29,9 @@ export const workspaceHandlers = [
 
     await getAll().then((workspaces: IWorkspace[]) => {
       CWorkspaces = workspaces.filter(({ owner }) => owner === email);
-      console.log(CWorkspaces);
     });
 
-    return res(ctx.status(200), ctx.json(CWorkspaces));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(CWorkspaces));
   }),
 
   rest.get('/workspace/list/participate', async (req: any, res, ctx) => {
@@ -47,9 +46,8 @@ export const workspaceHandlers = [
             : (PWorkspaces = PWorkspaces),
         );
       }
-      console.log(PWorkspaces);
     });
 
-    return res(ctx.status(200), ctx.json(PWorkspaces));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(PWorkspaces));
   }),
 ];

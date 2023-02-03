@@ -108,7 +108,7 @@ export default function WorkspaceDefault() {
     } catch (error: any) {
       setError(error);
     }
-    setTimeout(() => setLoading(false), 2000);
+    setLoading(false);
   };
 
   if (loading) return <WorkSpaceSkeleton></WorkSpaceSkeleton>;
