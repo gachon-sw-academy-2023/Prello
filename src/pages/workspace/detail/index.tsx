@@ -63,7 +63,7 @@ let members: IMember[] = [
 ];
 interface IBoard {
   id: number;
-  title: string;
+  name: string;
   workspaceId: number;
 }
 
@@ -73,6 +73,8 @@ export default function WorkspaceDetail() {
   const [title, setTitle] = useState<string>('');
   const [newItem, setNewItem] = useState<boolean>(false);
   const [boards, setBoards] = useState<IBoard[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleModal = () => {
     setOpenModal(!isOpenModal);
@@ -109,22 +111,27 @@ export default function WorkspaceDetail() {
   };
   const fetchBoardList = async () => {
     try {
+      setError(null);
+      setLoading(true);
       const response = await axios.get('/board/list');
       if (response.status === 200) {
         console.log(response.data);
         setBoards(response.data);
       }
     } catch (error: any) {
-      // setError(error);
+      setError(error);
       console.log(error);
     }
     console.log('보드', boards);
-    // setLoading(false);
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchBoardList();
   }, []);
+
+  if (loading) return <div>로딩중..</div>;
+  if (error) return <div>에러가 발생했습니다</div>;
 
   return (
     <S.Container>
@@ -172,7 +179,7 @@ export default function WorkspaceDetail() {
                 <Grid item xs={12} sm={6} md={4} key={board.id}>
                   <S.Item center={false} color={'#ffe7ee'}>
                     <S.TitleInput
-                      value={board.title}
+                      value={board.name}
                       disabled={true}
                     ></S.TitleInput>
                   </S.Item>
