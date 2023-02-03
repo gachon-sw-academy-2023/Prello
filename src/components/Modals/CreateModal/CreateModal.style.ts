@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import colors from '@/styles/colors';
 
 export type WrapperProps = {
   ratio: number;
@@ -10,6 +11,7 @@ export const MainWrapper = styled.div`
 `;
 
 export const SubWrapper = styled.div`
+  margin-top: 20px;
   width: 100%;
   height: 70%;
 `;
@@ -35,6 +37,8 @@ export const InviteWrapper = styled.div`
   width: 100%;
   margin-top: 15px;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
 `;
 
 export const BtnWrapper = styled.div`
@@ -79,6 +83,9 @@ export const StyledText = styled.h1`
   &.sub {
     font-family: 'LINESeedKR-Rg';
   }
+  &.error {
+    color: red;
+  }
 `;
 
 export const StyledEmailInput = styled.input`
@@ -86,10 +93,9 @@ export const StyledEmailInput = styled.input`
   color: rgb(36, 35, 42);
   font-size: 16px;
   line-height: 20px;
-  min-height: 28px;
+  min-height: 35px;
   border-radius: 0.5rem;
   padding: 8px 40px;
-  margin-top: 10px;
   border: 1px solid #eaebf6;
   transition: all 0.1s ease 0s;
   background: url('assets/authorization/login/email.png') no-repeat left;
@@ -108,7 +114,10 @@ export const InviteBtn = styled.button`
   min-height: 35px;
   border-radius: 0.5rem;
   margin-left: 1%;
-  background-color: lightgray;
+  background-color: #fca4be;
   color: white;
   font-family: 'LINESeedKR-Rg';
+  :disabled {
+    background-color: lightgray;
+  }
 `;

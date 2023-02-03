@@ -1,21 +1,16 @@
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
-import ROUTES from '@/routes';
 import { userSelector } from '@/recoil/atom/userSelector';
-import { emailRegex } from '@/utils/checkEmail';
-import { pwdRegex } from '@/utils/checkPassword';
-import { Default, Mobile } from '@/utils/mediaQuery';
+import ROUTES from '@/routes';
+import { Default } from '@/utils/mediaQuery';
 import axios from 'axios';
-import { FormEvent, useCallback, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import * as S from './styles';
 
 function Login() {
-  const [login, setLogin] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [emailValidation, setEmailValidation] = useState<boolean>(true);
-  const [pwdValidation, setPwdValidation] = useState<boolean>(true);
   const [user, setUser] = useRecoilState(userSelector);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
@@ -30,22 +25,6 @@ function Login() {
     setPassword(e.target.value);
   };
 
-  const emailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value.match(emailRegex) || e.target.value === null) {
-      setEmailValidation(false);
-    } else {
-      setEmailValidation(true);
-    }
-  };
-
-  const pwdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value.match(pwdRegex) || e.target.value === null) {
-      setPwdValidation(false);
-    } else {
-      setPwdValidation(true);
-    }
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     patchLogin();
@@ -58,9 +37,11 @@ function Login() {
     };
     try {
       const response = await axios.post('/login', data);
-      console.log(response);
+      console.log(response.data.user);
       if (response.status === 200) {
         setModalText('로그인이 완료되었습니다! 💖');
+        setUser(response.data.user);
+        console.log(user);
         handleModal();
         setTimeout(() => navigate(ROUTES.MAIN), 1000);
       }
@@ -76,9 +57,9 @@ function Login() {
     }
   };
 
-  const handleModal = useCallback(() => {
+  const handleModal = () => {
     setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
+  };
 
   return (
     <S.Container>
@@ -122,7 +103,6 @@ function Login() {
               value={email}
               placeholder="Type here"
               onChange={handleChangeEmail}
-              onBlur={emailInput}
               required
               data-testid="email"
             ></S.InputEmail>
@@ -134,7 +114,6 @@ function Login() {
               value={password}
               placeholder="Type here"
               onChange={handleChangePassword}
-              onBlur={pwdInput}
               required
               data-testid="password"
             ></S.InputPwd>
