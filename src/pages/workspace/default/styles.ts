@@ -24,6 +24,12 @@ export const Title = styled.h1`
   font-family: 'LINESeedKR-Bd';
   color: #4f4e4e;
 `;
+
+export const SubTitle = styled(Title)`
+  font-size: 18px;
+  font-weight: 400;
+`;
+
 export const CreateButton = styled.button`
   font-family: 'LINESeedKR-Rg';
   background-color: #fca4be;

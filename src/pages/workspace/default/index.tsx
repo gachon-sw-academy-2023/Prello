@@ -34,7 +34,8 @@ export default function WorkspaceDefault() {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const user = useRecoilValue(userSelector);
   const navigate = useNavigate();
-  const [workspaces, setWorkspaces] = useState<any>();
+  const [cWorkspaces, setCWorkspaces] = useState<any>();
+  const [pWorkspaces, setPWorkspaces] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -49,12 +50,18 @@ export default function WorkspaceDefault() {
   const fetchWorkspaces = async () => {
     try {
       setError(null);
-      setWorkspaces(null);
+      setCWorkspaces(null);
+      setPWorkspaces(null);
       setLoading(true);
 
       const response = await axios.get('/workspace/list');
       if (response.status === 200) {
-        setWorkspaces(response.data);
+        setCWorkspaces(response.data);
+      }
+
+      const response2 = await axios.get('/workspace/list/participate');
+      if (response2.status === 200) {
+        setPWorkspaces(response.data);
       }
     } catch (error: any) {
       setError(error);
@@ -68,7 +75,7 @@ export default function WorkspaceDefault() {
 
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>에러가 발생했습니다</div>;
-  if (!workspaces) return null;
+  if (!pWorkspaces && !cWorkspaces) return null;
 
   return (
     <S.Container>
@@ -114,8 +121,26 @@ export default function WorkspaceDefault() {
           </Default>
         </S.Wrapper>
 
+        <S.SubTitle>생성한 워크스페이스</S.SubTitle>
         <Grid container spacing={2}>
-          {workspaces.map((workspace: any) => (
+          {cWorkspaces.map((workspace: any) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
+              <S.Item onClick={handleNavigate}>
+                <S.GradientBG></S.GradientBG>
+                <S.ItemContents>
+                  <S.Title>{workspace.name}</S.Title>
+                  <S.ItemBoardName>{workspace.summary}</S.ItemBoardName>
+                  <S.ProfileImages>
+                    <UserImages members={workspace.memberInfo}></UserImages>
+                  </S.ProfileImages>
+                </S.ItemContents>
+              </S.Item>
+            </Grid>
+          ))}
+        </Grid>
+        <S.SubTitle>참여한 워크스페이스</S.SubTitle>
+        <Grid container spacing={2}>
+          {pWorkspaces.map((workspace: any) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
               <S.Item onClick={handleNavigate}>
                 <S.GradientBG></S.GradientBG>

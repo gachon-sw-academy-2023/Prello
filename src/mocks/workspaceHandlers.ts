@@ -24,15 +24,24 @@ export const workspaceHandlers = [
   }),
 
   rest.get('/workspace/list', async (req, res, ctx) => {
+    let CWorkspaces: IWorkspace[] = [];
+
+    const email = 'test@gmail.com';
+    await getAll().then((workspaces: IWorkspace[]) => {
+      CWorkspaces = workspaces.filter(({ owner }) => owner === email);
+    });
+
+    return res(ctx.status(200), ctx.json(CWorkspaces));
+  }),
+
+  rest.get('/workspace/list/participate', async (req, res, ctx) => {
     let PWorkspaces: IWorkspace[] = [];
 
     const email = 'test@gmail.com';
     await getAll().then((workspaces: IWorkspace[]) => {
-      PWorkspaces = workspaces.filter(({ owner }) => owner === email);
-
       {
         workspaces.map((workspace) =>
-          workspace.memberInfo.includes('test@gmail.com')
+          workspace.memberInfo.includes(email)
             ? (PWorkspaces = [...PWorkspaces, workspace])
             : (PWorkspaces = PWorkspaces),
         );
