@@ -5,7 +5,7 @@ import Login from './pages/authorization/login';
 import SignUp from './pages/authorization/sign-up';
 import Board from './pages/board';
 import Main from './pages/main';
-import NotFound from './pages/notFound';
+import Inform from './pages/util';
 import WorkspaceDefault from './pages/workspace/default';
 import WorkspaceDetail from './pages/workspace/detail';
 import WorkspaceSetting from './pages/workspace/setting';
@@ -75,7 +75,12 @@ function App() {
               path={routes.WORKSPACESETTING}
               element={<WorkspaceSetting />}
             />
-            <Route path={'*'} element={<NotFound />} />
+            <Route
+              path={'*'}
+              element={
+                <Inform message={'권한이 없거나 존재하지 않는 페이지입니다.'} />
+              }
+            />
           </Routes>
         </IndexedDB>
       </RecoilRoot>

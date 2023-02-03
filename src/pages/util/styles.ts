@@ -9,6 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const Wrapper = styled.div`
   width: 100%;
   height: 90%;
@@ -17,6 +18,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   h1 {
     font-size: 25px;
     font-weight: 600;
@@ -31,6 +33,7 @@ export const BackBtn = styled.div`
   background-color: whitesmoke;
   border-radius: 20px;
 `;
+
 export const Logo = styled.h1`
   font-family: 'Rubik Bubbles', cursive;
   font-size: 25px;

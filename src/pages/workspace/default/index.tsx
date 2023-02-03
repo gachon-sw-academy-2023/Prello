@@ -2,16 +2,16 @@ import Button from '@/components/Button/Button';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
+import Inform from '@/pages/util';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
-import { useCallback, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import * as S from './styles';
-import { useState, useCallback, useEffect } from 'react';
 import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal';
-import axios from 'axios';
+import * as S from './styles';
 
 function UserImages(props: any) {
   console.log(props.members);
@@ -74,7 +74,10 @@ export default function WorkspaceDefault() {
   };
 
   if (loading) return <div>로딩중..</div>;
-  if (error) return <div>에러가 발생했습니다</div>;
+  if (error)
+    return (
+      <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
+    );
   if (!pWorkspaces && !cWorkspaces) return null;
 
   return (
