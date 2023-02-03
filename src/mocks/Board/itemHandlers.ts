@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
-const { getAll, add, deleteRecord, getByIndex } = useIndexedDB('item');
+const { getAll, add, deleteRecord, getByIndex, getByID, update } =
+  useIndexedDB('item');
 
 export const itemHandlers = [
   rest.get('/list/item/:cardId', async (req, res, ctx) => {
@@ -30,5 +31,18 @@ export const itemHandlers = [
     });
 
     return res(ctx.status(200), ctx.json(AllList));
+  }),
+
+  rest.post('/item/update-card-index', async (req: any, res, ctx) => {
+    const target = await getByID(req.body.id);
+
+    update({
+      title: target.title,
+      id: target.id,
+      order: target.order,
+      cardId: req.body.newIndex,
+    });
+
+    return res(ctx.status(200));
   }),
 ];

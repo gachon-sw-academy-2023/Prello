@@ -71,7 +71,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   return (
     <div>
       <Default>
-        <S.ListWrapper draggable="true">
+        <S.ListWrapper draggable="true" key={cardId}>
           <S.ListHeader>
             <input
               defaultValue={title}
@@ -94,6 +94,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
           </S.ListHeader>
           <ReactSortable
             className="itemWrapper"
+            id={`${cardId}`}
             group="shared"
             animation={200}
             delay={1}
@@ -101,9 +102,18 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             multiDrag
             setList={setItems}
             list={items}
+            onEnd={(e) => {
+              axios.post('/item/update-card-index', {
+                id: parseInt(e.item.id),
+                oldIndex: parseInt(e.from.id),
+                newIndex: parseInt(e.to.id),
+              });
+            }}
           >
-            {items.map((card: IItem) => (
-              <Item key={card.id}>{card.title}</Item>
+            {items.map((item: IItem) => (
+              <Item key={item.id} itemId={item.id}>
+                {item.title}
+              </Item>
             ))}
           </ReactSortable>
           {!showForm && (
@@ -148,8 +158,10 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             setList={setItems}
             list={items}
           >
-            {items.map((card: IItem) => (
-              <Item key={card.id}>{card.title}</Item>
+            {items.map((item: IItem) => (
+              <Item key={item.id} itemId={item.id}>
+                {item.title}
+              </Item>
             ))}
           </ReactSortable>
           {!showForm && (
