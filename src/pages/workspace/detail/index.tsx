@@ -124,7 +124,7 @@ export default function WorkspaceDetail() {
 
   useEffect(() => {
     fetchBoardList();
-  }, [newItem]);
+  }, []);
 
   return (
     <S.Container>
