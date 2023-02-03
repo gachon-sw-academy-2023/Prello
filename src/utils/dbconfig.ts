@@ -21,7 +21,7 @@ export const DBConfig = {
         {
           name: 'memberInfo',
           keypath: 'memberInfo',
-          options: { unique: true },
+          options: { unique: false },
         },
       ],
     },

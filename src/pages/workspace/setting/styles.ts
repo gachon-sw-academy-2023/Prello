@@ -87,8 +87,11 @@ export const ProfileName = styled.p`
 
 //오른쪽 화면
 export const RightContainer = styled.div`
-  margin: auto;
-  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  padding: 30px;
+  margin-left: 250px;
 `;
 
 export const InfoContainer = styled.div`

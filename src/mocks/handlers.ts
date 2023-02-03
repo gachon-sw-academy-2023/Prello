@@ -1,6 +1,8 @@
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
+
 const { getAll, add } = useIndexedDB('user');
+
 export const handlers = [
   rest.get('/user', (req, res, ctx) => {
     return res(
@@ -17,7 +19,6 @@ export const handlers = [
   }),
 
   rest.post('/login', async (req: any, res, ctx) => {
-    let password;
     let user;
     await getAll().then((users) => {
       user = users.find(({ email }) => email === req.body.email);
@@ -25,7 +26,7 @@ export const handlers = [
 
     if (user) {
       if (req.body.password === user.password) {
-        return res(ctx.status(200), ctx.json({ message: 'Login Success!' }));
+        return res(ctx.status(200), ctx.json({ user }));
       }
       return res(ctx.status(401), ctx.json({ message: 'Anauthorized' }));
     }
