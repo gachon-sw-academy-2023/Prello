@@ -6,9 +6,10 @@ import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
+import axios from 'axios';
 
 interface IMember {
   name: string;
@@ -63,18 +64,24 @@ let members: IMember[] = [
 interface IBoard {
   title: string;
 }
-let boards: IBoard[] = [
-  {
-    title: 'First Board',
-  },
-  {
-    title: 'Second Board',
-  },
-];
+// let boards: IBoard[] = [
+//   {
+//     title: 'First Board',
+//   },
+//   {
+//     title: 'Second Board',
+//   },
+// ];
 
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
+  const [newItem, setNewItem] = useState<boolean>(false);
+  const [boards, setBoards] = useState<IBoard[]>([
+    { title: 'first Board' },
+    { title: 'Second Board' },
+  ]);
 
   const handleModal = () => {
     setOpenModal(!isOpenModal);
@@ -85,11 +92,33 @@ export default function WorkspaceDetail() {
   };
 
   const handleCreate = () => {
-    boards.push({ title: '' });
+    // setBoards(boards.concat({ title: title }));
+    setNewItem(true);
     console.log(boards);
   };
 
-  useEffect(() => {}, [handleCreate]);
+  const fetchCreate = async () => {
+    let info = {
+      workspaceId: 1,
+      name: title,
+    };
+    if (title.length > 0) {
+      try {
+        const response = await axios.post('/board/create', info);
+        if (response.status === 200) {
+          console.log('저장완료', info);
+        }
+      } catch (error: any) {
+        console.log(error);
+      }
+      setTitle('');
+      setNewItem(false);
+    }
+  };
+
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
 
   return (
     <S.Container>
@@ -124,13 +153,6 @@ export default function WorkspaceDetail() {
           <S.Line margin="0"></S.Line>
           <S.BoardContainer>
             <Grid container spacing={4}>
-              {boards.map((board) => (
-                <Grid item xs={12} sm={6} md={4} key={board.title}>
-                  <S.Item center={false} color={'#ffe7ee'}>
-                    <S.Title margin={'30px 20px'}>{board.title}</S.Title>
-                  </S.Item>
-                </Grid>
-              ))}
               <Grid item xs={12} sm={6} md={4}>
                 <S.Item center={true} color={'#fffcff'} onClick={handleCreate}>
                   <S.Image
@@ -140,6 +162,32 @@ export default function WorkspaceDetail() {
                   ></S.Image>
                 </S.Item>
               </Grid>
+              {boards.map((board) => (
+                <Grid item xs={12} sm={6} md={4} key={board.title}>
+                  <S.Item center={false} color={'#ffe7ee'}>
+                    <S.TitleInput
+                      defaultValue={board.title}
+                      disabled={true}
+                    ></S.TitleInput>
+                  </S.Item>
+                </Grid>
+              ))}
+              {newItem && (
+                <Grid item xs={12} sm={6} md={4}>
+                  <S.Item center={false} color={'#ffe7ee'}>
+                    <S.TitleInput
+                      placeholder="보드 이름을 입력해주세요"
+                      defaultValue={title}
+                      onChange={handleChangeTitle}
+                    ></S.TitleInput>
+                    <S.BtnWrapper>
+                      <S.SaveBtn color="primary" onClick={fetchCreate}>
+                        생성하기
+                      </S.SaveBtn>
+                    </S.BtnWrapper>
+                  </S.Item>
+                </Grid>
+              )}
             </Grid>
           </S.BoardContainer>
         </S.RightContainer>
