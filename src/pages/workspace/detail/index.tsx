@@ -6,11 +6,12 @@ import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
-import { ReactElement, useEffect, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
-import axios from 'axios';
 
+// TODO: member 불러오는 api로 대체
 interface IMember {
   name: string;
   profile: string;
@@ -90,6 +91,7 @@ export default function WorkspaceDetail() {
 
   const fetchCreate = async () => {
     let info = {
+      // TODO: workspaceID 변경 필요
       workspaceId: 1,
       name: title,
     };
@@ -104,6 +106,7 @@ export default function WorkspaceDetail() {
       }
       setTitle('');
       setNewItem(false);
+      fetchBoardList();
     }
   };
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
