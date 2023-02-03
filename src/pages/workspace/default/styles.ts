@@ -24,6 +24,12 @@ export const Title = styled.h1`
   font-family: 'LINESeedKR-Bd';
   color: #4f4e4e;
 `;
+
+export const SubTitle = styled(Title)`
+  font-size: 18px;
+  font-weight: 400;
+`;
+
 export const CreateButton = styled.button`
   font-family: 'LINESeedKR-Rg';
   background-color: #fca4be;
@@ -68,6 +74,8 @@ export const ItemBoardName = styled.h1`
 export const ProfileImages = styled.div`
   display: flex;
   justify-content: flex-start;
+  text-align: center;
+  align-items: center;
 `;
 export const ProfileImage = styled.div`
   width: 40px;
