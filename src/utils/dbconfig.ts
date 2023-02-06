@@ -33,5 +33,17 @@ export const DBConfig = {
         { name: 'order', keypath: 'order' },
       ],
     },
+    {
+      store: 'board',
+      storeConfig: { keyPath: 'id', autoIncrement: true },
+      storeSchema: [
+        {
+          name: 'workspaceId',
+          keypath: 'workspaceId',
+          options: { unique: false },
+        },
+        { name: 'name', keypath: 'name', options: { unique: false } },
+      ],
+    },
   ],
 };
