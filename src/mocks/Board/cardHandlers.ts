@@ -10,6 +10,14 @@ export const cardHandlers = [
     return res(ctx.status(200), ctx.json(memberList));
   }),
 
+  rest.get('/card/:cardId', async (req: any, res, ctx) => {
+    const target = await getByID(req.params.cardId);
+
+    console.log(target);
+
+    return res(ctx.status(200), ctx.json(target));
+  }),
+
   rest.get('/card', async (req, res, ctx) => {
     try {
       const list = await getAll();

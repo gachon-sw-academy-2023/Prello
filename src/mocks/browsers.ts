@@ -1,5 +1,5 @@
 import { setupWorker } from 'msw';
-import { cardHandlers } from './Board/CardHandlers';
+import { cardHandlers } from './Board/cardHandlers';
 import { handlers } from './handlers';
 import { workspaceHandlers } from './workspaceHandlers';
 import { itemHandlers } from './Board/itemHandlers';

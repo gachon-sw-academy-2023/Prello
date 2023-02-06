@@ -4,7 +4,7 @@ const ROUTES = {
   SIGNUP: '/sign-up',
   BOARD: '/board',
   WORKSPACEDEFAULT: '/workspace',
-  WORKSPACEDETAIL: '/workspace-detail',
+  WORKSPACEDETAIL: '/workspace-detail/:workspaceId',
   CREATEWORKSPACE: '/create-workspace',
   WORKSPACESETTING: '/workspace-setting',
 };
