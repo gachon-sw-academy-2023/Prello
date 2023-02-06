@@ -1,7 +1,9 @@
+import CircularLoading from '@/components/CirclularLoading/CircularLoading';
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
 import { userSelector } from '@/recoil/atom/userSelector';
 import ROUTES from '@/routes';
 import { Default } from '@/utils/mediaQuery';
+import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +16,7 @@ function Login() {
   const [user, setUser] = useRecoilState(userSelector);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -27,10 +30,11 @@ function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    patchLogin();
+    fetchLogin();
   };
 
-  const patchLogin = async () => {
+  const fetchLogin = async () => {
+    setLoading(true);
     const data = {
       email: email,
       password: password,
@@ -38,7 +42,9 @@ function Login() {
     try {
       const response = await axios.post('/login', data);
       console.log(response.data.user);
+      console.log(loading);
       if (response.status === 200) {
+        setLoading(false);
         setModalText('로그인이 완료되었습니다! 💖');
         setUser(response.data.user);
         console.log(user);
@@ -47,10 +53,12 @@ function Login() {
       }
     } catch (error: any) {
       if (error.response.status === 400) {
+        setLoading(false);
         setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
         handleModal();
       }
       if (error.response.status === 401) {
+        setLoading(false);
         setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
         handleModal();
       }
@@ -63,6 +71,7 @@ function Login() {
 
   return (
     <S.Container>
+      {loading && <CircularLoading />}
       {isOpenModal && (
         <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
       )}
