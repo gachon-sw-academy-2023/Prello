@@ -47,8 +47,8 @@ function UserImages({ members }: WorkspaceUserImageProps) {
 function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate('/workspace-detail');
+  const handleNavigate = (param: string) => {
+    navigate(`/workspace-detail/${param}`);
   };
 
   return (

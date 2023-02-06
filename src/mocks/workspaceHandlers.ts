@@ -2,7 +2,7 @@ import { IDeleteWorkspace, IUser, IWorkspace } from '@/utils/types';
 import { getAllByAltText } from '@testing-library/react';
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
-const { getAll, add, deleteRecord } = useIndexedDB('workspace');
+const { getAll, add, getByID, deleteRecord } = useIndexedDB('workspace');
 
 export const workspaceHandlers = [
   rest.post('/workspace/create', async (req, res, ctx) => {
@@ -52,21 +52,5 @@ export const workspaceHandlers = [
     }
 
     return res(ctx.status(200), ctx.delay(1000), ctx.json(PWorkspaces));
-  }),
-
-  rest.post('/workspace/delete', async (req, res, ctx) => {
-    const { workspaceId } = await req.json<IDeleteWorkspace>();
-    console.log(workspaceId);
-
-    try {
-      await deleteRecord(workspaceId);
-
-      return res(
-        ctx.status(200),
-        ctx.json({ message: 'Workspace Delete Success!' }),
-      );
-    } catch {
-      return res(ctx.status(500), ctx.json({ message: 'Fail to Delete Data' }));
-    }
   }),
 ];

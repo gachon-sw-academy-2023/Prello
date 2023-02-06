@@ -49,7 +49,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
     <S.Container ref={wrapperRef}>
       {visible && (
         <ul>
-          <li onClick={handleDeleteCard}>리스트 삭제</li>
+          <li onClick={handleDeleteCard}>카드 삭제</li>
           <li onClick={handleItemMenu}>아이템 전체 삭제</li>
         </ul>
       )}

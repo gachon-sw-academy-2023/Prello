@@ -1,10 +1,12 @@
 import { setupWorker } from 'msw';
-import { dataHandlers } from './boardHandlers';
+import { cardHandlers } from './Board/cardHandlers';
 import { handlers } from './handlers';
 import { workspaceHandlers } from './workspaceHandlers';
+import { itemHandlers } from './Board/itemHandlers';
 
 export const worker = setupWorker(
   ...handlers,
-  ...dataHandlers,
   ...workspaceHandlers,
+  ...cardHandlers,
+  ...itemHandlers,
 );
