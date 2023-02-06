@@ -5,6 +5,7 @@ import SubTitle from '@/components/SubTitle/SubTitle';
 export default function DeleteModal(props: any) {
   const handleModal = () => {
     props.setOpenModal(false);
+    props.deleteWorkspace();
   };
   return (
     <Modal onClickToggleModal={handleModal}>
