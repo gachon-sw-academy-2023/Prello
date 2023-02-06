@@ -1,13 +1,12 @@
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import DropDownMenu from '../DropDownMenu/dropDownMenu';
-import * as S from '../styles';
 import Item from '../Item/Item';
-import axios from 'axios';
-import { orderBy } from 'cypress/types/lodash';
+import * as S from '../styles';
 
 interface ICardProp {
   title: string;
@@ -29,7 +28,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const [items, setItems] = useState<IItem[]>([]);
 
   useEffect(() => {
-    axios.get(`/list/item/${cardId}`).then((res) => setItems(res.data));
+    fatchItems();
   }, []);
 
   const handleSubmit = (e: { target: any; preventDefault: () => void }) => {
@@ -69,11 +68,19 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
       .catch((error) => alert(error));
   };
 
+  const fatchItems = () => {
+    axios
+      .get(`/list/item/${cardId}`)
+      .then((res) =>
+        setItems(res.data.sort((a: IItem, b: IItem) => a.order - b.order)),
+      );
+  };
+
   return (
     <div>
       <Default>
-        <S.ListWrapper draggable="true" key={cardId}>
-          <S.ListHeader>
+        <S.ListWrapper key={cardId}>
+          <S.ListHeader draggable="true">
             <input
               defaultValue={title}
               placeholder={'카드 제목을 입력해주세요'}
@@ -104,24 +111,21 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             setList={setItems}
             list={items}
             onEnd={(e) => {
-              axios
-                .post('/item/update-index', {
-                  id: parseInt(e.item.id),
-                  oldCardIndex: parseInt(e.from.id),
-                  newCardIndex: parseInt(e.to.id),
-                  oldIndex: e.oldIndex,
-                  newIndex: e.newIndex,
-                })
-                .then((res) => setItems(res.data));
+              axios.post('/item/update-index', {
+                id: parseInt(e.item.id),
+                oldCardIndex: parseInt(e.from.id),
+                newCardIndex: parseInt(e.to.id),
+                oldIndex: e.oldIndex,
+                newIndex: e.newIndex,
+              });
             }}
+            onChange={fatchItems}
           >
-            {items
-              .sort((a, b) => a.order - b.order)
-              .map((item: IItem) => (
-                <Item key={item.id} itemId={item.id}>
-                  {item.title}
-                </Item>
-              ))}
+            {items.map((item: IItem) => (
+              <Item key={item.id} itemId={item.id}>
+                {item.title}
+              </Item>
+            ))}
           </ReactSortable>
           {!showForm && (
             <S.AddBtn onClick={() => setShowForm(true)}>

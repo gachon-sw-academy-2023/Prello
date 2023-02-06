@@ -87,7 +87,7 @@ export const Item = styled.div`
   background: rgba(252, 164, 190, 0.23);
   border-radius: 10px;
   height: 35px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   width: 80%;
   cursor: pointer;
 `;
