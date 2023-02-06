@@ -5,6 +5,11 @@ import { SubHeader } from '@/components/SubHeader/SubHeader';
 import Inform from '@/pages/util';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import {
+  IWorkspace,
+  WorkspaceContainerProps,
+  WorkspaceUserImageProps,
+} from '@/utils/types';
 import Grid from '@mui/material/Grid';
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
@@ -14,10 +19,10 @@ import CreateWorkspace from '../../../components/Modals/CreateModal/CreateModal'
 import WorkSpaceSkeleton from '../skeleton';
 import * as S from './styles';
 
-function UserImages(props: any) {
-  const remain = props.members.length - 2;
+function UserImages({ members }: WorkspaceUserImageProps) {
+  const remain = members.length - 2;
 
-  if (props.members.length > 3)
+  if (members.length > 3)
     return (
       <S.ProfileImages>
         <ProfileImg image="/assets/workspace/sample-profile-image.png" />
@@ -29,7 +34,7 @@ function UserImages(props: any) {
 
   return (
     <S.ProfileImages>
-      {props.members.map((member: string, index: number) => (
+      {members.map((member: string, index: number) => (
         <ProfileImg
           key={index}
           image="/assets/workspace/sample-profile-image.png"
@@ -39,7 +44,7 @@ function UserImages(props: any) {
   );
 }
 
-function WorkSpaceContainer(props: any) {
+function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -48,8 +53,15 @@ function WorkSpaceContainer(props: any) {
 
   return (
     <Grid container spacing={2}>
-      {props.workspaces.map((workspace: any) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
+      {workspaces?.map((workspace: IWorkspace) => (
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+          key={workspace.owner + workspace.name}
+        >
           <S.Item onClick={handleNavigate}>
             <S.GradientBG></S.GradientBG>
             <S.ItemContents>
@@ -67,9 +79,9 @@ function WorkSpaceContainer(props: any) {
 export default function WorkspaceDefault() {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const user = useRecoilValue(userSelector);
-  const [cWorkspaces, setCWorkspaces] = useState<any>();
-  const [pWorkspaces, setPWorkspaces] = useState<any>();
-  const [loading, setLoading] = useState(false);
+  const [cWorkspaces, setCWorkspaces] = useState<IWorkspace[]>();
+  const [pWorkspaces, setPWorkspaces] = useState<IWorkspace[]>();
+  const [loading, setLoading] = useState<Boolean>(false);
   const [error, setError] = useState<Boolean>(false);
 
   const handleModal = () => {
@@ -83,8 +95,8 @@ export default function WorkspaceDefault() {
   const fetchWorkspaces = async () => {
     try {
       setError(false);
-      setCWorkspaces(null);
-      setPWorkspaces(null);
+      setCWorkspaces([]);
+      setPWorkspaces([]);
       setLoading(true);
 
       const response = await axios.get('/workspace/list', {
@@ -162,14 +174,16 @@ export default function WorkspaceDefault() {
             </Button>
           </Default>
         </S.Wrapper>
-        <div hidden={!(cWorkspaces.length || pWorkspaces.length)}>
+        <div hidden={!(cWorkspaces?.length || pWorkspaces?.length)}>
           <S.SubTitle>생성한 워크스페이스</S.SubTitle>
           <WorkSpaceContainer workspaces={cWorkspaces}></WorkSpaceContainer>
-          <S.BlankDiv hidden={cWorkspaces.length}></S.BlankDiv>
+          <S.BlankDiv hidden={cWorkspaces?.length != 0}></S.BlankDiv>
           <S.SubTitle>참여한 워크스페이스</S.SubTitle>
           <WorkSpaceContainer workspaces={pWorkspaces}></WorkSpaceContainer>
         </div>
-        <S.messageDiv hidden={cWorkspaces.length || pWorkspaces.length}>
+        <S.messageDiv
+          hidden={cWorkspaces?.length != 0 || pWorkspaces?.length != 0}
+        >
           <div>
             <h1>워크스페이스가 없습니다!</h1>
             <h1>워크스페이스 생성 또는 참여해보세요 ✋</h1>

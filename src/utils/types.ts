@@ -24,6 +24,16 @@ export interface UserImaegsProps extends HTMLAttributes<HTMLDivElement> {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+export interface WorkspaceUserImageProps
+  extends HTMLAttributes<HTMLDivElement> {
+  members: string[];
+}
+
+export interface WorkspaceContainerProps
+  extends HTMLAttributes<HTMLDivElement> {
+  workspaces?: IWorkspace[];
+}
+
 export interface IWorkspace {
   owner: string;
   name: string;
