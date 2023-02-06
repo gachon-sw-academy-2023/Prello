@@ -5,7 +5,7 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Sortable from 'sortablejs';
-import List from './Card/Card';
+import Card from './Card/Card';
 import * as S from './styles';
 interface ICard {
   id: number;
@@ -80,7 +80,7 @@ export default function Board() {
               {lists
                 .sort((a, b) => a.order - b.order)
                 .map((list: ICard) => (
-                  <List
+                  <Card
                     title={list.title}
                     key={list.id}
                     cardId={list.id}
@@ -98,7 +98,7 @@ export default function Board() {
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
               {lists.map((list: ICard) => (
-                <List
+                <Card
                   title={list.title}
                   key={list.id}
                   cardId={list.id}
