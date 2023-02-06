@@ -1,4 +1,5 @@
 import SubTitle from '@/components/SubTitle/SubTitle';
+import { InviteMembersProps } from '@/utils/types';
 import { useState } from 'react';
 import Modal from '../../Modal/Modal';
 import {
@@ -8,13 +9,13 @@ import {
 } from '../DeleteModal/DeleteModal.styles';
 import * as S from './InviteModal.styles';
 
-export default function InviteModal(props: any) {
+export default function InviteModal({ setOpenModal }: InviteMembersProps) {
   const [email, setEmail] = useState<string>();
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
   const handleModal = () => {
-    props.setOpenModal(false);
+    setOpenModal(false);
   };
 
   return (

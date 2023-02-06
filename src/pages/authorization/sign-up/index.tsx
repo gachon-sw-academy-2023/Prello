@@ -3,7 +3,7 @@ import ROUTES from '@/routes';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,14 +52,16 @@ export default function SignUp() {
         handleModal();
         setTimeout(() => navigate(ROUTES.LOGIN), 1000);
       }
-    } catch (error: any) {
-      if (error.response.status === 409) {
-        console.log(error.response.data.message);
+    } catch (error) {
+      const err = error as AxiosError;
+
+      if (err.response?.status === 409) {
+        console.log(err.response?.data);
         setModalText('중복된 이메일입니다! 다른 이메일로 가입해 주세요! ✋');
         handleModal();
       }
-      if (error.response.status === 500) {
-        console.log(error.response.data.message);
+      if (err.response?.status === 500) {
+        console.log(err.response?.data);
         setModalText('오류가 발생했습니다. 다시 시도해 주세요!');
         handleModal();
       }

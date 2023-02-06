@@ -1,4 +1,5 @@
 import Modal from '@/components/Modal/Modal';
+import { DetailProps } from '@/utils/types';
 import Box from '@mui/joy/Box';
 import {
   Chip,
@@ -16,7 +17,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
 import * as S from './styles';
 
-export const Detail = ({ setOpen }: any) => {
+export const Detail = ({ setOpen }: DetailProps) => {
   const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
   const [personName, setPersonName] = useState<string[]>([]);
   const ITEM_HEIGHT = 48;

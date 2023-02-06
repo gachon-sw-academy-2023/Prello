@@ -8,6 +8,7 @@ import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import React, { useState } from 'react';
 import * as S from './styles';
+import axios, { AxiosError } from 'axios';
 
 interface IMember {
   name: string;
@@ -91,12 +92,30 @@ export default function WorkspaceSetting() {
   function handleModal() {
     setOpenModal(true);
   }
+
+  const deleteWorkspace = async () => {
+    const data = {
+      workspaceId: 1,
+    };
+    try {
+      const response = await axios.post('/workspace/delete', data);
+
+      if (response.status === 200) {
+        // reload
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      // error 처리
+    }
+  };
+
   return (
     <S.Container>
       {isOpenModal && (
         <DeleteModal
           workspaceName={workspaceName}
           setOpenModal={setOpenModal}
+          deleteWorkspace={deleteWorkspace}
         />
       )}
       <Default>
@@ -123,14 +142,14 @@ export default function WorkspaceSetting() {
               <S.EmptyBox />
               <SubTitle size="sm">이름</SubTitle>
               <S.RoundLineInput
-                defaultValue={workspaceName}
+                // defaultValue={workspaceName}
                 value={changedWorkspaceName}
                 onChange={handleWorkspaceName}
               />
               <S.EmptyBox />
               <SubTitle size="sm">설명</SubTitle>
               <S.RoundLineInput
-                defaultValue={workspaceExplain}
+                // defaultValue={workspaceExplain}
                 value={workspaceExplain}
                 onChange={handleWorkspaceExplain}
               />
