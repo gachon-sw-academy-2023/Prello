@@ -94,11 +94,11 @@ export default function WorkspaceSetting() {
   }
 
   const deleteWorkspace = async () => {
-    const workspaceId = 5;
+    const data = {
+      workspaceId: 1,
+    };
     try {
-      const response = await axios.post('/workspace/delete', {
-        workspaceId,
-      });
+      const response = await axios.post('/workspace/delete', data);
 
       if (response.status === 200) {
         // reload

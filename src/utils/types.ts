@@ -45,3 +45,13 @@ export interface IUser {
   email: string;
   password: string;
 }
+
+export interface IJUser {
+  email: string;
+  password: string;
+  nickname: string;
+}
+
+export interface IDeleteWorkspace {
+  workspaceId: number;
+}
