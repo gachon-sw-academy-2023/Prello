@@ -28,7 +28,7 @@ export default function DetailSkeleton() {
               ></S.Image>
             </S.Item>
           </Grid>
-          {[1, 2, 3, 4, 5].map((idx) => (
+          {/* {[1, 2, 3, 4, 5].map((idx) => (
             <Grid item xs={12} sm={6} md={4} key={idx}>
               <Skeleton variant="rounded" width="100%">
                 <S.Item center={false} color={'#ffe7ee'}>
@@ -36,8 +36,8 @@ export default function DetailSkeleton() {
                 </S.Item>
               </Skeleton>
             </Grid>
-          ))}
-          {/* {[1, 2, 3, 4, 5].map((idx) => (
+          ))} */}
+          {[1, 2, 3, 4, 5].map((idx) => (
             <Grid item xs={12} sm={6} md={4} key={idx}>
               <S.Item center={false} color={'#ffe7ee'}>
                 <Skeleton variant="text" width="100%">
@@ -45,7 +45,7 @@ export default function DetailSkeleton() {
                 </Skeleton>
               </S.Item>
             </Grid>
-          ))} */}
+          ))}
         </Grid>
       </S.BoardContainer>
     </S.RightContainer>

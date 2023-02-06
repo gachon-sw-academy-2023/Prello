@@ -73,7 +73,8 @@ interface IBoard {
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
   let { workspaceId } = useParams();
-  console.log(workspaceId);
+  const [workspaceName, setWorkspaceName] = useState<string>('');
+  const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isTitleExsit, setIsTitleExsit] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
@@ -121,6 +122,25 @@ export default function WorkspaceDetail() {
       setIsTitleExsit(false);
     }
   };
+  const fetchWorkspaceInfo = async () => {
+    try {
+      setError(null);
+      setLoading(true);
+      const response = await axios.get('/workspace/detail', {
+        params: {
+          workspaceId: workspaceId,
+        },
+      });
+      if (response.status === 200) {
+        setWorkspaceName(response.data.name);
+        setWorkspaceSummary(response.data.summary);
+      }
+    } catch (error: any) {
+      setError(error);
+      console.log(error);
+    }
+    setLoading(false);
+  };
   const fetchBoardList = async () => {
     try {
       setError(null);
@@ -141,6 +161,7 @@ export default function WorkspaceDetail() {
   };
 
   useEffect(() => {
+    fetchWorkspaceInfo();
     fetchBoardList();
   }, []);
 
@@ -176,8 +197,8 @@ export default function WorkspaceDetail() {
                 image="/assets/authorization/pimfy_profile.png"
               />
               <S.InfoContents>
-                <SubTitle size="md">PIMPY</SubTitle>
-                <S.ExplainText>핌피팀입니당</S.ExplainText>
+                <SubTitle size="md">{workspaceName}</SubTitle>
+                <S.ExplainText>{workspaceSummary}</S.ExplainText>
               </S.InfoContents>
             </S.InfoContainer>
             <S.Line margin="0"></S.Line>
