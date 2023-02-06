@@ -12,29 +12,71 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as S from './styles';
 
-export const Detail = ({ setOpen }: any) => {
+interface IItem {
+  title: string;
+  order: number;
+  cardId: number;
+  description: string;
+  members: string[];
+}
+
+interface ICard {
+  title: string;
+}
+
+export const Detail = ({ setOpen, itemId }: any) => {
+  const [item, setItem] = useState<IItem>();
+  const [card, setCard] = useState<ICard>();
   const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
   const [personName, setPersonName] = useState<string[]>([]);
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
+  const [description, setDescription] = useState<string>();
+
+  useEffect(() => {
+    axios.get(`/item/${itemId}`).then((res) => {
+      setItem(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (item) {
+      axios.get(`/card/${item?.cardId}`).then((res) => setCard(res.data));
+    }
+  }, [item]);
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     const {
       target: { value },
     } = event;
     setPersonName(typeof value === 'string' ? value.split(',') : value);
+  };
+
+  const handleDesription = (e: any) => {
+    setDescription(e.target.value);
+  };
+
+  const handleDelete = () => {
+    axios.post('/item/delete/', {
+      itemId,
+    });
+
+    setOpen(false);
+  };
+
+  const handleSave = () => {
+    //TODO: 아이템 상세 정보 저장
+    axios.post(`/item/${itemId}`, {
+      title: item?.title,
+      order: item?.order,
+      cardId: item?.cardId,
+      description: description,
+      date: value,
+      members: personName,
+    });
   };
 
   interface IMember {
@@ -91,17 +133,21 @@ export const Detail = ({ setOpen }: any) => {
     <Modal size="lg" onClickToggleModal={() => setOpen(false)}>
       <S.Title>
         <S.TitleWrapper>
-          <S.ListName>To do</S.ListName>
+          <S.ListName>{card?.title}</S.ListName>
           <S.Divider />
-          <S.ItemName>할 일</S.ItemName>
+          <S.ItemName>{item?.title}</S.ItemName>
         </S.TitleWrapper>
-        <S.Description>
-          이건 아이템 설명입니다 아이템 설명 아이템 설명
+        <S.Description
+          placeholder="설명 추가하기..."
+          defaultValue={item?.description}
+          onChange={handleDesription}
+        >
+          {item?.description}
         </S.Description>
       </S.Title>
       <S.Wrapper>
         <S.Comment>
-          <S.CommentTitle>comments</S.CommentTitle>
+          <S.InfoTitle>comments</S.InfoTitle>
           <S.CommentWrapper>
             <S.MyComment>
               <S.ProfileImg />
@@ -148,7 +194,6 @@ export const Detail = ({ setOpen }: any) => {
                 ))}
               </Box>
             )}
-            MenuProps={MenuProps}
           >
             {members.map((member) => (
               <MenuItem key={member.name} value={member.name}>
@@ -156,6 +201,10 @@ export const Detail = ({ setOpen }: any) => {
               </MenuItem>
             ))}
           </Select>
+          <S.BtnWrapper>
+            <button onClick={handleSave}>Save</button>
+            <button onClick={handleDelete}>Delete</button>
+          </S.BtnWrapper>
         </S.Info>
       </S.Wrapper>
     </Modal>

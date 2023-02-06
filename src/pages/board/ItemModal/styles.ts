@@ -28,8 +28,11 @@ export const ItemName = styled.span`
   font-size: 30px;
 `;
 
-export const Description = styled.div`
+export const Description = styled.input`
   margin-bottom: 25px;
+  height: 30px;
+  border: none;
+  width: 100%;
 `;
 
 export const Wrapper = styled.div`
@@ -43,7 +46,7 @@ export const Comment = styled.div`
   margin-top: 25px;
 `;
 
-export const CommentTitle = styled.h1`
+export const InfoTitle = styled.h1`
   margin-bottom: 25px;
   font-weight: 600;
 `;
@@ -130,4 +133,18 @@ export const MemberChip = styled(Chip)`
   background-color: #fca4be;
   margin-right: 10px;
   font-size: 12px;
+`;
+
+export const BtnWrapper = styled.div`
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  button {
+    background-color: #fca4be;
+    margin-left: 15px;
+    padding: 10px 30px;
+    border-radius: 2px;
+    color: #ffffff;
+  }
 `;

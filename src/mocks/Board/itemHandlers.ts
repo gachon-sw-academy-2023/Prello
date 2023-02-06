@@ -4,6 +4,21 @@ const { getAll, add, deleteRecord, getByIndex, getByID, update, clear } =
   useIndexedDB('item');
 
 export const itemHandlers = [
+  rest.get('/item/:itemId', async (req: any, res, ctx) => {
+    const target = await getByID(req.params.itemId);
+
+    return res(ctx.status(200), ctx.json(target));
+  }),
+  rest.post(`/item/delete/`, async (req: any, res, ctx) => {
+    await deleteRecord(req.body.itemId);
+
+    return res(ctx.status(200));
+  }),
+
+  rest.post('/item/:itemId', async (req: any, res, ctx) => {
+    // TODO: 아이템 상세 정보 저장
+  }),
+
   rest.get('/list/item/:cardId', async (req, res, ctx) => {
     const AllList = await getAll();
     const itemList = AllList.filter(

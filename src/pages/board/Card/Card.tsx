@@ -122,7 +122,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             onChange={fatchItems}
           >
             {items.map((item: IItem) => (
-              <Item key={item.id} itemId={item.id}>
+              <Item key={item.id} itemId={item.id} fatchItems={fatchItems}>
                 {item.title}
               </Item>
             ))}
@@ -170,7 +170,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             list={items}
           >
             {items.map((item: IItem) => (
-              <Item key={item.id} itemId={item.id}>
+              <Item key={item.id} itemId={item.id} fatchItems={fatchItems}>
                 {item.title}
               </Item>
             ))}
