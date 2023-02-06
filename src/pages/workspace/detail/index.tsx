@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DetailSkeleton from './skeleton';
 import * as S from './styles';
 
 // TODO: member 불러오는 api로 대체
@@ -137,7 +138,6 @@ export default function WorkspaceDetail() {
     fetchBoardList();
   }, []);
 
-  if (loading) return <div>로딩중..</div>;
   if (error) return <div>에러가 발생했습니다</div>;
 
   return (
@@ -160,62 +160,70 @@ export default function WorkspaceDetail() {
           onModal={handleModal}
           onNavigate={handleNavigate}
         />
-        <S.RightContainer>
-          <S.InfoContainer>
-            <WorkspaceImg
-              radius="none"
-              image="/assets/authorization/pimfy_profile.png"
-            />
-            <S.InfoContents>
-              <SubTitle size="md">PIMPY</SubTitle>
-              <S.ExplainText>핌피팀입니당</S.ExplainText>
-            </S.InfoContents>
-          </S.InfoContainer>
-          <S.Line margin="0"></S.Line>
-          <S.BoardContainer>
-            <Grid container spacing={4}>
-              <Grid item xs={12} sm={6} md={4}>
-                <S.Item center={true} color={'#fffcff'} onClick={handleCreate}>
-                  <S.Image
-                    width={'50px'}
-                    height={'50px'}
-                    img={'/assets/workspace/sample-add-icon.png'}
-                  ></S.Image>
-                </S.Item>
-              </Grid>
-              {boards.map((board) => (
-                <Grid item xs={12} sm={6} md={4} key={board.id}>
-                  <S.Item center={false} color={'#ffe7ee'}>
-                    <S.TitleInput
-                      value={board.name}
-                      disabled={true}
-                    ></S.TitleInput>
-                  </S.Item>
-                </Grid>
-              ))}
-              {newItem && (
+        {loading ? (
+          <DetailSkeleton />
+        ) : (
+          <S.RightContainer>
+            <S.InfoContainer>
+              <WorkspaceImg
+                radius="none"
+                image="/assets/authorization/pimfy_profile.png"
+              />
+              <S.InfoContents>
+                <SubTitle size="md">PIMPY</SubTitle>
+                <S.ExplainText>핌피팀입니당</S.ExplainText>
+              </S.InfoContents>
+            </S.InfoContainer>
+            <S.Line margin="0"></S.Line>
+            <S.BoardContainer>
+              <Grid container spacing={4}>
                 <Grid item xs={12} sm={6} md={4}>
-                  <S.Item center={false} color={'#ffe7ee'}>
-                    <S.TitleInput
-                      placeholder="보드 이름을 입력해주세요"
-                      defaultValue={title}
-                      onChange={handleChangeTitle}
-                    ></S.TitleInput>
-                    <S.BtnWrapper>
-                      <S.SaveBtn
-                        color="primary"
-                        onClick={fetchCreate}
-                        disable={!isTitleExsit}
-                      >
-                        생성하기
-                      </S.SaveBtn>
-                    </S.BtnWrapper>
+                  <S.Item
+                    center={true}
+                    color={'#fffcff'}
+                    onClick={handleCreate}
+                  >
+                    <S.Image
+                      width={'50px'}
+                      height={'50px'}
+                      img={'/assets/workspace/sample-add-icon.png'}
+                    ></S.Image>
                   </S.Item>
                 </Grid>
-              )}
-            </Grid>
-          </S.BoardContainer>
-        </S.RightContainer>
+                {boards.map((board) => (
+                  <Grid item xs={12} sm={6} md={4} key={board.id}>
+                    <S.Item center={false} color={'#ffe7ee'}>
+                      <S.TitleInput
+                        value={board.name}
+                        disabled={true}
+                      ></S.TitleInput>
+                    </S.Item>
+                  </Grid>
+                ))}
+                {newItem && (
+                  <Grid item xs={12} sm={6} md={4}>
+                    <S.Item center={false} color={'#ffe7ee'}>
+                      <S.TitleInput
+                        placeholder="보드 이름을 입력해주세요"
+                        defaultValue={title}
+                        onChange={handleChangeTitle}
+                      ></S.TitleInput>
+                      <S.BtnWrapper>
+                        <S.SaveBtn
+                          color="primary"
+                          onClick={fetchCreate}
+                          disable={!isTitleExsit}
+                        >
+                          생성하기
+                        </S.SaveBtn>
+                      </S.BtnWrapper>
+                    </S.Item>
+                  </Grid>
+                )}
+              </Grid>
+            </S.BoardContainer>
+          </S.RightContainer>
+        )}
       </S.Wrapper>
     </S.Container>
   );
