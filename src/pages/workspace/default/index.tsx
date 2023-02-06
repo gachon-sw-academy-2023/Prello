@@ -14,7 +14,7 @@ import WorkSpaceSkeleton from '../skeleton';
 import * as S from './styles';
 
 function UserImages(props: any) {
-  const remain = props.members.length - 3;
+  const remain = props.members.length - 2;
 
   if (props.members.length > 3)
     return (

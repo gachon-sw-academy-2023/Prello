@@ -80,6 +80,7 @@ export const ProfileImages = styled.div`
   justify-content: flex-start;
   text-align: center;
   align-items: center;
+  font-family: 'LINESeedKR-Rg';
 `;
 export const ProfileImage = styled.div`
   width: 40px;
