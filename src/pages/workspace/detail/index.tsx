@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DetailSkeleton from './skeleton';
 import * as S from './styles';
+import Inform from '@/pages/util';
 
 // TODO: member 불러오는 api로 대체
 interface IMember {
@@ -80,8 +81,8 @@ export default function WorkspaceDetail() {
   const [title, setTitle] = useState<string>('');
   const [newItem, setNewItem] = useState<boolean>(false);
   const [boards, setBoards] = useState<IBoard[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const handleModal = () => {
     setOpenModal(!isOpenModal);
@@ -106,8 +107,9 @@ export default function WorkspaceDetail() {
         if (response.status === 200) {
           console.log('저장완료', info);
         }
-      } catch (error: any) {
-        console.log(error);
+      } catch (error) {
+        setError(true);
+        throw error;
       }
       setTitle('');
       setNewItem(false);
@@ -124,7 +126,6 @@ export default function WorkspaceDetail() {
   };
   const fetchWorkspaceInfo = async () => {
     try {
-      setError(null);
       setLoading(true);
       const response = await axios.get('/workspace/detail', {
         params: {
@@ -135,15 +136,14 @@ export default function WorkspaceDetail() {
         setWorkspaceName(response.data.name);
         setWorkspaceSummary(response.data.summary);
       }
-    } catch (error: any) {
-      setError(error);
-      console.log(error);
+    } catch (error) {
+      setError(true);
+      throw error;
     }
     setLoading(false);
   };
   const fetchBoardList = async () => {
     try {
-      setError(null);
       setLoading(true);
       const response = await axios.get('/board/list', {
         params: {
@@ -153,9 +153,8 @@ export default function WorkspaceDetail() {
       if (response.status === 200) {
         setBoards(response.data);
       }
-    } catch (error: any) {
-      setError(error);
-      console.log(error);
+    } catch (error) {
+      setError(true);
     }
     setLoading(false);
   };
@@ -165,7 +164,10 @@ export default function WorkspaceDetail() {
     fetchBoardList();
   }, []);
 
-  if (error) return <div>에러가 발생했습니다</div>;
+  if (error)
+    return (
+      <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
+    );
 
   return (
     <S.Container>
