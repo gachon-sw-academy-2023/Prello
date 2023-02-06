@@ -1,5 +1,6 @@
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import InviteModal from '@/components/Modals/InviteModal/InviteModal';
+import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
@@ -71,6 +72,7 @@ interface IBoard {
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [isTitleExsit, setIsTitleExsit] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [newItem, setNewItem] = useState<boolean>(false);
   const [boards, setBoards] = useState<IBoard[]>([]);
@@ -84,7 +86,6 @@ export default function WorkspaceDetail() {
   const handleNavigate = () => {
     navigate('/workspace-setting');
   };
-
   const handleCreate = () => {
     setNewItem(true);
   };
@@ -111,6 +112,11 @@ export default function WorkspaceDetail() {
   };
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
+    if (e.target.value.length > 0) {
+      setIsTitleExsit(true);
+    } else {
+      setIsTitleExsit(false);
+    }
   };
   const fetchBoardList = async () => {
     try {
@@ -118,14 +124,12 @@ export default function WorkspaceDetail() {
       setLoading(true);
       const response = await axios.get('/board/list');
       if (response.status === 200) {
-        console.log(response.data);
         setBoards(response.data);
       }
     } catch (error: any) {
       setError(error);
       console.log(error);
     }
-    console.log('보드', boards);
     setLoading(false);
   };
 
@@ -149,6 +153,7 @@ export default function WorkspaceDetail() {
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {isOpenModal && <InviteModal setOpenModal={setOpenModal}></InviteModal>}
+
       <S.Wrapper>
         <SideBar
           memberInfo={members}
@@ -197,7 +202,11 @@ export default function WorkspaceDetail() {
                       onChange={handleChangeTitle}
                     ></S.TitleInput>
                     <S.BtnWrapper>
-                      <S.SaveBtn color="primary" onClick={fetchCreate}>
+                      <S.SaveBtn
+                        color="primary"
+                        onClick={fetchCreate}
+                        disable={!isTitleExsit}
+                      >
                         생성하기
                       </S.SaveBtn>
                     </S.BtnWrapper>
