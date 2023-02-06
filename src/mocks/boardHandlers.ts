@@ -118,7 +118,7 @@ export const boardHandlers = [
   }),
   rest.get('/board/list', async (req: any, res, ctx) => {
     let workspace: IBoard[] = [];
-    const id = 1;
+    const id = req.url.searchParams.get('workspaceId');
     try {
       await getAll().then((boards: IBoard[]) => {
         workspace = boards.filter(({ workspaceId }) => workspaceId === id);

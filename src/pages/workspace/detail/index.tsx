@@ -9,7 +9,7 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DetailSkeleton from './skeleton';
 import * as S from './styles';
 
@@ -72,6 +72,8 @@ interface IBoard {
 
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
+  let { workspaceId } = useParams();
+  console.log(workspaceId);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isTitleExsit, setIsTitleExsit] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
@@ -94,7 +96,7 @@ export default function WorkspaceDetail() {
   const fetchCreate = async () => {
     let info = {
       // TODO: workspaceID 변경 필요
-      workspaceId: 1,
+      workspaceId: workspaceId,
       name: title,
     };
     if (title.length > 0) {
@@ -123,7 +125,11 @@ export default function WorkspaceDetail() {
     try {
       setError(null);
       setLoading(true);
-      const response = await axios.get('/board/list');
+      const response = await axios.get('/board/list', {
+        params: {
+          workspaceId: workspaceId,
+        },
+      });
       if (response.status === 200) {
         setBoards(response.data);
       }

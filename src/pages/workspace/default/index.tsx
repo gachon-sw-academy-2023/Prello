@@ -42,15 +42,15 @@ function UserImages(props: any) {
 function WorkSpaceContainer(props: any) {
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate('/workspace-detail');
+  const handleNavigate = (param: string) => {
+    navigate(`/workspace-detail/${param}`);
   };
 
   return (
     <Grid container spacing={2}>
       {props.workspaces.map((workspace: any) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={workspace.id}>
-          <S.Item onClick={handleNavigate}>
+          <S.Item onClick={() => handleNavigate(workspace.id)}>
             <S.GradientBG></S.GradientBG>
             <S.ItemContents>
               <S.Title>{workspace.name}</S.Title>
