@@ -43,6 +43,9 @@ export const CreateButton = styled.button`
 `;
 
 // 워크스페이스 아이템
+export const BlankDiv = styled.div`
+  height: 200px;
+`;
 export const Item = styled.div`
   display: flex;
   background-color: white;
@@ -84,4 +87,28 @@ export const ProfileImage = styled.div`
   margin-right: 10px;
   background-size: cover;
   background-image: url('/assets/workspace/sample-profile-image.png');
+`;
+export const messageDiv = styled.div`
+  /* display: flex; */
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+
+  div {
+    font-family: 'LINESeedKR-Rg';
+    font-size: 18px;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  h1 {
+    margin-top: 10px;
+  }
 `;

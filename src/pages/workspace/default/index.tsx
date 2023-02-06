@@ -158,15 +158,19 @@ export default function WorkspaceDefault() {
             </Button>
           </Default>
         </S.Wrapper>
-
-        <S.SubTitle hidden={!cWorkspaces.length}>
-          생성한 워크스페이스
-        </S.SubTitle>
-        <WorkSpaceContainer workspaces={cWorkspaces}></WorkSpaceContainer>
-        <S.SubTitle hidden={!pWorkspaces.length}>
-          참여한 워크스페이스
-        </S.SubTitle>
-        <WorkSpaceContainer workspaces={pWorkspaces}></WorkSpaceContainer>
+        <div hidden={!(cWorkspaces.length || pWorkspaces.length)}>
+          <S.SubTitle>생성한 워크스페이스</S.SubTitle>
+          <WorkSpaceContainer workspaces={cWorkspaces}></WorkSpaceContainer>
+          <S.BlankDiv hidden={cWorkspaces.length}></S.BlankDiv>
+          <S.SubTitle>참여한 워크스페이스</S.SubTitle>
+          <WorkSpaceContainer workspaces={pWorkspaces}></WorkSpaceContainer>
+        </div>
+        <S.messageDiv hidden={cWorkspaces.length || pWorkspaces.length}>
+          <div>
+            <h1>워크스페이스가 없습니다!</h1>
+            <h1>워크스페이스 생성 또는 참여해보세요 ✋</h1>
+          </div>
+        </S.messageDiv>
       </S.ContentsWrapper>
     </S.Container>
   );
