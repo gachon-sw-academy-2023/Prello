@@ -1,7 +1,6 @@
-import * as S from './styles';
-import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
-import { Grid, Skeleton } from '@mui/material';
 import SubTitle from '@/components/SubTitle/SubTitle';
+import { Grid, Skeleton } from '@mui/material';
+import * as S from './styles';
 
 export default function DetailSkeleton() {
   return (
@@ -29,14 +28,24 @@ export default function DetailSkeleton() {
               ></S.Image>
             </S.Item>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Skeleton variant="rounded" width="100%" height={60} />
-            <Skeleton variant="rounded" width="100%" height={60} />
-            <Skeleton variant="rounded" width="100%" height={60} />
-            <Skeleton variant="rounded" width="100%" height={60} />
-            <Skeleton variant="rounded" width="100%" height={60} />
-            <Skeleton variant="rounded" width="100%" height={60} />
-          </Grid>
+          {[1, 2, 3, 4, 5].map((idx) => (
+            <Grid item xs={12} sm={6} md={4} key={idx}>
+              <Skeleton variant="rounded" width="100%">
+                <S.Item center={false} color={'#ffe7ee'}>
+                  <S.TitleInput disabled={true}></S.TitleInput>
+                </S.Item>
+              </Skeleton>
+            </Grid>
+          ))}
+          {/* {[1, 2, 3, 4, 5].map((idx) => (
+            <Grid item xs={12} sm={6} md={4} key={idx}>
+              <S.Item center={false} color={'#ffe7ee'}>
+                <Skeleton variant="text" width="100%">
+                  <S.TitleInput disabled={true}></S.TitleInput>
+                </Skeleton>
+              </S.Item>
+            </Grid>
+          ))} */}
         </Grid>
       </S.BoardContainer>
     </S.RightContainer>

@@ -124,11 +124,11 @@ export const boardHandlers = [
         workspace = boards.filter(({ workspaceId }) => workspaceId === id);
         console.log(workspace);
       });
-      return res(ctx.status(200), ctx.delay(2000), ctx.json(workspace));
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(workspace));
     } catch (error) {
       return res(
         ctx.status(500),
-        ctx.delay(2000),
+        ctx.delay(1000),
         ctx.json({ message: 'Store in DB Failed!' }),
       );
     }
