@@ -2,6 +2,7 @@ import Button from '@/components/Button/Button';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
+import Inform from '@/pages/util';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
@@ -112,8 +113,11 @@ export default function WorkspaceDefault() {
   };
 
   if (loading) return <WorkSpaceSkeleton></WorkSpaceSkeleton>;
-  if (error) return <div>에러가 발생했습니다</div>;
-  if (!cWorkspaces || !pWorkspaces) return null;
+  if (error)
+    return (
+      <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
+    );
+  if (!pWorkspaces && !cWorkspaces) return null;
 
   return (
     <S.Container>

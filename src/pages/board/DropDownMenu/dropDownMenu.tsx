@@ -1,14 +1,17 @@
+import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import * as S from './styles';
 
 interface IDropMenu {
-  handleDeleteCard: (e: any) => void;
   handleDeleteItems: () => void;
+  UpdateList: () => void;
+  cardId: number;
 }
 
 const DropDownMenu: React.FC<IDropMenu> = ({
-  handleDeleteCard,
   handleDeleteItems,
+  UpdateList,
+  cardId,
 }) => {
   const [visible, setVisible] = useState<boolean>(true);
 
@@ -35,6 +38,11 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
   const handleHideMenu = () => {
     setVisible(false);
+  };
+
+  const handleDeleteCard = () => {
+    axios.post('/card/delete', { cardId }).catch((error) => alert(error));
+    UpdateList();
   };
 
   return (

@@ -6,10 +6,12 @@ import { ReactSortable } from 'react-sortablejs';
 import DropDownMenu from '../DropDownMenu/dropDownMenu';
 import * as S from '../styles';
 import Item from '../Item/Item';
+import axios from 'axios';
 
-interface IBoardProps {
+interface ICardProp {
   title: string;
-  handleDeleteCard: (e: any) => void;
+  cardId: number;
+  UpdateList: () => void;
 }
 
 interface ICard {
@@ -17,7 +19,7 @@ interface ICard {
   text: string;
 }
 
-const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
+const List: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
@@ -47,6 +49,12 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
     setText('');
   };
 
+  const handleChangeTitle = (e: any) => {
+    axios
+      .post('/card/update-title', { title: e.target.value, cardId })
+      .catch((error) => alert(error));
+  };
+
   return (
     <div>
       <Default>
@@ -55,6 +63,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
             <input
               defaultValue={title}
               placeholder={'카드 제목을 입력해주세요'}
+              onChange={handleChangeTitle}
             />
             <S.MenuBtn>
               <FontAwesomeIcon
@@ -63,8 +72,9 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
               />
               {showMenu && (
                 <DropDownMenu
-                  handleDeleteCard={handleDeleteCard}
+                  UpdateList={UpdateList}
                   handleDeleteItems={handleDeleteItems}
+                  cardId={cardId}
                 />
               )}
             </S.MenuBtn>
@@ -98,7 +108,7 @@ const List: React.FC<IBoardProps> = ({ title, handleDeleteCard }) => {
               />
               <S.BtnWrapper>
                 <button type="submit">Add Item</button>
-                <button type="submit" onClick={handleCancel}>
+                <button type="submit" onClick={() => handleCancel()}>
                   Cancel
                 </button>
               </S.BtnWrapper>
