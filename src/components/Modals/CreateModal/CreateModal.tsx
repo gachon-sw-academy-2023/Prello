@@ -1,19 +1,23 @@
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
+import { userSelector } from '@/recoil/atom/userSelector';
+import { CreateWorkspaceProps } from '@/utils/types';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import axios, { AxiosError } from 'axios';
 import React, { useState } from 'react';
-import * as S from './CreateModal.style';
-import axios from 'axios';
-import { userSelector } from '@/recoil/atom/userSelector';
 import { useRecoilState } from 'recoil';
+import * as S from './CreateModal.style';
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export const CreateWorkspace = (props: any) => {
+export const CreateWorkspace = ({
+  setOpenModal,
+  fetchWorkspaces,
+}: CreateWorkspaceProps) => {
   const [user, setUser] = useRecoilState(userSelector);
   const [errorText, setErrorText] = useState<string>('');
   const [name, setName] = useState<string>('');
@@ -23,7 +27,7 @@ export const CreateWorkspace = (props: any) => {
   const [emailList, setEmailList] = useState<string[]>([]);
 
   const handleModal = () => {
-    props.setOpenModal(false);
+    setOpenModal(false);
   };
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -64,11 +68,12 @@ export const CreateWorkspace = (props: any) => {
     try {
       const response = await axios.post('/workspace/create', info);
       if (response.status === 200) {
-        props.setOpenModal(false);
-        props.fetchWorkspaces();
+        setOpenModal(false);
+        fetchWorkspaces();
       }
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log(err.response?.data);
     }
   };
 

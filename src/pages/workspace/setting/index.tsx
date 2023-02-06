@@ -8,7 +8,7 @@ import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import React, { useState } from 'react';
 import * as S from './styles';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 interface IMember {
   name: string;
@@ -103,7 +103,8 @@ export default function WorkspaceSetting() {
       if (response.status === 200) {
         // reload
       }
-    } catch (error: any) {
+    } catch (error) {
+      const err = error as AxiosError;
       // error 처리
     }
   };

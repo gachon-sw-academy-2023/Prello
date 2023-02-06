@@ -1,3 +1,4 @@
+import { IUser } from '@/utils/types';
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
 
@@ -19,7 +20,11 @@ export const handlers = [
   }),
 
   rest.post('/login', async (req: any, res, ctx) => {
-    let user;
+    let user: IUser = {
+      email: '',
+      password: '',
+    };
+
     await getAll().then((users) => {
       user = users.find(({ email }) => email === req.body.email);
     });

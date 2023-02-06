@@ -6,7 +6,7 @@ import Inform from '@/pages/util';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -67,11 +67,10 @@ function WorkSpaceContainer(props: any) {
 export default function WorkspaceDefault() {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const user = useRecoilValue(userSelector);
-  const navigate = useNavigate();
   const [cWorkspaces, setCWorkspaces] = useState<any>();
   const [pWorkspaces, setPWorkspaces] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Boolean>(false);
 
   const handleModal = () => {
     setOpenModal(!isOpenModal);
@@ -83,7 +82,7 @@ export default function WorkspaceDefault() {
 
   const fetchWorkspaces = async () => {
     try {
-      setError(null);
+      setError(false);
       setCWorkspaces(null);
       setPWorkspaces(null);
       setLoading(true);
@@ -106,8 +105,9 @@ export default function WorkspaceDefault() {
       if (response2.status === 200) {
         setPWorkspaces(response2.data);
       }
-    } catch (error: any) {
-      setError(error);
+    } catch (error) {
+      const err = error as AxiosError;
+      setError(true);
     }
     setLoading(false);
   };

@@ -1,14 +1,8 @@
+import { IWorkspace } from '@/utils/types';
 import { getAllByAltText } from '@testing-library/react';
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
 const { getAll, add, deleteRecord } = useIndexedDB('workspace');
-
-type IWorkspace = {
-  owner: string;
-  name: string;
-  summary: string;
-  memberInfo: string[];
-};
 
 export const workspaceHandlers = [
   rest.post('/workspace/create', async (req: any, res, ctx) => {

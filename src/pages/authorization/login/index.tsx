@@ -4,7 +4,7 @@ import { userSelector } from '@/recoil/atom/userSelector';
 import ROUTES from '@/routes';
 import { Default } from '@/utils/mediaQuery';
 import { CircularProgress } from '@mui/material';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -51,13 +51,15 @@ function Login() {
         handleModal();
         setTimeout(() => navigate(ROUTES.MAIN), 1000);
       }
-    } catch (error: any) {
-      if (error.response.status === 400) {
+    } catch (error) {
+      const err = error as AxiosError;
+
+      if (err.response?.status === 400) {
         setLoading(false);
         setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
         handleModal();
       }
-      if (error.response.status === 401) {
+      if (err.response?.status === 401) {
         setLoading(false);
         setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
         handleModal();

@@ -1,11 +1,16 @@
 import Modal from '@/components/Modal/Modal';
 import * as S from './DeleteModal.styles';
 import SubTitle from '@/components/SubTitle/SubTitle';
+import { DeleteWorkspaceProps } from '@/utils/types';
 
-export default function DeleteModal(props: any) {
+export default function DeleteModal({
+  workspaceName,
+  setOpenModal,
+  deleteWorkspace,
+}: DeleteWorkspaceProps) {
   const handleModal = () => {
-    props.setOpenModal(false);
-    props.deleteWorkspace();
+    setOpenModal(false);
+    deleteWorkspace();
   };
   return (
     <Modal onClickToggleModal={handleModal}>
@@ -15,8 +20,7 @@ export default function DeleteModal(props: any) {
         불가능합니다.
       </S.ExplainText>
       <S.ExplainText>
-        워크페이스 삭제를 원하시면 {props.workspaceName}을(를) 아래에
-        입력해주세요.
+        워크페이스 삭제를 원하시면 {workspaceName}을(를) 아래에 입력해주세요.
       </S.ExplainText>
       <S.RoundInput></S.RoundInput>
       <S.EmptyBox />
