@@ -152,11 +152,11 @@ export default function WorkspaceDetail() {
         <SubHeader
           divider={true}
           children="Workspace"
-          profileImg="assets/authorization/pimfy_profile.png"
+          profileImg="/assets/authorization/pimfy_profile.png"
         />
       </Default>
       <Mobile>
-        <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
+        <MobileHeader profileImg="/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {isOpenModal && <InviteModal setOpenModal={setOpenModal}></InviteModal>}
 
