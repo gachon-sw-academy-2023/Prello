@@ -35,6 +35,7 @@ export interface WorkspaceContainerProps
 }
 
 export interface IWorkspace {
+  id: number;
   owner: string;
   name: string;
   summary: string;

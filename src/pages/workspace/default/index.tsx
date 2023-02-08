@@ -47,7 +47,7 @@ function UserImages({ members }: WorkspaceUserImageProps) {
 function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
   const navigate = useNavigate();
 
-  const handleNavigate = (param: string) => {
+  const handleNavigate = (param: number) => {
     navigate(`/workspace-detail/${param}`);
   };
 
@@ -62,7 +62,7 @@ function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
           lg={3}
           key={workspace.owner + workspace.name}
         >
-          <S.Item onClick={handleNavigate}>
+          <S.Item onClick={() => handleNavigate(workspace.id)}>
             <S.GradientBG></S.GradientBG>
             <S.ItemContents>
               <S.Title>{workspace.name}</S.Title>

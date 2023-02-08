@@ -53,4 +53,21 @@ export const workspaceHandlers = [
 
     return res(ctx.status(200), ctx.delay(1000), ctx.json(PWorkspaces));
   }),
+  rest.get('/workspace/detail', async (req: any, res, ctx) => {
+    let Workspace: IWorkspace[] = [];
+    const workspaceId = req.url.searchParams.get('workspaceId');
+    console.log(workspaceId);
+    try {
+      await getByID(workspaceId).then((workspaceInfo: IWorkspace[]) => {
+        Workspace = workspaceInfo;
+      });
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(Workspace));
+    } catch (error) {
+      return res(
+        ctx.status(500),
+        ctx.delay(1000),
+        ctx.json({ message: 'Store in DB Failed!' }),
+      );
+    }
+  }),
 ];
