@@ -73,7 +73,7 @@ interface IBoard {
 
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
-  let { workspaceId } = useParams() as { workspaceId: string };
+  const { workspaceId } = useParams() as { workspaceId: string };
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);

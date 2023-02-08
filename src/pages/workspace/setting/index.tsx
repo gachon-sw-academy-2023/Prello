@@ -6,9 +6,14 @@ import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './styles';
 import axios, { AxiosError } from 'axios';
+import { Routes, useNavigate, useParams } from 'react-router-dom';
+import { Rocket } from '@mui/icons-material';
+import ROUTES from '@/routes';
+import { IWorkspace } from '@/utils/types';
+import Inform from '@/pages/util';
 
 interface IMember {
   name: string;
@@ -76,12 +81,18 @@ let boards: IBoard[] = [
 ];
 
 export default function WorkspaceSetting() {
+  const { workspaceId } = useParams() as { workspaceId: string };
+  const [workspace, setWorkspace] = useState<IWorkspace>();
   const [workspaceName, setWorkspaceName] = useState<string>('PIMFY');
   const [changedWorkspaceName, setChangedWorkspaceName] =
     useState<string>(workspaceName);
   const [workspaceExplain, setWorkspaceExplain] =
     useState<string>('핌피팀입니당');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [loading, setLoading] = useState<Boolean>(false);
+  const [error, setError] = useState<Boolean>(false);
+
+  const naviate = useNavigate();
 
   function handleWorkspaceName(e: React.ChangeEvent<HTMLInputElement>) {
     setChangedWorkspaceName(e.target.value);
@@ -93,19 +104,48 @@ export default function WorkspaceSetting() {
     setOpenModal(true);
   }
 
+  useEffect(() => {
+    fetchWorkspace();
+  }, []);
+
+  const fetchWorkspace = async () => {
+    try {
+      setError(false);
+      setLoading(true);
+
+      const response = await axios.get('/workspace', {
+        params: {
+          id: workspaceId,
+        },
+      });
+
+      if (response.status === 200) {
+        setWorkspace(response.data);
+      }
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  };
+
+  if (loading) return <div>로딩중...</div>;
+  if (error)
+    return (
+      <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
+    );
+
   const deleteWorkspace = async () => {
     const data = {
-      workspaceId: 1,
+      workspaceId: parseInt(workspaceId),
     };
     try {
       const response = await axios.post('/workspace/delete', data);
-
       if (response.status === 200) {
-        // reload
+        naviate(ROUTES.WORKSPACEDEFAULT);
       }
     } catch (error) {
       const err = error as AxiosError;
-      // error 처리
+      console.log(err);
     }
   };
 
@@ -142,15 +182,15 @@ export default function WorkspaceSetting() {
               <S.EmptyBox />
               <SubTitle size="sm">이름</SubTitle>
               <S.RoundLineInput
-                // defaultValue={workspaceName}
-                value={changedWorkspaceName}
+                defaultValue={workspace?.name}
+                value={workspace?.name}
                 onChange={handleWorkspaceName}
               />
               <S.EmptyBox />
               <SubTitle size="sm">설명</SubTitle>
               <S.RoundLineInput
-                // defaultValue={workspaceExplain}
-                value={workspaceExplain}
+                defaultValue={workspace?.summary}
+                value={workspace?.summary}
                 onChange={handleWorkspaceExplain}
               />
               <S.EmptyBox />

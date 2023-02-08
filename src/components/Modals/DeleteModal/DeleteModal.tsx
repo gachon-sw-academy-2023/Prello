@@ -10,8 +10,13 @@ export default function DeleteModal({
 }: DeleteWorkspaceProps) {
   const handleModal = () => {
     setOpenModal(false);
-    deleteWorkspace();
   };
+
+  const handleDelete = () => {
+    deleteWorkspace();
+    handleModal();
+  };
+
   return (
     <Modal onClickToggleModal={handleModal}>
       <SubTitle size="md">워크스페이스 삭제</SubTitle>
@@ -29,7 +34,7 @@ export default function DeleteModal({
         color="primary"
         height="md"
         width={0}
-        onClick={handleModal}
+        onClick={handleDelete}
       >
         삭제하기
       </S.DeleteButton>
