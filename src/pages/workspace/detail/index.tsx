@@ -73,7 +73,7 @@ interface IBoard {
 
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
-  let { workspaceId } = useParams();
+  let { workspaceId } = useParams() as { workspaceId: string };
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -88,8 +88,8 @@ export default function WorkspaceDetail() {
     setOpenModal(!isOpenModal);
   };
 
-  const handleNavigate = () => {
-    navigate('/workspace-setting');
+  const handleNavigate = (param: string) => {
+    navigate(`/workspace-setting/${param}`);
   };
   const handleCreate = () => {
     setNewItem(true);
@@ -187,7 +187,7 @@ export default function WorkspaceDetail() {
         <SideBar
           memberInfo={members}
           onModal={handleModal}
-          onNavigate={handleNavigate}
+          onNavigate={() => handleNavigate(workspaceId)}
         />
         {loading ? (
           <DetailSkeleton />

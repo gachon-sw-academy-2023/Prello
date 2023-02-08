@@ -6,6 +6,6 @@ const ROUTES = {
   WORKSPACEDEFAULT: '/workspace',
   WORKSPACEDETAIL: '/workspace-detail/:workspaceId',
   CREATEWORKSPACE: '/create-workspace',
-  WORKSPACESETTING: '/workspace-setting',
+  WORKSPACESETTING: '/workspace-setting/:workspaceId',
 };
 export default ROUTES;
