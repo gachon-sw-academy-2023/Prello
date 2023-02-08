@@ -1,18 +1,21 @@
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import InviteModal from '@/components/Modals/InviteModal/InviteModal';
-import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
+import { MenuBtn } from '@/pages/board/styles';
+import Inform from '@/pages/util';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Grid from '@mui/material/Grid';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DetailSkeleton from './skeleton';
 import * as S from './styles';
-import Inform from '@/pages/util';
+import DropDownMenu from '@/components/DropDownMenu/DropDownMenu';
 
 // TODO: member 불러오는 api로 대체
 interface IMember {
@@ -73,7 +76,8 @@ interface IBoard {
 
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
-  let { workspaceId } = useParams();
+  const { workspaceId } = useParams();
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -87,17 +91,16 @@ export default function WorkspaceDetail() {
   const handleModal = () => {
     setOpenModal(!isOpenModal);
   };
-
   const handleNavigate = () => {
     navigate('/workspace-setting');
   };
   const handleCreate = () => {
     setNewItem(true);
   };
-
+  const handleDelete = () => {};
+  const updateBoard = () => {};
   const fetchCreate = async () => {
     let info = {
-      // TODO: workspaceID 변경 필요
       workspaceId: workspaceId,
       name: title,
     };
@@ -222,10 +225,25 @@ export default function WorkspaceDetail() {
                 {boards.map((board) => (
                   <Grid item xs={12} sm={6} md={4} key={board.id}>
                     <S.Item center={false} color={'#ffe7ee'}>
-                      <S.TitleInput
-                        value={board.name}
-                        disabled={true}
-                      ></S.TitleInput>
+                      <S.TopWrapper>
+                        <S.TitleInput
+                          value={board.name}
+                          disabled={true}
+                        ></S.TitleInput>
+                        <MenuBtn>
+                          <FontAwesomeIcon
+                            icon={faEllipsis}
+                            onClick={() => setShowMenu(!showMenu)}
+                          />
+                          {showMenu && (
+                            <DropDownMenu
+                              updateBoard={updateBoard}
+                              handleDelete={handleDelete}
+                              boardId={board.id}
+                            />
+                          )}
+                        </MenuBtn>
+                      </S.TopWrapper>
                     </S.Item>
                   </Grid>
                 ))}
@@ -237,13 +255,14 @@ export default function WorkspaceDetail() {
                         defaultValue={title}
                         onChange={handleChangeTitle}
                       ></S.TitleInput>
+
                       <S.BtnWrapper>
                         <S.SaveBtn
                           color="primary"
                           onClick={fetchCreate}
                           disable={!isTitleExsit}
                         >
-                          생성하기
+                          확인
                         </S.SaveBtn>
                       </S.BtnWrapper>
                     </S.Item>
