@@ -5,15 +5,14 @@ import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
-import { Default, Mobile } from '@/utils/mediaQuery';
-import React, { useEffect, useState } from 'react';
-import * as S from './styles';
-import axios, { AxiosError } from 'axios';
-import { Routes, useNavigate, useParams } from 'react-router-dom';
-import { Rocket } from '@mui/icons-material';
-import ROUTES from '@/routes';
-import { IWorkspace } from '@/utils/types';
 import Inform from '@/pages/util';
+import ROUTES from '@/routes';
+import { Default, Mobile } from '@/utils/mediaQuery';
+import { IWorkspace } from '@/utils/types';
+import axios, { AxiosError } from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import * as S from './styles';
 
 interface IMember {
   name: string;
