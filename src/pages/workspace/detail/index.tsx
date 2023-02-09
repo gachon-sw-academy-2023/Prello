@@ -16,6 +16,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DetailSkeleton from './skeleton';
 import * as S from './styles';
 import DropDownMenu from '@/components/DropDownMenu/DropDownMenu';
+import BoardItem from '@/components/BoardItem/BoardItem';
 
 // TODO: member 불러오는 api로 대체
 interface IMember {
@@ -68,7 +69,7 @@ let members: IMember[] = [
     profile: '/assets/workspace/sample-profile-image.png',
   },
 ];
-interface IBoard {
+export interface IBoard {
   id: number;
   name: string;
   workspaceId: number;
@@ -223,28 +224,31 @@ export default function WorkspaceDetail() {
                   </S.Item>
                 </Grid>
                 {boards.map((board) => (
+                  // <Grid item xs={12} sm={6} md={4} key={board.id}>
+                  //   <S.Item center={false} color={'#ffe7ee'}>
+                  //     <S.TopWrapper>
+                  //       <S.TitleInput
+                  //         value={board.name}
+                  //         disabled={true}
+                  //       ></S.TitleInput>
+                  //       <MenuBtn>
+                  //         <FontAwesomeIcon
+                  //           icon={faEllipsis}
+                  //           onClick={() => setShowMenu(!showMenu)}
+                  //         />
+                  //         {showMenu && (
+                  //           <DropDownMenu
+                  //             UpdateList={updateBoard}
+                  //             handleDeleteItems={handleDelete}
+                  //             cardId={board.id}
+                  //           />
+                  //         )}
+                  //       </MenuBtn>
+                  //     </S.TopWrapper>
+                  //   </S.Item>
+                  // </Grid>
                   <Grid item xs={12} sm={6} md={4} key={board.id}>
-                    <S.Item center={false} color={'#ffe7ee'}>
-                      <S.TopWrapper>
-                        <S.TitleInput
-                          value={board.name}
-                          disabled={true}
-                        ></S.TitleInput>
-                        <MenuBtn>
-                          <FontAwesomeIcon
-                            icon={faEllipsis}
-                            onClick={() => setShowMenu(!showMenu)}
-                          />
-                          {showMenu && (
-                            <DropDownMenu
-                              updateBoard={updateBoard}
-                              handleDelete={handleDelete}
-                              boardId={board.id}
-                            />
-                          )}
-                        </MenuBtn>
-                      </S.TopWrapper>
-                    </S.Item>
+                    <BoardItem board={board} />
                   </Grid>
                 ))}
                 {newItem && (

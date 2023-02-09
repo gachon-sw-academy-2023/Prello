@@ -6,9 +6,10 @@ export const Container = styled.div`
   border-radius: 10px;
   font-size: 15px;
 
-  width: 150px;
+  width: 110px;
   li {
-    padding: 20px 10px;
+    font-family: 'LINESeedKR-Rg';
+    padding: 15px 10px;
     border-radius: 10px;
 
     :hover {

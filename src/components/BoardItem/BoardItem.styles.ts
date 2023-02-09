@@ -23,34 +23,7 @@ export const Wrapper = styled.div`
   display: flex;
   padding-top: 65px;
 `;
-// 구분선
-export const Line = styled.div<TitleProps>`
-  width: 100%;
-  height: 0.5px;
-  margin-left: ${(props) => props.margin};
-  background-color: #71717190;
-`;
 
-// 왼쪽 바 div
-export const LeftContainer = styled.div`
-  width: 20%;
-  min-height: 100vh;
-  padding: 20px 30px;
-`;
-export const LeftContent = styled.div`
-  display: flex;
-  width: 100%;
-  margin: 15px 0px;
-  padding-left: 10px;
-  border-radius: 0.5rem;
-  &:hover {
-    background-color: #d7d7d7;
-  }
-`;
-
-export const LeftContentNotHover = styled(LeftContent)`
-  pointer-events: none;
-`;
 export const TitleInput = styled.input`
   width: 92%;
   height: fit-content;
@@ -63,31 +36,6 @@ export const TitleInput = styled.input`
   ::placeholder {
     color: #bdbdbd;
   }
-`;
-export const MembersWrapper = styled.div`
-  width: 100%;
-  height: 60vh;
-  overflow: auto;
-  padding-left: 10px;
-`;
-export const MemberWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  padding-top: 10px;
-`;
-
-// 이미지
-export const Image = styled.div<ImageProps>`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  background-size: cover;
-  background-image: url(${(props) => props.img});
-`;
-export const ProfileName = styled.p`
-  font-size: 15px;
-  font-family: 'LINESeedKR-Rg';
-  padding: 13px 10px 7px 10px;
-  color: #4f4e4e;
 `;
 
 //오른쪽 화면
@@ -142,6 +90,9 @@ export const Item = styled.div<ItemProps>`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 `;
+export const MenuBtn = styled.div`
+  position: 'relative';
+`;
 export const TopWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -153,6 +104,9 @@ export const Icon = styled.div<ImageProps>`
   background-size: cover;
   background-image: url(${(props) => props.img});
   margin: 7px 10px 10px 0;
+`;
+export const IconBtn = styled.div`
+  padding: 10px;
 `;
 
 export const BtnWrapper = styled.div`

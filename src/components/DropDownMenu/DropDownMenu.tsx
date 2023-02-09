@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import * as S from './DropDownMenu.styles';
 
 interface IDropMenu {
-  handleDelete: () => void;
-  updateBoard: () => void;
+  handleDeleteItems: () => void;
+  UpdateList: () => void;
   boardId: number;
 }
 
 const DropDownMenu: React.FC<IDropMenu> = ({
-  handleDelete,
-  updateBoard,
+  handleDeleteItems,
+  UpdateList,
   boardId,
 }) => {
   const [visible, setVisible] = useState<boolean>(true);
@@ -31,25 +31,33 @@ const DropDownMenu: React.FC<IDropMenu> = ({
       setVisible(true);
     }
   };
-
-  const handleBoardMenu = () => {
+  const handleItemMenu = () => {
     handleHideMenu();
-    handleDeleteBoard();
+    handleDeleteItems();
   };
-  const handleUpdateBoard = () => {};
   const handleHideMenu = () => {
     setVisible(false);
   };
 
-  const handleDeleteBoard = () => {
-    axios.post('/card/delete', { boardId }).catch((error) => alert(error));
+  const handleDeleteBoard = async () => {
+    try {
+      const response = await axios.post('/board/delete', { boardId });
+      console.log(boardId);
+      if (response.status === 200) {
+        UpdateList();
+        console.log('삭제완료');
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log(err.response?.data);
+    }
   };
 
   return (
     <S.Container ref={wrapperRef}>
       {visible && (
         <ul>
-          <li onClick={handleUpdateBoard}>보드 이름 수정</li>
+          <li onClick={handleItemMenu}>보드 이름 변경</li>
           <li onClick={handleDeleteBoard}>보드 삭제</li>
         </ul>
       )}
