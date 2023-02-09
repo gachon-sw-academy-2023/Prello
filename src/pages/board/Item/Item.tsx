@@ -5,15 +5,15 @@ import * as S from '../styles';
 interface IItemProps {
   children: React.ReactNode;
   itemId: number;
-  fatchItems: () => void;
+  fetchItems: () => void;
 }
 
-const Item: React.FC<IItemProps> = ({ children, itemId, fatchItems }) => {
+const Item: React.FC<IItemProps> = ({ children, itemId, fetchItems }) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const handleModal = () => {
     setOpen(false);
-    fatchItems();
+    fetchItems();
   };
   return (
     <S.ItemContainer id={`${itemId}`} draggable="true">

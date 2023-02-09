@@ -28,7 +28,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const [items, setItems] = useState<IItem[]>([]);
 
   useEffect(() => {
-    fatchItems();
+    fetchItems();
   }, []);
 
   const handleSubmit = (e: { target: any; preventDefault: () => void }) => {
@@ -68,7 +68,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
       .catch((error) => alert(error));
   };
 
-  const fatchItems = () => {
+  const fetchItems = () => {
     axios
       .get(`/list/item/${cardId}`)
       .then((res) =>
@@ -119,10 +119,10 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
                 newIndex: e.newIndex,
               });
             }}
-            onChange={fatchItems}
+            onChange={fetchItems}
           >
             {items.map((item: IItem) => (
-              <Item key={item.id} itemId={item.id} fatchItems={fatchItems}>
+              <Item key={item.id} itemId={item.id} fetchItems={fetchItems}>
                 {item.title}
               </Item>
             ))}
@@ -170,7 +170,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             list={items}
           >
             {items.map((item: IItem) => (
-              <Item key={item.id} itemId={item.id} fatchItems={fatchItems}>
+              <Item key={item.id} itemId={item.id} fetchItems={fetchItems}>
                 {item.title}
               </Item>
             ))}
