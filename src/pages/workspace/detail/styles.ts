@@ -158,7 +158,7 @@ export const Icon = styled.div<ImageProps>`
 export const BtnWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 105px;
+  margin-top: 95px;
 `;
 export const SaveBtn = styled(Button)`
   width: 60px;

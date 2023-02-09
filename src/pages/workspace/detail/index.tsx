@@ -254,12 +254,13 @@ export default function WorkspaceDetail() {
                 {newItem && (
                   <Grid item xs={12} sm={6} md={4}>
                     <S.Item center={false} color={'#ffe7ee'}>
-                      <S.TitleInput
-                        placeholder="보드 이름을 입력해주세요"
-                        defaultValue={title}
-                        onChange={handleChangeTitle}
-                      ></S.TitleInput>
-
+                      <S.TopWrapper>
+                        <S.TitleInput
+                          placeholder="보드 이름을 입력해주세요"
+                          defaultValue={title}
+                          onChange={handleChangeTitle}
+                        ></S.TitleInput>
+                      </S.TopWrapper>
                       <S.BtnWrapper>
                         <S.SaveBtn
                           color="primary"

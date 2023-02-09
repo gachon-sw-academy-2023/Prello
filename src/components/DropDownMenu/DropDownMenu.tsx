@@ -6,12 +6,14 @@ interface IDropMenu {
   handleDeleteItems: () => void;
   UpdateList: () => void;
   boardId: number;
+  setEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DropDownMenu: React.FC<IDropMenu> = ({
   handleDeleteItems,
   UpdateList,
   boardId,
+  setEdit,
 }) => {
   const [visible, setVisible] = useState<boolean>(true);
 
@@ -33,7 +35,8 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
   const handleItemMenu = () => {
     handleHideMenu();
-    handleDeleteItems();
+    setEdit(true);
+    // handleDeleteItems();
   };
   const handleHideMenu = () => {
     setVisible(false);

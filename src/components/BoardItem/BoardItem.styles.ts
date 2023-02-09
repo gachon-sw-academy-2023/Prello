@@ -112,7 +112,7 @@ export const IconBtn = styled.div`
 export const BtnWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 105px;
+  margin-top: 90px;
 `;
 export const SaveBtn = styled(Button)`
   width: 60px;
