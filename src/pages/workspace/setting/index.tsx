@@ -83,11 +83,10 @@ let boards: IBoard[] = [
 export default function WorkspaceSetting() {
   const { workspaceId } = useParams() as { workspaceId: string };
   const [workspace, setWorkspace] = useState<IWorkspace>();
-  const [workspaceName, setWorkspaceName] = useState<string>('PIMFY');
+  const [workspaceName, setWorkspaceName] = useState<string>('');
   const [changedWorkspaceName, setChangedWorkspaceName] =
     useState<string>(workspaceName);
-  const [workspaceExplain, setWorkspaceExplain] =
-    useState<string>('핌피팀입니당');
+  const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<Boolean>(false);
   const [error, setError] = useState<Boolean>(false);
@@ -98,7 +97,7 @@ export default function WorkspaceSetting() {
     setChangedWorkspaceName(e.target.value);
   }
   function handleWorkspaceExplain(e: React.ChangeEvent<HTMLInputElement>) {
-    setWorkspaceExplain(e.target.value);
+    setWorkspaceSummary(e.target.value);
   }
   function handleModal() {
     setOpenModal(true);
@@ -121,6 +120,9 @@ export default function WorkspaceSetting() {
 
       if (response.status === 200) {
         setWorkspace(response.data);
+        setWorkspaceName(response.data.name);
+        setChangedWorkspaceName(response.data.name);
+        setWorkspaceSummary(response.data.summary);
       }
     } catch (error) {
       setError(true);
@@ -134,6 +136,26 @@ export default function WorkspaceSetting() {
       <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
     );
 
+  const updateWorkspace = async () => {
+    const data = {
+      id: parseInt(workspaceId),
+      summary: workspaceSummary,
+      name: changedWorkspaceName,
+    };
+
+    try {
+      const response = await axios.post('/workspace/update', data);
+
+      if (response.status === 200) {
+        fetchWorkspace();
+        alert('워크스페이스 정보가 업데이트 되었습니다!');
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log(err);
+    }
+  };
+
   const deleteWorkspace = async () => {
     const data = {
       workspaceId: parseInt(workspaceId),
@@ -141,6 +163,7 @@ export default function WorkspaceSetting() {
     try {
       const response = await axios.post('/workspace/delete', data);
       if (response.status === 200) {
+        alert('워크스페이스가 삭제되었습니다!');
         naviate(ROUTES.WORKSPACEDEFAULT);
       }
     } catch (error) {
@@ -182,20 +205,32 @@ export default function WorkspaceSetting() {
               <S.EmptyBox />
               <SubTitle size="sm">이름</SubTitle>
               <S.RoundLineInput
-                defaultValue={workspace?.name}
-                value={workspace?.name}
+                // defaultValue={changedWorkspaceName}
+                value={changedWorkspaceName}
                 onChange={handleWorkspaceName}
               />
               <S.EmptyBox />
               <SubTitle size="sm">설명</SubTitle>
               <S.RoundLineInput
-                defaultValue={workspace?.summary}
-                value={workspace?.summary}
+                // defaultValue={workspaceSummary}
+                value={workspaceSummary}
                 onChange={handleWorkspaceExplain}
               />
               <S.EmptyBox />
               <S.SaveButtonWrapper>
-                <Button shadow={true} color="notworking" height="md" width={30}>
+                <Button
+                  shadow={true}
+                  color="primary"
+                  height="md"
+                  width={30}
+                  disable={
+                    !(
+                      workspace?.name !== changedWorkspaceName ||
+                      workspace?.summary !== workspaceSummary
+                    )
+                  }
+                  onClick={updateWorkspace}
+                >
                   변경 사항 저장
                 </Button>
               </S.SaveButtonWrapper>

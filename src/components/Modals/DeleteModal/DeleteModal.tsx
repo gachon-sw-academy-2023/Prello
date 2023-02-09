@@ -1,13 +1,20 @@
 import Modal from '@/components/Modal/Modal';
-import * as S from './DeleteModal.styles';
 import SubTitle from '@/components/SubTitle/SubTitle';
 import { DeleteWorkspaceProps } from '@/utils/types';
+import { useState } from 'react';
+import * as S from './DeleteModal.styles';
 
 export default function DeleteModal({
   workspaceName,
   setOpenModal,
   deleteWorkspace,
 }: DeleteWorkspaceProps) {
+  const [inputValue, setInputValue] = useState<string>('');
+
+  function handleInputValue(e: React.ChangeEvent<HTMLInputElement>) {
+    setInputValue(e.target.value);
+  }
+
   const handleModal = () => {
     setOpenModal(false);
   };
@@ -27,7 +34,10 @@ export default function DeleteModal({
       <S.ExplainText>
         워크페이스 삭제를 원하시면 {workspaceName}을(를) 아래에 입력해주세요.
       </S.ExplainText>
-      <S.RoundInput></S.RoundInput>
+      <S.RoundInput
+        value={inputValue}
+        onChange={handleInputValue}
+      ></S.RoundInput>
       <S.EmptyBox />
       <S.DeleteButton
         shadow={true}
@@ -35,6 +45,7 @@ export default function DeleteModal({
         height="md"
         width={0}
         onClick={handleDelete}
+        disable={inputValue !== workspaceName}
       >
         삭제하기
       </S.DeleteButton>

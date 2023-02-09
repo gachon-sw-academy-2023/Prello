@@ -2,7 +2,8 @@ import { IDeleteWorkspace, IUser, IWorkspace } from '@/utils/types';
 import { getAllByAltText } from '@testing-library/react';
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
-const { getAll, add, getByID, deleteRecord } = useIndexedDB('workspace');
+const { getAll, add, getByID, deleteRecord, update } =
+  useIndexedDB('workspace');
 
 export const workspaceHandlers = [
   rest.get('/workspace', async (req, res, ctx) => {
@@ -86,7 +87,6 @@ export const workspaceHandlers = [
   }),
 
   rest.post('/workspace/delete', async (req: any, res, ctx) => {
-    console.log(req.body.workspaceId);
     try {
       await deleteRecord(req.body.workspaceId);
 
@@ -96,6 +96,27 @@ export const workspaceHandlers = [
       );
     } catch {
       return res(ctx.status(500), ctx.json({ message: 'Fail to Delete Data' }));
+    }
+  }),
+
+  rest.post('/workspace/update', async (req: any, res, ctx) => {
+    try {
+      const workspace = await getByID(req.body.id);
+
+      update({
+        owner: workspace.owner,
+        name: req.body.name,
+        summary: req.body.summary,
+        id: workspace.id,
+        memberInfo: workspace.memberInfo,
+      });
+
+      return res(
+        ctx.status(200),
+        ctx.json({ message: 'Workspace Update Success!' }),
+      );
+    } catch {
+      return res(ctx.status(500), ctx.json({ message: 'Fail to Update Data' }));
     }
   }),
 ];
