@@ -4,7 +4,7 @@ import { IBoard } from '@/pages/workspace/detail';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios, { AxiosError } from 'axios';
-import { ReactHTML, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import * as S from './BoardItem.styles';
 
 type BoardProps = {
@@ -26,9 +26,13 @@ export default function BoardItem({ board }: BoardProps) {
     }
     return false;
   };
-  const updateBoard = async () => {
+  const fetchUpdate = async () => {
+    let newBoardInfo = {
+      boardId: board.id,
+      boardName: board.name,
+    };
     try {
-      const response = await axios.get('/board/list');
+      const response = await axios.post('/board/update', newBoardInfo);
     } catch (error) {
       const err = error as AxiosError;
       console.log(err.response?.data);
@@ -51,7 +55,7 @@ export default function BoardItem({ board }: BoardProps) {
           </S.IconBtn>
           {showMenu && (
             <DropDownMenu
-              UpdateList={updateBoard}
+              UpdateList={fetchUpdate}
               handleDeleteItems={handleDelete}
               boardId={board.id}
               setEdit={setEdit}
@@ -64,8 +68,7 @@ export default function BoardItem({ board }: BoardProps) {
           <S.SaveBtn
             color="primary"
             disable={handleButton()}
-            // onClick={fetchCreate}
-            // disable={!isTitleExsit}
+            onClick={fetchUpdate}
           >
             확인
           </S.SaveBtn>

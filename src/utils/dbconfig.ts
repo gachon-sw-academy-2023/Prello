@@ -46,9 +46,8 @@ export const DBConfig = {
       store: 'board',
       storeConfig: { keyPath: 'id', autoIncrement: true },
       storeSchema: [
-        { name: 'title', keypath: 'title' },
-        { name: 'order', keypath: 'order' },
-        { name: 'cardId', keypath: 'cardId' },
+        { name: 'name', keypath: 'name' },
+        { name: 'workspaceId', keypath: 'workspaceId' },
       ],
     },
   ],
