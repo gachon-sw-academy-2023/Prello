@@ -28,11 +28,19 @@ export const ItemName = styled.span`
   font-size: 30px;
 `;
 
-export const Description = styled.input`
+export const Description = styled.textarea`
   margin-bottom: 25px;
-  height: 30px;
-  border: none;
+  height: 60px;
   width: 100%;
+  background-color: rgba(255, 238, 238, 0.3);
+  border: none;
+  font-size: 20px;
+  resize: none;
+  padding: 5px 20px;
+  font-family: 'LINESeedKR-Rg';
+  :focus {
+    outline: none;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -47,8 +55,9 @@ export const Comment = styled.div`
 `;
 
 export const InfoTitle = styled.h1`
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
 `;
 
 export const CommentWrapper = styled.div`

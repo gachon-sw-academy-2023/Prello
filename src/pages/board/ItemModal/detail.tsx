@@ -73,7 +73,7 @@ export const Detail = ({ setOpen, itemId }: DetailProps) => {
     setPersonName(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const handleDesription = (e: any) => {
+  const handleDesription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
   };
 
@@ -106,6 +106,7 @@ export const Detail = ({ setOpen, itemId }: DetailProps) => {
           <S.Divider />
           <S.ItemName>{item?.title}</S.ItemName>
         </S.TitleWrapper>
+        <S.InfoTitle>설명</S.InfoTitle>
         <S.Description
           placeholder="설명 추가하기..."
           defaultValue={item?.description}
