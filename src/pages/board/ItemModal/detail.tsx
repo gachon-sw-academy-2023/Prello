@@ -29,24 +29,42 @@ interface ICard {
   title: string;
 }
 
-export const Detail = ({ setOpen, itemId }: any) => {
-  const [item, setItem] = useState<IItem>();
-  const [card, setCard] = useState<ICard>();
+interface IMember {
+  name: string;
+  profile: string;
+}
+
+interface DetailProps {
+  setOpen: (b: boolean) => void;
+  itemId: number;
+}
+
+export const Detail = ({ setOpen, itemId }: DetailProps) => {
   const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
   const [personName, setPersonName] = useState<string[]>([]);
+  const [member, setMember] = useState<IMember[]>([]);
+  const [item, setItem] = useState<IItem>();
+  const [card, setCard] = useState<ICard>();
   const [description, setDescription] = useState<string>();
 
   useEffect(() => {
+    axios
+      .get('/members/list')
+      .then((res) => setMember(res.data))
+      .catch((error) => alert(error));
+
     axios.get(`/item/${itemId}`).then((res) => {
       setItem(res.data);
+      setValue(res.data.date);
+      setPersonName(res.data.members);
+      setDescription(res.data.description);
+      axios.get(`/card/${res.data.cardId}`).then((res) => setCard(res.data));
     });
   }, []);
 
-  useEffect(() => {
-    if (item) {
-      axios.get(`/card/${item?.cardId}`).then((res) => setCard(res.data));
-    }
-  }, [item]);
+  const setCardList = () => {
+    axios.get(`/card/${item?.cardId}`).then((res) => setCard(res.data));
+  };
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     const {
@@ -63,12 +81,11 @@ export const Detail = ({ setOpen, itemId }: any) => {
     axios.post('/item/delete/', {
       itemId,
     });
-
     setOpen(false);
+    setCardList();
   };
 
   const handleSave = () => {
-    //TODO: 아이템 상세 정보 저장
     axios.post(`/item/${itemId}`, {
       title: item?.title,
       order: item?.order,
@@ -77,58 +94,10 @@ export const Detail = ({ setOpen, itemId }: any) => {
       date: value,
       members: personName,
     });
-  };
 
-  interface IMember {
-    name: string;
-    profile: string;
-  }
-  let members: IMember[] = [
-    {
-      name: 'dahye',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: 'leah',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: 'rylee',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버1',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버2',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버3',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버4',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버5',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버6',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버7',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버8',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-  ];
+    setOpen(false);
+    setCardList();
+  };
   return (
     <Modal size="lg" onClickToggleModal={() => setOpen(false)}>
       <S.Title>
@@ -141,31 +110,9 @@ export const Detail = ({ setOpen, itemId }: any) => {
           placeholder="설명 추가하기..."
           defaultValue={item?.description}
           onChange={handleDesription}
-        >
-          {item?.description}
-        </S.Description>
+        ></S.Description>
       </S.Title>
       <S.Wrapper>
-        <S.Comment>
-          <S.InfoTitle>comments</S.InfoTitle>
-          <S.CommentWrapper>
-            <S.MyComment>
-              <S.ProfileImg />
-              <S.InputComment placeholder="Add a comment..." />
-            </S.MyComment>
-            <S.PostBtn>Post</S.PostBtn>
-          </S.CommentWrapper>
-          <S.MemberComment>
-            <S.ProfileImg />
-            <S.MemberCommentWrapper>
-              <h1>Member 1</h1>
-              <p>
-                comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...
-              </p>
-            </S.MemberCommentWrapper>
-          </S.MemberComment>
-          <S.LoadBtn>Load More</S.LoadBtn>
-        </S.Comment>
         <S.Info>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <InputLabel>Date</InputLabel>
@@ -183,8 +130,9 @@ export const Detail = ({ setOpen, itemId }: any) => {
           </LocalizationProvider>
           <InputLabel sx={{ marginTop: '20px' }}>Member</InputLabel>
           <Select
+            sx={{ width: '300px' }}
             multiple
-            value={personName}
+            value={personName ? personName : []}
             onChange={handleChange}
             input={<OutlinedInput label="Chip" />}
             renderValue={(selected) => (
@@ -195,17 +143,17 @@ export const Detail = ({ setOpen, itemId }: any) => {
               </Box>
             )}
           >
-            {members.map((member) => (
+            {member.map((member) => (
               <MenuItem key={member.name} value={member.name}>
                 {member.name}
               </MenuItem>
             ))}
           </Select>
-          <S.BtnWrapper>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleDelete}>Delete</button>
-          </S.BtnWrapper>
         </S.Info>
+        <S.BtnWrapper>
+          <button onClick={handleSave}>Save</button>
+          <button onClick={handleDelete}>Delete</button>
+        </S.BtnWrapper>
       </S.Wrapper>
     </Modal>
   );

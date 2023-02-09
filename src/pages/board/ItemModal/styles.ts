@@ -124,9 +124,6 @@ export const LoadBtn = styled(Btn)`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
-  margin-left: 25px;
-  width: 30%;
 `;
 
 export const MemberChip = styled(Chip)`
@@ -136,15 +133,17 @@ export const MemberChip = styled(Chip)`
 `;
 
 export const BtnWrapper = styled.div`
-  margin-top: auto;
+  margin-top: 25px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: end;
+  margin-top: auto;
   button {
     background-color: #fca4be;
     margin-left: 15px;
+    height: 50px;
     padding: 10px 30px;
-    border-radius: 2px;
+    border-radius: 5px;
     color: #ffffff;
   }
 `;

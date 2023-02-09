@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
+import { json } from 'react-router-dom';
 const { getAll, add, deleteRecord, getByIndex, getByID, update, clear } =
   useIndexedDB('item');
 
@@ -9,16 +10,6 @@ export const itemHandlers = [
 
     return res(ctx.status(200), ctx.json(target));
   }),
-  rest.post(`/item/delete/`, async (req: any, res, ctx) => {
-    await deleteRecord(req.body.itemId);
-
-    return res(ctx.status(200));
-  }),
-
-  rest.post('/item/:itemId', async (req: any, res, ctx) => {
-    // TODO: 아이템 상세 정보 저장
-  }),
-
   rest.get('/list/item/:cardId', async (req, res, ctx) => {
     const AllList = await getAll();
     const itemList = AllList.filter(
@@ -33,6 +24,11 @@ export const itemHandlers = [
       (list) => list.cardId === req.body.cardId,
     );
     return res(ctx.status(200), ctx.json(targetList));
+  }),
+
+  rest.post('item/delete', async (req: any, res, ctx) => {
+    await deleteRecord(req.body.itemId);
+    return res(ctx.status(200));
   }),
 
   rest.post('/item/clear', async (req: any, res, ctx) => {
@@ -67,6 +63,9 @@ export const itemHandlers = [
               id: list.id,
               order: Math.max(0, list.order - 1),
               cardId: list.cardId,
+              description: list.description,
+              date: list.date,
+              members: list.members,
             });
           }
         });
@@ -81,6 +80,9 @@ export const itemHandlers = [
               id: list.id,
               order: list.order + 1,
               cardId: list.cardId,
+              description: list.description,
+              date: list.date,
+              members: list.members,
             });
           }
         });
@@ -103,6 +105,9 @@ export const itemHandlers = [
             id: list.id,
             order: list.order - 1,
             cardId: list.cardId,
+            description: list.description,
+            date: list.date,
+            members: list.members,
           });
         }
       });
@@ -118,12 +123,30 @@ export const itemHandlers = [
             id: list.id,
             order: list.order + 1,
             cardId: list.cardId,
+            description: list.description,
+            date: list.date,
+            members: list.members,
           });
         }
       });
     }
 
     add(target);
+    return res(ctx.status(200));
+  }),
+
+  rest.post('/item/:itemId', async (req: any, res, ctx) => {
+    await update({
+      id: parseInt(req.params.itemId),
+
+      title: req.body.title,
+      order: req.body.order,
+      cardId: req.body.cardId,
+      description: req.body.description,
+      date: req.body.date,
+      members: req.body.members,
+    });
+
     return res(ctx.status(200));
   }),
 ];
