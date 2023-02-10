@@ -221,31 +221,8 @@ export default function WorkspaceDetail() {
                   </S.Item>
                 </Grid>
                 {boards.map((board) => (
-                  // <Grid item xs={12} sm={6} md={4} key={board.id}>
-                  //   <S.Item center={false} color={'#ffe7ee'}>
-                  //     <S.TopWrapper>
-                  //       <S.TitleInput
-                  //         value={board.name}
-                  //         disabled={true}
-                  //       ></S.TitleInput>
-                  //       <MenuBtn>
-                  //         <FontAwesomeIcon
-                  //           icon={faEllipsis}
-                  //           onClick={() => setShowMenu(!showMenu)}
-                  //         />
-                  //         {showMenu && (
-                  //           <DropDownMenu
-                  //             UpdateList={updateBoard}
-                  //             handleDeleteItems={handleDelete}
-                  //             cardId={board.id}
-                  //           />
-                  //         )}
-                  //       </MenuBtn>
-                  //     </S.TopWrapper>
-                  //   </S.Item>
-                  // </Grid>
                   <Grid item xs={12} sm={6} md={4} key={board.id}>
-                    <BoardItem board={board} />
+                    <BoardItem board={board} workspaceId={workspaceId} />
                   </Grid>
                 ))}
                 {newItem && (

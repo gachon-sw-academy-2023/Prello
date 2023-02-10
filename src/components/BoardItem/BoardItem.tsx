@@ -9,9 +9,10 @@ import * as S from './BoardItem.styles';
 
 type BoardProps = {
   board: IBoard;
+  workspaceId: string;
 };
 
-export default function BoardItem({ board }: BoardProps) {
+export default function BoardItem({ board, workspaceId }: BoardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [isEdit, setEdit] = useState<boolean>(false);
@@ -28,11 +29,14 @@ export default function BoardItem({ board }: BoardProps) {
   };
   const fetchUpdate = async () => {
     let newBoardInfo = {
-      boardId: board.id,
-      boardName: board.name,
+      id: board.id,
+      name: boardName,
+      workspaceId: workspaceId,
     };
+    console.log(workspaceId);
     try {
-      const response = await axios.post('/board/update', newBoardInfo);
+      await axios.post('/board/update', newBoardInfo);
+      setEdit(false);
     } catch (error) {
       const err = error as AxiosError;
       console.log(err.response?.data);

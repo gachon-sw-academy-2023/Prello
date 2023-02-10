@@ -44,10 +44,10 @@ const DropDownMenu: React.FC<IDropMenu> = ({
 
   const handleDeleteBoard = async () => {
     try {
-      const response = await axios.post('/board/delete', { boardId });
+      const response = await axios.post('/board/delete', { id: boardId });
       console.log(boardId);
       if (response.status === 200) {
-        UpdateList();
+        // UpdateList();
         console.log('삭제완료');
       }
     } catch (error) {

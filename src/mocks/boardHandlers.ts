@@ -49,7 +49,7 @@ export const boardHandlers = [
   }),
   rest.post('/board/delete', async (req: any, res, ctx) => {
     try {
-      await deleteRecord(req.body.boardId);
+      await deleteRecord(req.body.id);
       return res(
         ctx.status(200),
         ctx.json({ message: 'Board Update Success!' }),
