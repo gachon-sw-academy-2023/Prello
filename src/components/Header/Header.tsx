@@ -1,3 +1,5 @@
+import ROUTES from '@/routes';
+import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import * as S from './Header.styles';
 import { HeaderProps } from './Header.types';
@@ -12,9 +14,9 @@ export const Header = ({
 }: HeaderProps) => (
   <header>
     <S.HeaderContainer color={color} backgroundColor={backgroundColor}>
-      <div>
+      <Link to={ROUTES.MAIN}>
         <h1>PRELLO</h1>
-      </div>
+      </Link>
       <div>
         {user?.nickname !== '' ? (
           <div>

@@ -1,3 +1,5 @@
+import ROUTES from '@/routes';
+import { Link } from 'react-router-dom';
 import * as S from './SubHeader.style';
 import { SubHeaderProps } from './SubHeader.types';
 export const SubHeader = ({
@@ -9,7 +11,9 @@ export const SubHeader = ({
   return (
     <S.Header>
       <S.LeftHeaderDiv>
-        <S.Title>Prello</S.Title>
+        <Link to={ROUTES.MAIN}>
+          <S.Title>Prello</S.Title>
+        </Link>
         {divider && <S.Divider />}
         <S.BoardName>{children}</S.BoardName>
       </S.LeftHeaderDiv>
