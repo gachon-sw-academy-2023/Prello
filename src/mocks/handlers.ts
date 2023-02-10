@@ -1,3 +1,4 @@
+import { IJUser, IUser } from '@/utils/types';
 import { rest } from 'msw';
 import { useIndexedDB } from 'react-indexed-db';
 
@@ -18,27 +19,43 @@ export const handlers = [
     );
   }),
 
-  rest.post('/login', async (req: any, res, ctx) => {
-    let user;
+  rest.post('/login', async (req, res, ctx) => {
+    const { email, password } = await req.json<IUser>();
+
+    let user: IUser = {
+      email: '',
+      password: '',
+    };
+
     await getAll().then((users) => {
-      user = users.find(({ email }) => email === req.body.email);
+      user = users.find((u) => u.email === email);
     });
 
     if (user) {
-      if (req.body.password === user.password) {
-        return res(ctx.status(200), ctx.json({ user }));
+      if (user.password === password) {
+        return res(ctx.status(200), ctx.delay(2000), ctx.json({ user }));
       }
-      return res(ctx.status(401), ctx.json({ message: 'Anauthorized' }));
+      return res(
+        ctx.status(401),
+        ctx.delay(2000),
+        ctx.json({ message: 'Anauthorized' }),
+      );
     }
-
-    return res(ctx.status(400), ctx.json({ message: 'Unregistered Account' }));
+    return res(
+      ctx.status(400),
+      ctx.delay(2000),
+      ctx.json({ message: 'Unregistered Account' }),
+    );
   }),
 
-  rest.post('/sign-up', async (req: any, res, ctx) => {
+  rest.post('/sign-up', async (req, res, ctx) => {
+    const { email, password, nickname } = await req.json<IJUser>();
+    console.log(email, password);
+
     let isExist;
+
     await getAll().then((users) => {
-      console.log(users.find(({ email }) => email === req.body.email));
-      users.find(({ email }) => email === req.body.email) !== undefined
+      users.find((u) => u.email === email) !== undefined
         ? (isExist = true)
         : (isExist = false);
     });
@@ -47,7 +64,11 @@ export const handlers = [
       return res(ctx.status(409), ctx.json({ message: 'Registered Email!' }));
     } else {
       try {
-        await add({ ...req.body });
+        await add({
+          email: email,
+          password: password,
+          nickname: nickname,
+        });
         return res(ctx.status(200), ctx.json({ message: 'SignUp Success!' }));
       } catch (error) {
         return res(

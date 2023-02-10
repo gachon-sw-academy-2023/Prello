@@ -5,8 +5,13 @@ import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
+import Inform from '@/pages/util';
+import ROUTES from '@/routes';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import React, { useState } from 'react';
+import { IWorkspace } from '@/utils/types';
+import axios, { AxiosError } from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as S from './styles';
 
 interface IMember {
@@ -75,28 +80,104 @@ let boards: IBoard[] = [
 ];
 
 export default function WorkspaceSetting() {
-  const [workspaceName, setWorkspaceName] = useState<string>('PIMFY');
+  const { workspaceId } = useParams() as { workspaceId: string };
+  const [workspace, setWorkspace] = useState<IWorkspace>();
+  const [workspaceName, setWorkspaceName] = useState<string>('');
   const [changedWorkspaceName, setChangedWorkspaceName] =
     useState<string>(workspaceName);
-  const [workspaceExplain, setWorkspaceExplain] =
-    useState<string>('핌피팀입니당');
+  const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [loading, setLoading] = useState<Boolean>(false);
+  const [error, setError] = useState<Boolean>(false);
+
+  const naviate = useNavigate();
 
   function handleWorkspaceName(e: React.ChangeEvent<HTMLInputElement>) {
     setChangedWorkspaceName(e.target.value);
   }
   function handleWorkspaceExplain(e: React.ChangeEvent<HTMLInputElement>) {
-    setWorkspaceExplain(e.target.value);
+    setWorkspaceSummary(e.target.value);
   }
   function handleModal() {
     setOpenModal(true);
   }
+
+  useEffect(() => {
+    fetchWorkspace();
+  }, []);
+
+  const fetchWorkspace = async () => {
+    try {
+      setError(false);
+      setLoading(true);
+
+      const response = await axios.get('/workspace', {
+        params: {
+          id: workspaceId,
+        },
+      });
+
+      if (response.status === 200) {
+        setWorkspace(response.data);
+        setWorkspaceName(response.data.name);
+        setChangedWorkspaceName(response.data.name);
+        setWorkspaceSummary(response.data.summary);
+      }
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  };
+
+  if (loading) return <div>로딩중...</div>;
+  if (error)
+    return (
+      <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
+    );
+
+  const updateWorkspace = async () => {
+    const data = {
+      id: parseInt(workspaceId),
+      summary: workspaceSummary,
+      name: changedWorkspaceName,
+    };
+
+    try {
+      const response = await axios.post('/workspace/update', data);
+
+      if (response.status === 200) {
+        fetchWorkspace();
+        alert('워크스페이스 정보가 업데이트 되었습니다!');
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log(err);
+    }
+  };
+
+  const deleteWorkspace = async () => {
+    const data = {
+      workspaceId: parseInt(workspaceId),
+    };
+    try {
+      const response = await axios.post('/workspace/delete', data);
+      if (response.status === 200) {
+        alert('워크스페이스가 삭제되었습니다!');
+        naviate(ROUTES.WORKSPACEDEFAULT);
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log(err);
+    }
+  };
+
   return (
     <S.Container>
       {isOpenModal && (
         <DeleteModal
           workspaceName={workspaceName}
           setOpenModal={setOpenModal}
+          deleteWorkspace={deleteWorkspace}
         />
       )}
       <Default>
@@ -123,20 +204,32 @@ export default function WorkspaceSetting() {
               <S.EmptyBox />
               <SubTitle size="sm">이름</SubTitle>
               <S.RoundLineInput
-                defaultValue={workspaceName}
+                // defaultValue={changedWorkspaceName}
                 value={changedWorkspaceName}
                 onChange={handleWorkspaceName}
               />
               <S.EmptyBox />
               <SubTitle size="sm">설명</SubTitle>
               <S.RoundLineInput
-                defaultValue={workspaceExplain}
-                value={workspaceExplain}
+                // defaultValue={workspaceSummary}
+                value={workspaceSummary}
                 onChange={handleWorkspaceExplain}
               />
               <S.EmptyBox />
               <S.SaveButtonWrapper>
-                <Button shadow={true} color="notworking" height="md" width={30}>
+                <Button
+                  shadow={true}
+                  color="primary"
+                  height="md"
+                  width={30}
+                  disable={
+                    !(
+                      workspace?.name !== changedWorkspaceName ||
+                      workspace?.summary !== workspaceSummary
+                    )
+                  }
+                  onClick={updateWorkspace}
+                >
                   변경 사항 저장
                 </Button>
               </S.SaveButtonWrapper>

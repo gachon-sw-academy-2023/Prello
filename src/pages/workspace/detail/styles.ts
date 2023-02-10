@@ -1,3 +1,4 @@
+import Button from '@/components/Button/Button';
 import styled from '@emotion/styled';
 type ImageProps = {
   img: string;
@@ -50,12 +51,18 @@ export const LeftContent = styled.div`
 export const LeftContentNotHover = styled(LeftContent)`
   pointer-events: none;
 `;
-export const Title = styled.h1<TitleProps>`
+export const TitleInput = styled.input`
+  width: 100%;
+  height: fit-content;
   font-size: 20px;
   font-weight: 600;
   font-family: 'LINESeedKR-Bd';
-  margin: ${(props) => props.margin};
   color: #4f4e4e;
+  background-color: #ffe7ee;
+  border: none;
+  ::placeholder {
+    color: #bdbdbd;
+  }
 `;
 export const MembersWrapper = styled.div`
   width: 100%;
@@ -124,14 +131,16 @@ export const BoardContainer = styled.div`
 export const Item = styled.div<ItemProps>`
   display: flex;
   align-items: ${(props) => (props.center ? 'center' : 'left')};
-  flex-direction: row;
+  flex-direction: column;
   justify-content: ${(props) => (props.center ? 'center' : 'left')};
   background-color: ${(props) => props.color};
   width: 100%;
   height: 200px;
   border-radius: 0.5rem;
   margin: 10px 0;
+  padding: 20px 20px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 `;
 export const Icon = styled.div<ImageProps>`
   width: ${(props) => props.width};
@@ -139,4 +148,15 @@ export const Icon = styled.div<ImageProps>`
   background-size: cover;
   background-image: url(${(props) => props.img});
   margin: 7px 10px 10px 0;
+`;
+
+export const BtnWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+`;
+export const SaveBtn = styled(Button)`
+  width: 100px;
 `;
