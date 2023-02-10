@@ -28,7 +28,7 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
     return false;
   };
   const fetchUpdate = async () => {
-    let newBoardInfo = {
+    const newBoardInfo = {
       id: board.id,
       name: boardName,
       workspaceId: workspaceId,
