@@ -52,7 +52,6 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
           disabled={!isEdit}
           onChange={handleChangeTitle}
         ></S.TitleInput>
-
         <MenuBtn>
           <S.IconBtn onClick={() => setShowMenu(!showMenu)}>
             <FontAwesomeIcon icon={faEllipsis} />
@@ -80,7 +79,4 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
       )}
     </S.Item>
   );
-}
-function useFocus(arg0: boolean) {
-  throw new Error('Function not implemented.');
 }

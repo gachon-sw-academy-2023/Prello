@@ -36,7 +36,6 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   const handleItemMenu = () => {
     handleHideMenu();
     setEdit(true);
-    // handleDeleteItems();
   };
   const handleHideMenu = () => {
     setVisible(false);
@@ -47,7 +46,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
       const response = await axios.post('/board/delete', { id: boardId });
       console.log(boardId);
       if (response.status === 200) {
-        // UpdateList();
+        // 목록 업데이트 필요
         console.log('삭제완료');
       }
     } catch (error) {
