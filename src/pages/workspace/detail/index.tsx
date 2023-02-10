@@ -92,6 +92,7 @@ export default function WorkspaceDetail() {
   const handleNavigate = (param: string) => {
     navigate(`/workspace-setting/${param}`);
   };
+
   const handleCreate = () => {
     setNewItem(true);
   };
@@ -183,7 +184,6 @@ export default function WorkspaceDetail() {
         <MobileHeader profileImg="/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {isOpenModal && <InviteModal setOpenModal={setOpenModal}></InviteModal>}
-
       <S.Wrapper>
         <SideBar
           memberInfo={members}

@@ -5,6 +5,7 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios, { AxiosError } from 'axios';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './BoardItem.styles';
 
 type BoardProps = {
@@ -14,10 +15,15 @@ type BoardProps = {
 
 export default function BoardItem({ board, workspaceId }: BoardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [isEdit, setEdit] = useState<boolean>(false);
   const [boardName, setBoardName] = useState<string>(board.name);
   const handleDelete = () => {};
+  const handleNavigate = (workspaceId: string, boardId: number) => {
+    navigate(`/workspace/${workspaceId}/${boardId}`);
+  };
+
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBoardName(e.target.value);
   };
@@ -43,7 +49,11 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
     }
   };
   return (
-    <S.Item center={false} color={'#ffe7ee'}>
+    <S.Item
+      center={false}
+      color={'#ffe7ee'}
+      onClick={() => handleNavigate(workspaceId, board.id)}
+    >
       <S.TopWrapper>
         <S.TitleInput
           type="text"
