@@ -28,8 +28,19 @@ export const ItemName = styled.span`
   font-size: 30px;
 `;
 
-export const Description = styled.div`
+export const Description = styled.textarea`
   margin-bottom: 25px;
+  height: 60px;
+  width: 100%;
+  background-color: rgba(255, 238, 238, 0.3);
+  border: none;
+  font-size: 20px;
+  resize: none;
+  padding: 5px 20px;
+  font-family: 'LINESeedKR-Rg';
+  :focus {
+    outline: none;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -43,9 +54,10 @@ export const Comment = styled.div`
   margin-top: 25px;
 `;
 
-export const CommentTitle = styled.h1`
-  margin-bottom: 25px;
+export const InfoTitle = styled.h1`
+  margin-bottom: 15px;
   font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
 `;
 
 export const CommentWrapper = styled.div`
@@ -121,13 +133,26 @@ export const LoadBtn = styled(Btn)`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
-  margin-left: 25px;
-  width: 30%;
 `;
 
 export const MemberChip = styled(Chip)`
   background-color: #fca4be;
   margin-right: 10px;
   font-size: 12px;
+`;
+
+export const BtnWrapper = styled.div`
+  margin-top: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-top: auto;
+  button {
+    background-color: #fca4be;
+    margin-left: 15px;
+    height: 50px;
+    padding: 10px 30px;
+    border-radius: 5px;
+    color: #ffffff;
+  }
 `;

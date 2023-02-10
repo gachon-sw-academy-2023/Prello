@@ -1,5 +1,4 @@
 import Modal from '@/components/Modal/Modal';
-import { DetailProps } from '@/utils/types';
 import Box from '@mui/joy/Box';
 import {
   Chip,
@@ -13,22 +12,58 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as S from './styles';
 
-export const Detail = ({ setOpen }: DetailProps) => {
+interface IItem {
+  title: string;
+  order: number;
+  cardId: number;
+  description: string;
+  members: string[];
+}
+
+interface ICard {
+  title: string;
+}
+
+interface IMember {
+  name: string;
+  profile: string;
+}
+
+interface DetailProps {
+  setOpen: (b: boolean) => void;
+  itemId: number;
+}
+
+export const Detail = ({ setOpen, itemId }: DetailProps) => {
   const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
   const [personName, setPersonName] = useState<string[]>([]);
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
+  const [member, setMember] = useState<IMember[]>([]);
+  const [item, setItem] = useState<IItem>();
+  const [card, setCard] = useState<ICard>();
+  const [description, setDescription] = useState<string>();
+
+  useEffect(() => {
+    axios
+      .get('/members/list')
+      .then((res) => setMember(res.data))
+      .catch((error) => alert(error));
+
+    axios.get(`/item/${itemId}`).then((res) => {
+      setItem(res.data);
+      setValue(res.data.date);
+      setPersonName(res.data.members);
+      setDescription(res.data.description);
+      axios.get(`/card/${res.data.cardId}`).then((res) => setCard(res.data));
+    });
+  }, []);
+
+  const setCardList = () => {
+    axios.get(`/card/${item?.cardId}`).then((res) => setCard(res.data));
   };
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
@@ -38,89 +73,47 @@ export const Detail = ({ setOpen }: DetailProps) => {
     setPersonName(typeof value === 'string' ? value.split(',') : value);
   };
 
-  interface IMember {
-    name: string;
-    profile: string;
-  }
-  let members: IMember[] = [
-    {
-      name: 'dahye',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: 'leah',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: 'rylee',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버1',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버2',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버3',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버4',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버5',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버6',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버7',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-    {
-      name: '멤버8',
-      profile: '/assets/workspace/sample-profile-image.png',
-    },
-  ];
+  const handleDesription = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
+  };
+
+  const handleDelete = () => {
+    axios.post('/item/delete/', {
+      itemId,
+    });
+    setOpen(false);
+    setCardList();
+  };
+
+  const handleSave = () => {
+    axios.post(`/item/${itemId}`, {
+      title: item?.title,
+      order: item?.order,
+      cardId: item?.cardId,
+      description: description,
+      date: value,
+      members: personName,
+    });
+
+    setOpen(false);
+    setCardList();
+  };
   return (
     <Modal size="lg" onClickToggleModal={() => setOpen(false)}>
       <S.Title>
         <S.TitleWrapper>
-          <S.ListName>To do</S.ListName>
+          <S.ListName>{card?.title}</S.ListName>
           <S.Divider />
-          <S.ItemName>할 일</S.ItemName>
+          <S.ItemName>{item?.title}</S.ItemName>
         </S.TitleWrapper>
-        <S.Description>
-          이건 아이템 설명입니다 아이템 설명 아이템 설명
-        </S.Description>
+        <S.InfoTitle>설명</S.InfoTitle>
+        <S.Description
+          placeholder="설명 추가하기..."
+          defaultValue={item?.description}
+          onChange={handleDesription}
+        ></S.Description>
       </S.Title>
       <S.Wrapper>
-        <S.Comment>
-          <S.CommentTitle>comments</S.CommentTitle>
-          <S.CommentWrapper>
-            <S.MyComment>
-              <S.ProfileImg />
-              <S.InputComment placeholder="Add a comment..." />
-            </S.MyComment>
-            <S.PostBtn>Post</S.PostBtn>
-          </S.CommentWrapper>
-          <S.MemberComment>
-            <S.ProfileImg />
-            <S.MemberCommentWrapper>
-              <h1>Member 1</h1>
-              <p>
-                comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...comment...
-              </p>
-            </S.MemberCommentWrapper>
-          </S.MemberComment>
-          <S.LoadBtn>Load More</S.LoadBtn>
-        </S.Comment>
         <S.Info>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <InputLabel>Date</InputLabel>
@@ -138,8 +131,9 @@ export const Detail = ({ setOpen }: DetailProps) => {
           </LocalizationProvider>
           <InputLabel sx={{ marginTop: '20px' }}>Member</InputLabel>
           <Select
+            sx={{ width: '300px' }}
             multiple
-            value={personName}
+            value={personName ? personName : []}
             onChange={handleChange}
             input={<OutlinedInput label="Chip" />}
             renderValue={(selected) => (
@@ -149,15 +143,18 @@ export const Detail = ({ setOpen }: DetailProps) => {
                 ))}
               </Box>
             )}
-            MenuProps={MenuProps}
           >
-            {members.map((member) => (
+            {member.map((member) => (
               <MenuItem key={member.name} value={member.name}>
                 {member.name}
               </MenuItem>
             ))}
           </Select>
         </S.Info>
+        <S.BtnWrapper>
+          <button onClick={handleSave}>Save</button>
+          <button onClick={handleDelete}>Delete</button>
+        </S.BtnWrapper>
       </S.Wrapper>
     </Modal>
   );

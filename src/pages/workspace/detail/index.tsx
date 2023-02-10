@@ -1,22 +1,18 @@
+import BoardItem from '@/components/BoardItem/BoardItem';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import InviteModal from '@/components/Modals/InviteModal/InviteModal';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
-import { MenuBtn } from '@/pages/board/styles';
 import Inform from '@/pages/util';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Grid from '@mui/material/Grid';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DetailSkeleton from './skeleton';
 import * as S from './styles';
-import DropDownMenu from '@/components/DropDownMenu/DropDownMenu';
-import BoardItem from '@/components/BoardItem/BoardItem';
 
 // TODO: member 불러오는 api로 대체
 interface IMember {
@@ -77,7 +73,7 @@ export interface IBoard {
 
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
-  const { workspaceId } = useParams();
+  const { workspaceId } = useParams() as { workspaceId: string };
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
@@ -92,8 +88,9 @@ export default function WorkspaceDetail() {
   const handleModal = () => {
     setOpenModal(!isOpenModal);
   };
-  const handleNavigate = () => {
-    navigate('/workspace-setting');
+
+  const handleNavigate = (param: string) => {
+    navigate(`/workspace-setting/${param}`);
   };
   const handleCreate = () => {
     setNewItem(true);
@@ -191,7 +188,7 @@ export default function WorkspaceDetail() {
         <SideBar
           memberInfo={members}
           onModal={handleModal}
-          onNavigate={handleNavigate}
+          onNavigate={() => handleNavigate(workspaceId)}
         />
         {loading ? (
           <DetailSkeleton />
