@@ -40,6 +40,9 @@ export const DBConfig = {
         { name: 'title', keypath: 'title' },
         { name: 'order', keypath: 'order' },
         { name: 'cardId', keypath: 'cardId' },
+        { name: 'description', keypath: 'description' },
+        { name: 'date', keypath: 'date' },
+        { name: 'members', keypath: 'members' },
       ],
     },
     {

@@ -34,7 +34,7 @@ export const DialogBox = styled.dialog<ModalProps>`
           width: 40%;
         `
       : css`
-          width: 60%;
+          width: 50%;
           padding: 40px 50px;
         `}
 `;
