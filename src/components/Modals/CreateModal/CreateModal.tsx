@@ -14,7 +14,7 @@ const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export const CreateWorkspace = ({
+export const CreateWorkspaceModal = ({
   setOpenModal,
   fetchWorkspaces,
 }: CreateWorkspaceProps) => {
@@ -151,4 +151,4 @@ export const CreateWorkspace = ({
   );
 };
 
-export default CreateWorkspace;
+export default CreateWorkspaceModal;
