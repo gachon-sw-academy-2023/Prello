@@ -2,9 +2,10 @@ import CircularLoading from '@/components/CirclularLoading/CircularLoading';
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
 import { userSelector } from '@/recoil/atom/userSelector';
 import ROUTES from '@/routes';
+import request from '@/utils/api';
 import { Default } from '@/utils/mediaQuery';
 import { CircularProgress } from '@mui/material';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -39,32 +40,55 @@ function Login() {
       email: email,
       password: password,
     };
-    try {
-      const response = await axios.post('/login', data);
-      console.log(response.data.user);
-      console.log(loading);
-      if (response.status === 200) {
+    request
+      .post('/api/v1/users/login', data)
+      .then((res: AxiosResponse) => {
+        console.log(res);
         setLoading(false);
         setModalText('로그인이 완료되었습니다! 💖');
-        setUser(response.data.user);
+        setUser(res.data.user);
         console.log(user);
         handleModal();
         setTimeout(() => navigate(ROUTES.MAIN), 1000);
-      }
-    } catch (error) {
-      const err = error as AxiosError;
+      })
+      .catch((err: AxiosError) => {
+        if (err.response?.status === 400) {
+          setLoading(false);
+          setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
+          handleModal();
+        }
+        if (err.response?.status === 401) {
+          setLoading(false);
+          setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
+          handleModal();
+        }
+      });
+    // try {
+    //   const response = await axios.post('/login', data);
+    //   console.log(response.data.user);
+    //   console.log(loading);
+    //   if (response.status === 200) {
+    //     setLoading(false);
+    //     setModalText('로그인이 완료되었습니다! 💖');
+    //     setUser(response.data.user);
+    //     console.log(user);
+    //     handleModal();
+    //     setTimeout(() => navigate(ROUTES.MAIN), 1000);
+    //   }
+    // } catch (error) {
+    //   const err = error as AxiosError;
 
-      if (err.response?.status === 400) {
-        setLoading(false);
-        setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
-        handleModal();
-      }
-      if (err.response?.status === 401) {
-        setLoading(false);
-        setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
-        handleModal();
-      }
-    }
+    //   if (err.response?.status === 400) {
+    //     setLoading(false);
+    //     setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
+    //     handleModal();
+    //   }
+    //   if (err.response?.status === 401) {
+    //     setLoading(false);
+    //     setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
+    //     handleModal();
+    //   }
+    // }
   };
 
   const handleModal = () => {

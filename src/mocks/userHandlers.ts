@@ -4,7 +4,7 @@ import { useIndexedDB } from 'react-indexed-db';
 
 const { getAll, add } = useIndexedDB('user');
 
-export const handlers = [
+export const userHandlers = [
   rest.get('/user', (req, res, ctx) => {
     return res(
       ctx.status(200),
@@ -19,7 +19,7 @@ export const handlers = [
     );
   }),
 
-  rest.post('/login', async (req, res, ctx) => {
+  rest.post('/api/v1/users/login', async (req, res, ctx) => {
     const { email, password } = await req.json<IUser>();
 
     let user: IUser = {
@@ -48,7 +48,7 @@ export const handlers = [
     );
   }),
 
-  rest.post('/sign-up', async (req, res, ctx) => {
+  rest.post('/api/v1/users/signup', async (req, res, ctx) => {
     const { email, password, nickname } = await req.json<IJUser>();
     console.log(email, password);
 
