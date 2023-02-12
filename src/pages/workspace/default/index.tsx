@@ -4,6 +4,7 @@ import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import Inform from '@/pages/util';
 import { userSelector } from '@/recoil/atom/userSelector';
+import { modalSelector } from '@/recoil/atom/modalSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import {
   IWorkspace,
@@ -14,7 +15,7 @@ import Grid from '@mui/material/Grid';
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import CreateWorkspaceModal from '../../../components/Modals/CreateModal/CreateModal';
 import WorkSpaceSkeleton from '../skeleton';
 import * as S from './styles';
@@ -79,7 +80,7 @@ function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
 }
 
 export default function WorkspaceDefault() {
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [modal, setModal] = useRecoilState(modalSelector);
   const user = useRecoilValue(userSelector);
   const [createdWorkspaces, setCreatedWorkspaces] = useState<IWorkspace[]>();
   const [participatingWorkspaces, setparticipatingWorkspaces] =
@@ -88,7 +89,10 @@ export default function WorkspaceDefault() {
   const [error, setError] = useState<Boolean>(false);
 
   const handleModal = () => {
-    setOpenModal(!isOpenModal);
+    const data = {
+      isOpen: !modal.isOpen,
+    };
+    setModal(data);
   };
 
   useEffect(() => {
@@ -145,9 +149,8 @@ export default function WorkspaceDefault() {
       <Mobile>
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
-      {isOpenModal && (
+      {modal.isOpen && (
         <CreateWorkspaceModal
-          setOpenModal={setOpenModal}
           fetchWorkspaces={fetchWorkspaces}
         ></CreateWorkspaceModal>
       )}

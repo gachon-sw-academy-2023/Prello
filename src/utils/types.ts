@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 
 export interface CreateWorkspaceProps extends HTMLAttributes<HTMLDivElement> {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  // setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   fetchWorkspaces: () => void;
 }
 
