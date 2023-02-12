@@ -14,71 +14,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as S from './styles';
 
-interface IMember {
-  name: string;
-  profile: string;
-}
-
-interface IBoard {
-  title: string;
-}
-
-let members: IMember[] = [
-  {
-    name: 'dahye',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: 'leah',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: 'rylee',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버1',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버2',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버3',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버4',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버5',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버6',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버7',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버8',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-];
-
-let boards: IBoard[] = [
-  {
-    title: 'First Board',
-  },
-  {
-    title: 'Second Board',
-  },
-];
-
 export default function WorkspaceSetting() {
   const { workspaceId } = useParams() as { workspaceId: string };
   const [workspace, setWorkspace] = useState<IWorkspace>();
@@ -191,7 +126,7 @@ export default function WorkspaceSetting() {
         <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
       </Mobile>
       <S.Wrapper>
-        <SideBar memberInfo={members} />
+        <SideBar memberInfo={workspace?.memberInfo} />
         <S.RightContainer>
           <S.InfoContainer>
             <S.InfoContents>

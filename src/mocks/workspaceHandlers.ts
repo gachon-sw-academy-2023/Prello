@@ -119,4 +119,25 @@ export const workspaceHandlers = [
       return res(ctx.status(500), ctx.json({ message: 'Fail to Update Data' }));
     }
   }),
+
+  rest.post('/workspace/update-member', async (req: any, res, ctx) => {
+    try {
+      const workspace = await getByID(req.body.id);
+
+      update({
+        owner: workspace.owner,
+        name: workspace.name,
+        summary: workspace.summary,
+        id: workspace.id,
+        memberInfo: workspace.memberInfo.concat(req.body.memberInfo),
+      });
+
+      return res(
+        ctx.status(200),
+        ctx.json({ message: 'Workspace Update Success!' }),
+      );
+    } catch {
+      return res(ctx.status(500), ctx.json({ message: 'Fail to Update Data' }));
+    }
+  }),
 ];

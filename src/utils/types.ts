@@ -12,7 +12,8 @@ export interface DeleteWorkspaceProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export interface InviteMembersProps extends HTMLAttributes<HTMLDivElement> {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  workspaceId: string;
+  fetchWorkspaces: () => void;
 }
 
 export interface DetailProps extends HTMLAttributes<HTMLDivElement> {

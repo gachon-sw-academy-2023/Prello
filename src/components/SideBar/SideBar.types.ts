@@ -4,7 +4,7 @@ interface IMember {
   profile: string;
 }
 export interface SideBarProps extends HTMLAttributes<HTMLDivElement> {
-  memberInfo: Array<IMember>;
+  memberInfo?: string[];
   onModal?: () => void;
   onNavigate?: () => void;
 }

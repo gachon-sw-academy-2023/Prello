@@ -38,15 +38,15 @@ const SideBar = ({ memberInfo, onModal, onNavigate }: SideBarProps) => {
         </Button>
       </S.LeftContent>
       <S.MembersWrapper>
-        {memberInfo.map((member: IMember) => (
+        {memberInfo?.map((member) => (
           // key 변경 필요
-          <S.MemberWrapper key={member.name}>
+          <S.MemberWrapper key={member}>
             <S.Image
               width={'35px'}
               height={'35px'}
-              img={member.profile}
+              img="/assets/workspace/sample-profile-image.png"
             ></S.Image>
-            <S.ProfileName>{member.name}</S.ProfileName>
+            <S.ProfileName>{member}</S.ProfileName>
           </S.MemberWrapper>
         ))}
       </S.MembersWrapper>
