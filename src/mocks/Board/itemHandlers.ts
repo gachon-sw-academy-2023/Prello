@@ -26,12 +26,13 @@ export const itemHandlers = [
     return res(ctx.status(200), ctx.json(targetList));
   }),
 
-  rest.post('item/delete', async (req: any, res, ctx) => {
+  rest.post('/item/delete', async (req: any, res, ctx) => {
     const target = await getByID(req.body.itemId);
     const cardId = target.cardId;
 
     await deleteRecord(req.body.itemId);
     const result = (await getAll()).filter((list) => list.cardId == cardId);
+    console.log(result);
     return res(ctx.status(200), ctx.json(result));
   }),
 
