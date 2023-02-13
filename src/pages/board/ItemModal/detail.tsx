@@ -89,7 +89,6 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
         itemId,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.length) {
           fetchItems(res.data);
         } else fetchItems([]);
