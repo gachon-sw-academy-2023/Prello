@@ -78,7 +78,7 @@ export const CreateWorkspaceModal = ({
       const response = await axios.post('/workspace/create', info);
       if (response.status === 200) {
         handleModal();
-        // fetchWorkspaces();
+        fetchWorkspaces();
       }
     } catch (error) {
       const err = error as AxiosError;
