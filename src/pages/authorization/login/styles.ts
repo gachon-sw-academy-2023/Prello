@@ -48,6 +48,7 @@ export const Content = styled.div`
 export const BackBtn = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
   img {
     content: url('assets/authorization/login/arrow-right.png');
     width: 18px;
