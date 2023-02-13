@@ -1,5 +1,6 @@
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
+import { modalSelector } from '@/recoil/atom/modalSelector';
 import { userSelector } from '@/recoil/atom/userSelector';
 import { CreateWorkspaceProps } from '@/utils/types';
 import Chip from '@mui/material/Chip';
@@ -14,10 +15,10 @@ const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export const CreateWorkspace = ({
-  setOpenModal,
+export const CreateWorkspaceModal = ({
   fetchWorkspaces,
 }: CreateWorkspaceProps) => {
+  const [modal, setModal] = useRecoilState(modalSelector);
   const [user, setUser] = useRecoilState(userSelector);
   const [errorText, setErrorText] = useState<string>('');
   const [name, setName] = useState<string>('');
@@ -27,18 +28,25 @@ export const CreateWorkspace = ({
   const [emailList, setEmailList] = useState<string[]>([]);
 
   const handleModal = () => {
-    setOpenModal(false);
+    const data = {
+      isOpen: !modal.isOpen,
+    };
+    setModal(data);
   };
+
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
+
   const handleChangeSummary = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSummary(e.target.value);
   };
+
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewEmail(e.target.value);
     setInviteBtnStatus(false);
   };
+
   const handleInvite = () => {
     if (newEmail !== '' && !emailList.includes(newEmail)) {
       setEmailList(emailList.concat(newEmail));
@@ -46,6 +54,7 @@ export const CreateWorkspace = ({
       setNewEmail('');
     }
   };
+
   const handleDelete = (emailToDelete: string) => () => {
     setEmailList((emails) => emails.filter((email) => email !== emailToDelete));
   };
@@ -59,7 +68,7 @@ export const CreateWorkspace = ({
   };
 
   const fetchCreate = async () => {
-    let info = {
+    const info = {
       owner: user.email,
       name: name,
       summary: summary,
@@ -68,7 +77,7 @@ export const CreateWorkspace = ({
     try {
       const response = await axios.post('/workspace/create', info);
       if (response.status === 200) {
-        setOpenModal(false);
+        handleModal();
         fetchWorkspaces();
       }
     } catch (error) {
@@ -151,4 +160,4 @@ export const CreateWorkspace = ({
   );
 };
 
-export default CreateWorkspace;
+export default CreateWorkspaceModal;

@@ -6,65 +6,18 @@ import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import Inform from '@/pages/util';
+import { modalSelector } from '@/recoil/atom/modalSelector';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import { IWorkspace } from '@/utils/types';
 import Grid from '@mui/material/Grid';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import DetailSkeleton from './skeleton';
 import * as S from './styles';
 
-// TODO: member 불러오는 api로 대체
-interface IMember {
-  name: string;
-  profile: string;
-}
-let members: IMember[] = [
-  {
-    name: 'dahye',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: 'leah',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: 'rylee',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버1',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버2',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버3',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버4',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버5',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버6',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버7',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-  {
-    name: '멤버8',
-    profile: '/assets/workspace/sample-profile-image.png',
-  },
-];
 export interface IBoard {
   id: number;
   name: string;
@@ -74,10 +27,12 @@ export interface IBoard {
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
   const { workspaceId } = useParams() as { workspaceId: string };
+  const [modal, setModal] = useRecoilState(modalSelector);
+  const [workspace, setWorkpsace] =
+    useRecoilState<IWorkspace>(workspaceSelector);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [isTitleExsit, setIsTitleExsit] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [newItem, setNewItem] = useState<boolean>(false);
@@ -86,7 +41,10 @@ export default function WorkspaceDetail() {
   const [error, setError] = useState<boolean>(false);
 
   const handleModal = () => {
-    setOpenModal(!isOpenModal);
+    const data = {
+      isOpen: !modal.isOpen,
+    };
+    setModal(data);
   };
 
   const handleNavigate = (param: string) => {
@@ -99,7 +57,7 @@ export default function WorkspaceDetail() {
   const handleDelete = () => {};
   const updateBoard = () => {};
   const fetchCreate = async () => {
-    let info = {
+    const info = {
       workspaceId: workspaceId,
       name: title,
     };
@@ -137,6 +95,7 @@ export default function WorkspaceDetail() {
       if (response.status === 200) {
         setWorkspaceName(response.data.name);
         setWorkspaceSummary(response.data.summary);
+        setWorkpsace(response.data);
       }
     } catch (error) {
       setError(true);
@@ -183,10 +142,17 @@ export default function WorkspaceDetail() {
       <Mobile>
         <MobileHeader profileImg="/assets/authorization/pimfy_profile.png" />
       </Mobile>
-      {isOpenModal && <InviteModal setOpenModal={setOpenModal}></InviteModal>}
+      {modal.isOpen && (
+        <InviteModal
+          workspaceId={workspaceId}
+          fetchWorkspaces={fetchWorkspaceInfo}
+        ></InviteModal>
+      )}
+
       <S.Wrapper>
         <SideBar
-          memberInfo={members}
+          workspaceName={workspace.name}
+          memberInfo={workspace.memberInfo}
           onModal={handleModal}
           onNavigate={() => handleNavigate(workspaceId)}
         />
