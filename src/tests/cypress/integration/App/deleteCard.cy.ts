@@ -1,20 +1,25 @@
 import axios from 'axios';
 
 describe('카드 삭제 테스트', () => {
-  it('1. 메인화면 접속', () => {
+  it('1. 보드페이지 접속', () => {
     cy.visit('/board');
-    cy.wait(1000);
+    cy.wait(2000);
   });
-  it('2. 메뉴 버튼 클릭', async () => {
+  it('2. 메뉴 > 삭제 버튼 클릭', async () => {
     cy.get('.column')
       .get('div[data-testid="created-card"]')
-      .get('[test-id="menu-btn"]')
+      .get('[test-id="menu-btn"]:first')
       .click();
-  });
+    cy.wait(2000);
+    cy.get('ul li:first').click();
 
-  it('3. 메뉴 버튼 클릭', async () => {
+    cy.wait(2000);
+    let card_len;
+    const card = await axios.get('/card').then((res) => {
+      card_len = res.data.length;
+    });
     cy.get('.column')
       .get('div[data-testid="created-card"]')
-      .get('[test-id="menu-btn"]');
+      .should('have.length', card_len);
   });
 });

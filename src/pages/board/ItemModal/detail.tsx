@@ -110,7 +110,7 @@ export const Detail = ({ setOpen, itemId }: DetailProps) => {
         <S.Description
           placeholder="설명 추가하기..."
           defaultValue={item?.description}
-          onChange={handleDesription}
+          onChange={() => handleDesription}
         ></S.Description>
       </S.Title>
       <S.Wrapper>

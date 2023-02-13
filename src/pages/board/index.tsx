@@ -42,24 +42,11 @@ export default function Board() {
   }, []);
 
   useEffect(() => {
-    fetchBoardList();
-  }, []);
+    setLists(lists);
+  }, [lists]);
 
-  const fetchBoardList = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get('/board', {
-        params: {
-          id: boardId,
-        },
-      });
-      if (response.status === 200) {
-        setBoard(response.data);
-      }
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
+  const fetchList = (list: ICard[]) => {
+    setLists(list);
   };
 
   useEffect(() => {
@@ -134,7 +121,7 @@ export default function Board() {
                     title={list.title}
                     key={list.id}
                     cardId={list.id}
-                    UpdateList={UpdateList}
+                    UpdateList={fetchList}
                   />
                 ))}
             </S.ListContainer>
