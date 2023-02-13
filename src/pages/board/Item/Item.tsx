@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Detail from '../ItemModal/detail';
 import * as S from '../styles';
+
+interface IItemProps {
+  children: React.ReactNode;
+  itemId: number;
+  fetchItems: (item: IItem[]) => void;
+}
+
 interface IItem {
   id: number;
   title: string;
   order: number;
   cardId: number;
-}
-interface IItemProps {
-  children: React.ReactNode;
-  itemId: number;
-  fetchItems: (i: IItem[]) => void;
 }
 
 const Item: React.FC<IItemProps> = ({ children, itemId, fetchItems }) => {

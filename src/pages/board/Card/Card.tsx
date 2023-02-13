@@ -146,7 +146,6 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
           {showForm && (
             <S.Form onSubmit={handleSubmit}>
               <S.FormInput
-                data-testid="input_item"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="아이템 입력하기"

@@ -16,12 +16,7 @@ import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 import * as S from './styles';
-interface IItemList {
-  id: number;
-  title: string;
-  order: number;
-  cardId: number;
-}
+
 interface IItem {
   title: string;
   order: number;
@@ -42,7 +37,7 @@ interface IMember {
 interface DetailProps {
   setOpen: (b: boolean) => void;
   itemId: number;
-  fetchItems: (i: IItemList[]) => void;
+  fetchItems: (item: IItem[]) => void;
 }
 
 export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
