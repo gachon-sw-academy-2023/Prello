@@ -20,9 +20,6 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
   const [isEdit, setEdit] = useState<boolean>(false);
   const [boardName, setBoardName] = useState<string>(board.name);
   const handleDelete = () => {};
-  const handleNavigate = (workspaceId: string, boardId: number) => {
-    navigate(`/workspace/${workspaceId}/${boardId}`);
-  };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBoardName(e.target.value);
@@ -32,6 +29,10 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
       return true;
     }
     return false;
+  };
+  const handleMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    setShowMenu(!showMenu);
   };
   const fetchUpdate = async () => {
     const newBoardInfo = {
@@ -49,11 +50,7 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
     }
   };
   return (
-    <S.Item
-      center={false}
-      color={'#ffe7ee'}
-      onClick={() => handleNavigate(workspaceId, board.id)}
-    >
+    <S.Item center={false} color={'#ffe7ee'}>
       <S.TopWrapper>
         <S.TitleInput
           type="text"
@@ -63,7 +60,7 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
           onChange={handleChangeTitle}
         ></S.TitleInput>
         <MenuBtn>
-          <S.IconBtn onClick={() => setShowMenu(!showMenu)}>
+          <S.IconBtn onClick={handleMenu}>
             <FontAwesomeIcon icon={faEllipsis} />
           </S.IconBtn>
           {showMenu && (
