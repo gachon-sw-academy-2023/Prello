@@ -150,7 +150,7 @@ export default function SignUp() {
         <S.Header>
           <Default>
             <S.HeaderWrapper>
-              <S.BackBtn>
+              <S.BackBtn onClick={() => navigate(-1)}>
                 <S.BackImg />
                 <span>Back</span>
               </S.BackBtn>

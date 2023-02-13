@@ -110,7 +110,7 @@ function Login() {
         <S.Header>
           <Default>
             <S.HeaderWrapper>
-              <S.BackBtn>
+              <S.BackBtn onClick={() => navigate(-1)}>
                 <img />
                 <span>Back</span>
               </S.BackBtn>

@@ -1,10 +1,18 @@
-import { Link, useNavigate } from 'react-router-dom';
+import ROUTES from '@/routes';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as S from './styles';
 
 export default function Inform({ message }: { message: string }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const hasPreviousState = location.key !== 'default';
+
   const handleClick = () => {
-    navigate(-1);
+    if (hasPreviousState) {
+      navigate(-1);
+    } else {
+      navigate(ROUTES.MAIN);
+    }
   };
   return (
     <S.Container>
