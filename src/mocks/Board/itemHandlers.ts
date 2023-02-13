@@ -27,8 +27,12 @@ export const itemHandlers = [
   }),
 
   rest.post('item/delete', async (req: any, res, ctx) => {
+    const target = await getByID(req.body.itemId);
+    const cardId = target.cardId;
+
     await deleteRecord(req.body.itemId);
-    return res(ctx.status(200));
+    const result = await getByIndex('cardId', cardId);
+    return res(ctx.status(200), ctx.json(result));
   }),
 
   rest.post('/item/clear', async (req: any, res, ctx) => {
