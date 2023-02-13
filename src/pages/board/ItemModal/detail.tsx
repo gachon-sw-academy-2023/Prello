@@ -16,7 +16,12 @@ import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 import * as S from './styles';
-
+interface IItemList {
+  id: number;
+  title: string;
+  order: number;
+  cardId: number;
+}
 interface IItem {
   title: string;
   order: number;
@@ -37,9 +42,10 @@ interface IMember {
 interface DetailProps {
   setOpen: (b: boolean) => void;
   itemId: number;
+  fetchItems: (i: IItemList[]) => void;
 }
 
-export const Detail = ({ setOpen, itemId }: DetailProps) => {
+export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
   const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
   const [personName, setPersonName] = useState<string[]>([]);
   const [member, setMember] = useState<IMember[]>([]);
@@ -78,9 +84,16 @@ export const Detail = ({ setOpen, itemId }: DetailProps) => {
   };
 
   const handleDelete = () => {
-    axios.post('/item/delete/', {
-      itemId,
-    });
+    axios
+      .post('/item/delete/', {
+        itemId,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.length) {
+          fetchItems(res.data);
+        } else fetchItems([]);
+      });
     setOpen(false);
     setCardList();
   };
@@ -110,7 +123,7 @@ export const Detail = ({ setOpen, itemId }: DetailProps) => {
         <S.Description
           placeholder="설명 추가하기..."
           defaultValue={item?.description}
-          onChange={handleDesription}
+          onChange={() => handleDesription}
         ></S.Description>
       </S.Title>
       <S.Wrapper>
