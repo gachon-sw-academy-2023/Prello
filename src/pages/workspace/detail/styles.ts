@@ -52,7 +52,7 @@ export const LeftContentNotHover = styled(LeftContent)`
   pointer-events: none;
 `;
 export const TitleInput = styled.input`
-  width: 100%;
+  width: 92%;
   height: fit-content;
   font-size: 20px;
   font-weight: 600;
@@ -131,8 +131,8 @@ export const BoardContainer = styled.div`
 export const Item = styled.div<ItemProps>`
   display: flex;
   align-items: ${(props) => (props.center ? 'center' : 'left')};
-  flex-direction: column;
   justify-content: ${(props) => (props.center ? 'center' : 'left')};
+  flex-direction: column;
   background-color: ${(props) => props.color};
   width: 100%;
   height: 200px;
@@ -141,6 +141,11 @@ export const Item = styled.div<ItemProps>`
   padding: 20px 20px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+`;
+export const TopWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 `;
 export const Icon = styled.div<ImageProps>`
   width: ${(props) => props.width};
@@ -151,12 +156,10 @@ export const Icon = styled.div<ImageProps>`
 `;
 
 export const BtnWrapper = styled.div`
-  height: 100%;
   display: flex;
   justify-content: flex-end;
-  align-items: flex-end;
-  width: 100%;
+  margin-top: 95px;
 `;
 export const SaveBtn = styled(Button)`
-  width: 100px;
+  width: 60px;
 `;

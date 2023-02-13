@@ -69,7 +69,7 @@ export const workspaceHandlers = [
   }),
 
   rest.get('/workspace/detail', async (req: any, res, ctx) => {
-    let Workspace: IWorkspace[] = [];
+    let Workspace;
     const workspaceId = req.url.searchParams.get('workspaceId');
     console.log(workspaceId);
     try {
