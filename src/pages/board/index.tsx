@@ -1,9 +1,12 @@
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import { IWorkspace } from '@/utils/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import Sortable from 'sortablejs';
 import Card from './Card/Card';
 import * as S from './styles';
@@ -16,6 +19,8 @@ interface ICard {
 export default function Board() {
   const [lists, setLists] = useState<ICard[]>([]);
   const [member, setMember] = useState([]);
+  const [workspace, setWorkpsace] =
+    useRecoilState<IWorkspace>(workspaceSelector);
 
   useEffect(() => {
     axios
@@ -79,7 +84,10 @@ export default function Board() {
       </Mobile>
       <S.Wrapper>
         <Default>
-          <SideBar memberInfo={member} workspaceName={''} />
+          <SideBar
+            workspaceName={workspace.name}
+            memberInfo={workspace.memberInfo}
+          />
         </Default>
 
         <Default>

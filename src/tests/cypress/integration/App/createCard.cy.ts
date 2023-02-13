@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 describe('카드 생성 테스트', () => {
-  it('1. 메인화면 접속', () => {
-    cy.visit('/board');
+  it('1. 보드페이지 접속', () => {
+    cy.visit('/board/1');
   });
   it('2. 카드 생성 버튼 클릭', () => {
     cy.wait(1000);
