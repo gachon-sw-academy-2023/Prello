@@ -4,7 +4,7 @@ describe('카드 생성 테스트', () => {
   it('1. 메인화면 접속', () => {
     cy.visit('/board');
   });
-  it('2. 로그인 메뉴 클릭', () => {
+  it('2. 카드 생성 버튼 클릭', () => {
     cy.wait(1000);
     cy.get('div').contains('ADD').click();
   });
