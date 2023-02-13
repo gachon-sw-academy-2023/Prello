@@ -1,10 +1,11 @@
+import BoardItem from '@/components/BoardItem/BoardItem';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import InviteModal from '@/components/Modals/InviteModal/InviteModal';
-import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
+import Inform from '@/pages/util';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import Grid from '@mui/material/Grid';
 import axios from 'axios';
@@ -12,7 +13,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DetailSkeleton from './skeleton';
 import * as S from './styles';
-import Inform from '@/pages/util';
 
 // TODO: member 불러오는 api로 대체
 interface IMember {
@@ -65,7 +65,7 @@ let members: IMember[] = [
     profile: '/assets/workspace/sample-profile-image.png',
   },
 ];
-interface IBoard {
+export interface IBoard {
   id: number;
   name: string;
   workspaceId: number;
@@ -74,6 +74,7 @@ interface IBoard {
 export default function WorkspaceDetail() {
   const navigate = useNavigate();
   const { workspaceId } = useParams() as { workspaceId: string };
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -91,13 +92,14 @@ export default function WorkspaceDetail() {
   const handleNavigate = (param: string) => {
     navigate(`/workspace-setting/${param}`);
   };
+
   const handleCreate = () => {
     setNewItem(true);
   };
-
+  const handleDelete = () => {};
+  const updateBoard = () => {};
   const fetchCreate = async () => {
     let info = {
-      // TODO: workspaceID 변경 필요
       workspaceId: workspaceId,
       name: title,
     };
@@ -182,7 +184,6 @@ export default function WorkspaceDetail() {
         <MobileHeader profileImg="/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {isOpenModal && <InviteModal setOpenModal={setOpenModal}></InviteModal>}
-
       <S.Wrapper>
         <SideBar
           memberInfo={members}
@@ -221,29 +222,26 @@ export default function WorkspaceDetail() {
                 </Grid>
                 {boards.map((board) => (
                   <Grid item xs={12} sm={6} md={4} key={board.id}>
-                    <S.Item center={false} color={'#ffe7ee'}>
-                      <S.TitleInput
-                        value={board.name}
-                        disabled={true}
-                      ></S.TitleInput>
-                    </S.Item>
+                    <BoardItem board={board} workspaceId={workspaceId} />
                   </Grid>
                 ))}
                 {newItem && (
                   <Grid item xs={12} sm={6} md={4}>
                     <S.Item center={false} color={'#ffe7ee'}>
-                      <S.TitleInput
-                        placeholder="보드 이름을 입력해주세요"
-                        defaultValue={title}
-                        onChange={handleChangeTitle}
-                      ></S.TitleInput>
+                      <S.TopWrapper>
+                        <S.TitleInput
+                          placeholder="보드 이름을 입력해주세요"
+                          defaultValue={title}
+                          onChange={handleChangeTitle}
+                        ></S.TitleInput>
+                      </S.TopWrapper>
                       <S.BtnWrapper>
                         <S.SaveBtn
                           color="primary"
                           onClick={fetchCreate}
                           disable={!isTitleExsit}
                         >
-                          생성하기
+                          확인
                         </S.SaveBtn>
                       </S.BtnWrapper>
                     </S.Item>
