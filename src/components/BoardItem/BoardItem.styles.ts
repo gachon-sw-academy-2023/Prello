@@ -45,9 +45,6 @@ export const TopWrapper = styled.div`
   justify-content: space-between;
   flex-direction: row;
 `;
-export const BottomWrapper = styled.div`
-  min-height: 80%;
-`;
 export const IconBtn = styled.div`
   padding: 10px;
 `;

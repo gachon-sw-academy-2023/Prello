@@ -84,11 +84,6 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
           </S.SaveBtn>
         </S.BtnWrapper>
       )}
-      {!isEdit && (
-        <S.BottomWrapper
-          onClick={() => navigate(`/board/${board.id}`)}
-        ></S.BottomWrapper>
-      )}
     </S.Item>
   );
 }
