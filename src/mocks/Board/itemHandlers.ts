@@ -31,7 +31,7 @@ export const itemHandlers = [
     const cardId = target.cardId;
 
     await deleteRecord(req.body.itemId);
-    const result = (await getAll()).filter((list) => list.cardId == cardId);
+    const result = await getByIndex('cardId', cardId);
     return res(ctx.status(200), ctx.json(result));
   }),
 
