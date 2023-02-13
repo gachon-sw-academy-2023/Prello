@@ -77,7 +77,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   };
 
   return (
-    <div>
+    <div data-testid="created-card">
       <Default>
         <S.ListWrapper key={cardId}>
           <S.ListHeader draggable="true">
