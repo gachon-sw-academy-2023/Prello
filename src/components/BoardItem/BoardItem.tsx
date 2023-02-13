@@ -50,11 +50,7 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
     }
   };
   return (
-    <S.Item
-      center={false}
-      color={'#ffe7ee'}
-      // onClick={() => navigate(`/board/${board.id}`)}
-    >
+    <S.Item center={false} color={'#ffe7ee'}>
       <S.TopWrapper>
         <S.TitleInput
           type="text"

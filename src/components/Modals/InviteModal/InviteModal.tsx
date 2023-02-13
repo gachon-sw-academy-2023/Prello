@@ -99,6 +99,7 @@ export default function InviteModal({
         height="md"
         width={0}
         onClick={fetchInvite}
+        disable={!(emailList.length > 0)}
       >
         초대하기
       </DeleteButton>

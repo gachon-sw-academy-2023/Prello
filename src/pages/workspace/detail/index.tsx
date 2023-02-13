@@ -151,8 +151,8 @@ export default function WorkspaceDetail() {
 
       <S.Wrapper>
         <SideBar
-          workspaceName={workspace?.name}
-          memberInfo={workspace?.memberInfo}
+          workspaceName={workspace.name}
+          memberInfo={workspace.memberInfo}
           onModal={handleModal}
           onNavigate={() => handleNavigate(workspaceId)}
         />
