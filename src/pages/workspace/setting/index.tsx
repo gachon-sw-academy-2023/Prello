@@ -52,6 +52,7 @@ export default function WorkspaceSetting() {
       memberInfo: workspace.memberInfo,
     };
     setWorkspace(data);
+    setWorkspaceName(changedWorkspaceName);
   };
 
   const updateWorkspace = async () => {

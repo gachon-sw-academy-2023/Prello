@@ -73,7 +73,7 @@ export default function InviteModal({
           return (
             <S.TextWrapper key={data}>
               <S.StyledText>{data}</S.StyledText>
-              <S.StyledTextRight>이메일 발송 완료</S.StyledTextRight>
+              <S.StyledTextRight>초대 완료</S.StyledTextRight>
             </S.TextWrapper>
           );
         })}
@@ -88,7 +88,7 @@ export default function InviteModal({
           ></StyledEmailInput>
           <InviteBtn onClick={handleInvite} disabled={inviteBtnStatus}>
             {' '}
-            초대 이메일 전송
+            초대
           </InviteBtn>
         </InviteWrapper>
         <EmptyBox />
