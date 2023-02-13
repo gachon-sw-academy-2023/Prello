@@ -5,7 +5,7 @@ describe('카드 삭제 테스트', () => {
     cy.visit('/board');
     cy.wait(2000);
   });
-  it('2. 메뉴 > 삭제 버튼 클릭', async () => {
+  it('2. 삭제 버튼 클릭 및 삭제 확인', async () => {
     cy.get('.column')
       .get('div[data-testid="created-card"]')
       .get('[test-id="menu-btn"]:first')
