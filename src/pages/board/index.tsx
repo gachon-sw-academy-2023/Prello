@@ -26,6 +26,14 @@ export default function Board() {
   }, []);
 
   useEffect(() => {
+    setLists(lists);
+  }, [lists]);
+
+  const fetchList = (list: ICard[]) => {
+    setLists(list);
+  };
+
+  useEffect(() => {
     const columns = document.querySelectorAll('.column');
     columns.forEach((column: any) => {
       new Sortable(column, {
@@ -84,7 +92,7 @@ export default function Board() {
                     title={list.title}
                     key={list.id}
                     cardId={list.id}
-                    UpdateList={UpdateList}
+                    UpdateList={fetchList}
                   />
                 ))}
             </S.ListContainer>

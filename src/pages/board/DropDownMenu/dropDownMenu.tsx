@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import * as S from './styles';
-
+interface ICard {
+  id: number;
+  title: string;
+  order: number;
+}
 interface IDropMenu {
   handleDeleteItems: () => void;
-  UpdateList: () => void;
+  UpdateList: (list: ICard[]) => void;
   cardId: number;
 }
 
@@ -41,8 +45,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
 
   const handleDeleteCard = () => {
-    axios.post('/card/delete', { cardId }).catch((error) => alert(error));
-    UpdateList();
+    axios.post('/card/delete', { cardId }).then((res) => UpdateList(res.data));
   };
 
   return (

@@ -7,11 +7,15 @@ import { ReactSortable } from 'react-sortablejs';
 import DropDownMenu from '../DropDownMenu/dropDownMenu';
 import Item from '../Item/Item';
 import * as S from '../styles';
-
+interface ICard {
+  id: number;
+  title: string;
+  order: number;
+}
 interface ICardProp {
   title: string;
   cardId: number;
-  UpdateList: () => void;
+  UpdateList: (list: ICard[]) => void;
 }
 
 interface IItem {
