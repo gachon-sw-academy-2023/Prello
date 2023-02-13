@@ -2,12 +2,14 @@ import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
 import ROUTES from '@/routes';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
+import { modalSelector } from '@/recoil/atom/modalSelector';
 import { Default } from '@/utils/mediaQuery';
 import axios, { AxiosError } from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import request from '@/utils/api';
 import * as S from './styles';
+import { useRecoilState } from 'recoil';
 
 interface IUser {
   email: string;
@@ -28,7 +30,8 @@ export default function SignUp() {
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [modal, setModal] = useRecoilState(modalSelector);
+  // const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [emailValidation, setEmailValidation] = useState<boolean>(true);
   const [pwdValidation, setPwdValidation] = useState<boolean>(true);
@@ -59,29 +62,30 @@ export default function SignUp() {
       nickname: nickname,
     };
 
-    request
-      .post('/api/v1/users/signup', user)
-      .then((res) => {
-        setModalText('회원가입이 완료되었습니다! 💖');
-        handleModal();
-        setTimeout(() => navigate(ROUTES.LOGIN), 1000);
-      })
-      .catch((err: AxiosError) => {
-        if (err.response?.status === 409) {
-          console.log(err.response?.data);
-          setModalText('중복된 이메일입니다! 다른 이메일로 가입해 주세요! ✋');
-          handleModal();
-        }
-        if (err.response?.status === 500) {
-          console.log(err.response?.data);
-          setModalText('오류가 발생했습니다. 다시 시도해 주세요!');
-          handleModal();
-        }
-      });
+    request.post('/api/v1/users/signup', user).then((res) => {
+      setModalText('회원가입이 완료되었습니다! 💖');
+      handleModal();
+      setTimeout(() => navigate(ROUTES.LOGIN), 1000);
+    });
+    // .catch((err: AxiosError) => {
+    //   if (err.response?.status === 409) {
+    //     console.log(err.response?.data);
+    //     setModalText('중복된 이메일입니다! 다른 이메일로 가입해 주세요! ✋');
+    //     handleModal();
+    //   }
+    //   if (err.response?.status === 500) {
+    //     console.log(err.response?.data);
+    //     setModalText('오류가 발생했습니다. 다시 시도해 주세요!');
+    //     handleModal();
+    //   }
+    // });
   };
 
   const handleModal = () => {
-    setOpenModal(!isOpenModal);
+    const data = {
+      isOpen: !modal.isOpen,
+    };
+    setModal(data);
   };
 
   const emailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,7 +142,7 @@ export default function SignUp() {
 
   return (
     <S.Container>
-      {isOpenModal && (
+      {modal.isOpen && (
         <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
       )}
       <Default>

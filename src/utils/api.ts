@@ -1,8 +1,16 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { modalSelector } from '@/recoil/atom/modalSelector';
+import { useRecoilState } from 'recoil';
+
+// const [modal, setModal] = useRecoilState(modalSelector);
+// const handleModal = () => {
+//   const data = {
+//     isOpen: !modal.isOpen,
+//   };
+//   setModal(data);
+// };
 
 const BASE_URL = import.meta.env.BASE_URL;
-
-console.log(BASE_URL);
 
 const request = axios.create({
   baseURL: BASE_URL,
@@ -35,7 +43,8 @@ request.interceptors.response.use(
         return Promise.reject(error);
       case 409:
         // 중복 이메일 에러 처리
-
+        // handleModal();
+        alert('잉?');
         return Promise.reject(error);
       default:
         return Promise.reject(error);
