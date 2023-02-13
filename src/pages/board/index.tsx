@@ -28,7 +28,7 @@ export default function Board() {
   const workspace = useRecoilValue(workspaceSelector);
   const [lists, setLists] = useState<ICard[]>([]);
   const [member, setMember] = useState([]);
-  const { boardId } = useParams() as { boardId: string };
+  const { boardId } = useParams();
   const [board, setBoard] = useState<IBoard>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);

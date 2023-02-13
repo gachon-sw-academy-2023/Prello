@@ -39,6 +39,7 @@ export const HeaderWrapper = styled.div`
 export const BackBtn = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const BackImg = styled.img`

@@ -1,3 +1,4 @@
+import BoardItem from '@/components/BoardItem/BoardItem';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import InviteModal from '@/components/Modals/InviteModal/InviteModal';
 import SideBar from '@/components/SideBar/SideBar';
@@ -17,7 +18,7 @@ import { useRecoilState } from 'recoil';
 import DetailSkeleton from './skeleton';
 import * as S from './styles';
 
-interface IBoard {
+export interface IBoard {
   id: number;
   name: string;
   workspaceId: number;
@@ -29,6 +30,7 @@ export default function WorkspaceDetail() {
   const [modal, setModal] = useRecoilState(modalSelector);
   const [workspace, setWorkpsace] =
     useRecoilState<IWorkspace>(workspaceSelector);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isTitleExsit, setIsTitleExsit] = useState<boolean>(false);
@@ -52,7 +54,8 @@ export default function WorkspaceDetail() {
   const handleCreate = () => {
     setNewItem(true);
   };
-
+  const handleDelete = () => {};
+  const updateBoard = () => {};
   const fetchCreate = async () => {
     const info = {
       workspaceId: workspaceId,
@@ -185,33 +188,26 @@ export default function WorkspaceDetail() {
                 </Grid>
                 {boards.map((board) => (
                   <Grid item xs={12} sm={6} md={4} key={board.id}>
-                    <S.Item
-                      onClick={() => navigate(`/board/${board.id}`)}
-                      center={false}
-                      color={'#ffe7ee'}
-                    >
-                      <S.TitleInput
-                        value={board.name}
-                        disabled={true}
-                      ></S.TitleInput>
-                    </S.Item>
+                    <BoardItem board={board} workspaceId={workspaceId} />
                   </Grid>
                 ))}
                 {newItem && (
                   <Grid item xs={12} sm={6} md={4}>
                     <S.Item center={false} color={'#ffe7ee'}>
-                      <S.TitleInput
-                        placeholder="보드 이름을 입력해주세요"
-                        defaultValue={title}
-                        onChange={handleChangeTitle}
-                      ></S.TitleInput>
+                      <S.TopWrapper>
+                        <S.TitleInput
+                          placeholder="보드 이름을 입력해주세요"
+                          defaultValue={title}
+                          onChange={handleChangeTitle}
+                        ></S.TitleInput>
+                      </S.TopWrapper>
                       <S.BtnWrapper>
                         <S.SaveBtn
                           color="primary"
                           onClick={fetchCreate}
                           disable={!isTitleExsit}
                         >
-                          생성하기
+                          확인
                         </S.SaveBtn>
                       </S.BtnWrapper>
                     </S.Item>
