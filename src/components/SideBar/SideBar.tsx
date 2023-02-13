@@ -8,7 +8,12 @@ interface IMember {
   profile: string;
 }
 
-const SideBar = ({ memberInfo, onModal, onNavigate }: SideBarProps) => {
+const SideBar = ({
+  workspaceName,
+  memberInfo,
+  onModal,
+  onNavigate,
+}: SideBarProps) => {
   return (
     <S.LeftContainer>
       <S.LeftContentNotHover>
@@ -18,7 +23,7 @@ const SideBar = ({ memberInfo, onModal, onNavigate }: SideBarProps) => {
             radius="rounded"
             image="/assets/authorization/pimfy_profile.png"
           />
-          <SubTitle>pimfy</SubTitle>
+          <SubTitle>{workspaceName}</SubTitle>
         </S.BarInfo>
       </S.LeftContentNotHover>
       <S.Line margin="10px"></S.Line>

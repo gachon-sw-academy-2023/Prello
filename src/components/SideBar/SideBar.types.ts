@@ -4,6 +4,7 @@ interface IMember {
   profile: string;
 }
 export interface SideBarProps extends HTMLAttributes<HTMLDivElement> {
+  workspaceName: string;
   memberInfo?: string[];
   onModal?: () => void;
   onNavigate?: () => void;

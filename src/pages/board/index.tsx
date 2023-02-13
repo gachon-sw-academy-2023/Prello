@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import Sortable from 'sortablejs';
 import Card from './Card/Card';
 import * as S from './styles';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
+import { useRecoilValue } from 'recoil';
 
 interface ICard {
   id: number;
@@ -23,6 +25,7 @@ interface IBoard {
 }
 
 export default function Board() {
+  const workspace = useRecoilValue(workspaceSelector);
   const [lists, setLists] = useState<ICard[]>([]);
   const [member, setMember] = useState([]);
   const { boardId } = useParams() as { boardId: string };
@@ -115,7 +118,10 @@ export default function Board() {
       </Mobile>
       <S.Wrapper>
         <Default>
-          <SideBar />
+          <SideBar
+            workspaceName={workspace.name}
+            memberInfo={workspace.memberInfo}
+          />
         </Default>
 
         <Default>

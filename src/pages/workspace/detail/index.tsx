@@ -6,6 +6,7 @@ import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import Inform from '@/pages/util';
 import { modalSelector } from '@/recoil/atom/modalSelector';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { IWorkspace } from '@/utils/types';
 import Grid from '@mui/material/Grid';
@@ -26,7 +27,8 @@ export default function WorkspaceDetail() {
   const navigate = useNavigate();
   const { workspaceId } = useParams() as { workspaceId: string };
   const [modal, setModal] = useRecoilState(modalSelector);
-  const [workspace, setWorkpsace] = useState<IWorkspace>();
+  const [workspace, setWorkpsace] =
+    useRecoilState<IWorkspace>(workspaceSelector);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isTitleExsit, setIsTitleExsit] = useState<boolean>(false);
@@ -146,6 +148,7 @@ export default function WorkspaceDetail() {
 
       <S.Wrapper>
         <SideBar
+          workspaceName={workspace?.name}
           memberInfo={workspace?.memberInfo}
           onModal={handleModal}
           onNavigate={() => handleNavigate(workspaceId)}

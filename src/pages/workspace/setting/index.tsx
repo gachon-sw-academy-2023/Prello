@@ -5,25 +5,25 @@ import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
-import Inform from '@/pages/util';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import ROUTES from '@/routes';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { IWorkspace } from '@/utils/types';
 import axios, { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import * as S from './styles';
 
 export default function WorkspaceSetting() {
   const { workspaceId } = useParams() as { workspaceId: string };
-  const [workspace, setWorkspace] = useState<IWorkspace>();
+  const [workspace, setWorkspace] =
+    useRecoilState<IWorkspace>(workspaceSelector);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [changedWorkspaceName, setChangedWorkspaceName] =
     useState<string>(workspaceName);
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const [loading, setLoading] = useState<Boolean>(false);
-  const [error, setError] = useState<Boolean>(false);
 
   const naviate = useNavigate();
 
@@ -38,37 +38,21 @@ export default function WorkspaceSetting() {
   }
 
   useEffect(() => {
-    fetchWorkspace();
+    setWorkspaceName(workspace.name);
+    setChangedWorkspaceName(workspace.name);
+    setWorkspaceSummary(workspace.summary);
   }, []);
 
   const fetchWorkspace = async () => {
-    try {
-      setError(false);
-      setLoading(true);
-
-      const response = await axios.get('/workspace', {
-        params: {
-          id: workspaceId,
-        },
-      });
-
-      if (response.status === 200) {
-        setWorkspace(response.data);
-        setWorkspaceName(response.data.name);
-        setChangedWorkspaceName(response.data.name);
-        setWorkspaceSummary(response.data.summary);
-      }
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
+    const data = {
+      id: workspace.id,
+      owner: workspace.owner,
+      name: changedWorkspaceName,
+      summary: workspaceSummary,
+      memberInfo: workspace.memberInfo,
+    };
+    setWorkspace(data);
   };
-
-  if (loading) return <div>로딩중...</div>;
-  if (error)
-    return (
-      <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
-    );
 
   const updateWorkspace = async () => {
     const data = {
@@ -118,15 +102,21 @@ export default function WorkspaceSetting() {
       <Default>
         <SubHeader
           divider={true}
-          children="Workspace"
+          children={workspace.name}
           profileImg="assets/authorization/pimfy_profile.png"
         />
       </Default>
       <Mobile>
-        <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
+        <MobileHeader
+          children={workspace.name}
+          profileImg="public/assets/authorization/pimfy_profile.png"
+        />
       </Mobile>
       <S.Wrapper>
-        <SideBar memberInfo={workspace?.memberInfo} />
+        <SideBar
+          workspaceName={workspace?.name}
+          memberInfo={workspace?.memberInfo}
+        />
         <S.RightContainer>
           <S.InfoContainer>
             <S.InfoContents>
@@ -139,7 +129,6 @@ export default function WorkspaceSetting() {
               <S.EmptyBox />
               <SubTitle size="sm">이름</SubTitle>
               <S.RoundLineInput
-                // defaultValue={changedWorkspaceName}
                 value={changedWorkspaceName}
                 onChange={handleWorkspaceName}
               />
