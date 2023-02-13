@@ -26,14 +26,20 @@ request.interceptors.response.use(
     return res;
   },
   (error: AxiosError): Promise<AxiosError> => {
-    if (error.response?.status === 409) {
-      // 409 에러 처리
-    } else if (error.response?.status === 500) {
-      // 500 에러 처리
-    }
+    switch (error.response?.status) {
+      case 400:
+        return Promise.reject(error);
+      case 401:
+        return Promise.reject(error);
+      case 403:
+        return Promise.reject(error);
+      case 409:
+        // 중복 이메일 에러 처리
 
-    console.log(error);
-    return Promise.reject(error);
+        return Promise.reject(error);
+      default:
+        return Promise.reject(error);
+    }
   },
 );
 
