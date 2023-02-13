@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
-export const MobileHeader = ({ profileImg }: MobileHeaderProps) => {
+export const MobileHeader = ({ profileImg, children }: MobileHeaderProps) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -23,7 +23,7 @@ export const MobileHeader = ({ profileImg }: MobileHeaderProps) => {
           <S.HeaderImg profileImg={profileImg} />
         </S.ImgWrapper>
       </S.Wrapper>
-      <S.BoardName>First Board</S.BoardName>
+      <S.BoardName>{children} </S.BoardName>
 
       {open ? (
         <S.SideMenuWrapper>

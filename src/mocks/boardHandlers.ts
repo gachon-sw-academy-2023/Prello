@@ -36,4 +36,16 @@ export const boardHandlers = [
       );
     }
   }),
+  rest.get('/board', async (req: any, res, ctx) => {
+    let board;
+    const id = req.url.searchParams.get('id');
+    try {
+      await getAll().then((boards) => {
+        board = boards.find(({ id }) => id === id);
+      });
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(board));
+    } catch (error) {
+      return res(ctx.status(500), ctx.json({ message: 'Store in DB Failed!' }));
+    }
+  }),
 ];

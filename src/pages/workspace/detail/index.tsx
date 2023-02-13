@@ -46,12 +46,13 @@ export default function WorkspaceDetail() {
   const handleNavigate = (param: string) => {
     navigate(`/workspace-setting/${param}`);
   };
+
   const handleCreate = () => {
     setNewItem(true);
   };
 
   const fetchCreate = async () => {
-    let info = {
+    const info = {
       workspaceId: workspaceId,
       name: title,
     };
@@ -181,7 +182,11 @@ export default function WorkspaceDetail() {
                 </Grid>
                 {boards.map((board) => (
                   <Grid item xs={12} sm={6} md={4} key={board.id}>
-                    <S.Item center={false} color={'#ffe7ee'}>
+                    <S.Item
+                      onClick={() => navigate(`/board/${board.id}`)}
+                      center={false}
+                      color={'#ffe7ee'}
+                    >
                       <S.TitleInput
                         value={board.name}
                         disabled={true}
