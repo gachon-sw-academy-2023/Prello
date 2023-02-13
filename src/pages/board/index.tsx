@@ -6,8 +6,10 @@ import { Default, Mobile } from '@/utils/mediaQuery';
 import { IWorkspace } from '@/utils/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useParams } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Sortable from 'sortablejs';
+import Inform from '../util';
 import Card from './Card/Card';
 import * as S from './styles';
 interface ICard {
@@ -15,12 +17,19 @@ interface ICard {
   title: string;
   order: number;
 }
-
+interface IBoard {
+  id: number;
+  name: string;
+  workspaceId: number;
+}
 export default function Board() {
+  const workspace = useRecoilValue(workspaceSelector);
   const [lists, setLists] = useState<ICard[]>([]);
   const [member, setMember] = useState([]);
-  const [workspace, setWorkpsace] =
-    useRecoilState<IWorkspace>(workspaceSelector);
+  const { boardId } = useParams();
+  const [board, setBoard] = useState<IBoard>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     axios
@@ -28,11 +37,28 @@ export default function Board() {
       .then((res) => setMember(res.data))
       .catch((error) => alert(error));
     UpdateList();
+    fetchBoardList();
   }, []);
 
   useEffect(() => {
     setLists(lists);
   }, [lists]);
+  const fetchBoardList = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/board', {
+        params: {
+          id: boardId,
+        },
+      });
+      if (response.status === 200) {
+        setBoard(response.data);
+      }
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  };
 
   const fetchList = (list: ICard[]) => {
     setLists(list);
@@ -69,18 +95,28 @@ export default function Board() {
       .then((res) => setLists(res.data))
       .catch((error) => alert(error));
   };
+
+  if (loading) return <div>로딩중...</div>;
+  if (error)
+    return (
+      <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
+    );
+
   return (
     <S.Container>
       <Default>
         <WithSearchBar
           divider={true}
-          children="first board"
+          children={board?.name}
           profileImg="public/assets/authorization/pimfy_profile.png"
           searchBar={true}
         />
       </Default>
       <Mobile>
-        <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
+        <MobileHeader
+          children={board?.name}
+          profileImg="public/assets/authorization/pimfy_profile.png"
+        />
       </Mobile>
       <S.Wrapper>
         <Default>
