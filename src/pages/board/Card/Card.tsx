@@ -90,6 +90,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
               <FontAwesomeIcon
                 icon={faEllipsis}
                 onClick={() => setShowMenu(!showMenu)}
+                test-id="menu-btn"
               />
               {showMenu && (
                 <DropDownMenu
