@@ -17,7 +17,6 @@ function Login() {
   const [password, setPassword] = useState<string>('');
   const [user, setUser] = useRecoilState(userSelector);
   const [modal, setModal] = useRecoilState(modalSelector);
-  // const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -49,7 +48,7 @@ function Login() {
         console.log(res);
         setLoading(false);
         setModalText('로그인이 완료되었습니다! 💖');
-        handleModal(modalText);
+        handleModal();
         console.log(modalText);
         setUser(res.data.user);
         console.log(user);
@@ -58,20 +57,10 @@ function Login() {
       })
       .catch((err: AxiosError) => {
         setLoading(false);
-        // if (err.response?.status === 400) {
-        //   setLoading(false);
-        //   setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
-        //   handleModal(modalText);
-        // }
-        // if (err.response?.status === 401) {
-        //   setLoading(false);
-        //   setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
-        //   handleModal(modalText);
-        // }
       });
   };
 
-  const handleModal = (text: string) => {
+  const handleModal = () => {
     const data = {
       isOpen: !modal.isOpen,
       text: '로그인이 완료되었습니다! 💖',
@@ -144,12 +133,6 @@ function Login() {
               radius="circle"
               width={160}
               data-testid="submit"
-              // disable={
-              //   !(
-              //     email.length > 0 &&
-              //     password.length > 0 &&
-              //   )
-              // }
             >
               Login
             </S.SubmitBtn>

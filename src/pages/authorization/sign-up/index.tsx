@@ -1,3 +1,4 @@
+import CircularLoading from '@/components/CirclularLoading/CircularLoading';
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
 import { modalSelector } from '@/recoil/atom/modalSelector';
 import ROUTES from '@/routes';
@@ -6,6 +7,7 @@ import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
 import { useAxiosInterceptor } from '@/utils/useAxiosInterceptor';
+import { AxiosError } from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -24,7 +26,7 @@ export default function SignUp() {
   const [pwdConfirmValidation, setPwdConfirmValidation] =
     useState<boolean>(true);
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(true);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   console.log(modal);
@@ -39,28 +41,35 @@ export default function SignUp() {
     } else {
       setModalText('입력 조건을 확인해주세요!');
 
-      handleModal(modalText);
+      handleModal();
     }
   }
 
   const patchSignUp = async () => {
+    setLoading(true);
     const user = {
       email: email,
       password: password,
       nickname: nickname,
     };
 
-    request.post('/api/v1/users/signup', user).then((res) => {
-      setModalText('회원가입이 완료되었습니다! 💖');
-      handleModal(modalText);
-      setTimeout(() => navigate(ROUTES.LOGIN), 1000);
-    });
+    request
+      .post('/api/v1/users/signup', user)
+      .then((res) => {
+        setModalText('회원가입이 완료되었습니다! 💖');
+        setLoading(false);
+        handleModal();
+        setTimeout(() => navigate(ROUTES.LOGIN), 1000);
+      })
+      .catch((err: AxiosError) => {
+        setLoading(false);
+      });
   };
 
-  const handleModal = (text: string) => {
+  const handleModal = () => {
     const data = {
       isOpen: !modal.isOpen,
-      text: text,
+      text: modalText,
     };
     setModal(data);
   };
@@ -119,6 +128,7 @@ export default function SignUp() {
 
   return (
     <S.Container>
+      {loading && <CircularLoading />}
       {modal.isOpen && (
         <SimpleModal onClickToggleModal={handleModal}>{modal.text}</SimpleModal>
       )}

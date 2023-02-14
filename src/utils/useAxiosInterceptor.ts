@@ -1,6 +1,5 @@
 import { modalSelector } from '@/recoil/atom/modalSelector';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { response } from 'msw';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import request from './api';
@@ -44,7 +43,6 @@ export const useAxiosInterceptor = () => {
         case 403:
           return Promise.reject(error);
         case 409:
-          // 중복 이메일 에러 처리
           errorText = '중복된 이메일입니다! 다른 이메일로 가입해 주세요! ✋';
           handleModal(errorText);
           return Promise.reject(error);
