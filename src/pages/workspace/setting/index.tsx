@@ -14,16 +14,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import * as S from './styles';
+import { modalSelector } from '@/recoil/atom/modalSelector';
 
 export default function WorkspaceSetting() {
   const { workspaceId } = useParams() as { workspaceId: string };
   const [workspace, setWorkspace] =
     useRecoilState<IWorkspace>(workspaceSelector);
+  const [modal, setModal] = useRecoilState(modalSelector);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [changedWorkspaceName, setChangedWorkspaceName] =
     useState<string>(workspaceName);
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
 
   const naviate = useNavigate();
 
@@ -33,10 +34,12 @@ export default function WorkspaceSetting() {
   function handleWorkspaceExplain(e: React.ChangeEvent<HTMLInputElement>) {
     setWorkspaceSummary(e.target.value);
   }
-  function handleModal() {
-    setOpenModal(true);
-  }
-
+  const handleModal = () => {
+    const data = {
+      isOpen: !modal.isOpen,
+    };
+    setModal(data);
+  };
   useEffect(() => {
     setWorkspaceName(workspace.name);
     setChangedWorkspaceName(workspace.name);
@@ -93,13 +96,7 @@ export default function WorkspaceSetting() {
 
   return (
     <S.Container>
-      {isOpenModal && (
-        <DeleteModal
-          workspaceName={workspaceName}
-          setOpenModal={setOpenModal}
-          deleteWorkspace={deleteWorkspace}
-        />
-      )}
+      {modal.isOpen && <DeleteModal deleteWorkspace={deleteWorkspace} />}
       <Default>
         <SubHeader
           divider={true}
