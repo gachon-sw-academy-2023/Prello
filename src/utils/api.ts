@@ -42,9 +42,6 @@ request.interceptors.response.use(
       case 403:
         return Promise.reject(error);
       case 409:
-        // 중복 이메일 에러 처리
-        // handleModal();
-        alert('잉?');
         return Promise.reject(error);
       default:
         return Promise.reject(error);

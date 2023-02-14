@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import request from '@/utils/api';
 import * as S from './styles';
 import { useRecoilState } from 'recoil';
+import { useAxiosInterceptor } from '@/utils/useAxiosInterceptor';
 
 interface IUser {
   email: string;
@@ -26,6 +27,7 @@ interface IUser {
 // };
 
 export default function SignUp() {
+  useAxiosInterceptor();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
@@ -41,6 +43,7 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
+  console.log(modal);
   function handleSubmit() {
     if (
       emailValidation &&
@@ -63,27 +66,16 @@ export default function SignUp() {
     };
 
     request.post('/api/v1/users/signup', user).then((res) => {
-      setModalText('회원가입이 완료되었습니다! 💖');
       handleModal();
+
       setTimeout(() => navigate(ROUTES.LOGIN), 1000);
     });
-    // .catch((err: AxiosError) => {
-    //   if (err.response?.status === 409) {
-    //     console.log(err.response?.data);
-    //     setModalText('중복된 이메일입니다! 다른 이메일로 가입해 주세요! ✋');
-    //     handleModal();
-    //   }
-    //   if (err.response?.status === 500) {
-    //     console.log(err.response?.data);
-    //     setModalText('오류가 발생했습니다. 다시 시도해 주세요!');
-    //     handleModal();
-    //   }
-    // });
   };
 
   const handleModal = () => {
     const data = {
       isOpen: !modal.isOpen,
+      text: '회원가입이 완료되었습니다! 💖',
     };
     setModal(data);
   };
@@ -143,7 +135,7 @@ export default function SignUp() {
   return (
     <S.Container>
       {modal.isOpen && (
-        <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
+        <SimpleModal onClickToggleModal={handleModal}>{modal.text}</SimpleModal>
       )}
       <Default>
         <S.LeftWrapper>
