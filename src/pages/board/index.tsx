@@ -25,12 +25,25 @@ interface IBoard {
 export default function Board() {
   const workspace = useRecoilValue(workspaceSelector);
   const [lists, setLists] = useState<ICard[]>([]);
-  const [member, setMember] = useState([]);
   const { boardId } = useParams();
   const [board, setBoard] = useState<IBoard>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-
+  const [size, setSize] = useState<boolean>();
+  useEffect(() => {
+    const columns = document.querySelectorAll('.column');
+    columns.forEach((column: any) => {
+      new Sortable(column, {
+        animation: 150,
+        ghostClass: 'blue-background-class',
+        onUpdate({ oldIndex, newIndex }) {
+          axios
+            .post('/card/update-index', { oldIndex, newIndex })
+            .catch((error) => alert(error));
+        },
+      });
+    });
+  });
   useEffect(() => {
     UpdateList();
     fetchBoardList();
@@ -39,6 +52,21 @@ export default function Board() {
   useEffect(() => {
     setLists(lists);
   }, [lists]);
+
+  useEffect(() => {
+    window.addEventListener('resize', resize);
+  });
+  useEffect(() => {
+    UpdateList();
+  }, [size]);
+
+  const resize = () => {
+    if (window.innerWidth < 765) {
+      setSize(true);
+    } else {
+      setSize(false);
+    }
+  };
 
   const fetchBoardList = async () => {
     try {
@@ -60,21 +88,6 @@ export default function Board() {
   const fetchList = (list: ICard[]) => {
     setLists(list);
   };
-
-  useEffect(() => {
-    const columns = document.querySelectorAll('.column');
-    columns.forEach((column: any) => {
-      new Sortable(column, {
-        animation: 150,
-        ghostClass: 'blue-background-class',
-        onUpdate({ oldIndex, newIndex }) {
-          axios
-            .post('/card/update-index', { oldIndex, newIndex })
-            .catch((error) => alert(error));
-        },
-      });
-    });
-  });
 
   const UpdateList = async () => {
     await axios
@@ -168,14 +181,16 @@ export default function Board() {
         <Mobile>
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
-              {lists.map((list: ICard) => (
-                <Card
-                  title={list.title}
-                  key={list.id}
-                  cardId={list.id}
-                  UpdateList={fetchList}
-                />
-              ))}
+              {lists
+                .sort((a, b) => a.order - b.order)
+                .map((list: ICard) => (
+                  <Card
+                    title={list.title}
+                    key={list.id}
+                    cardId={list.id}
+                    UpdateList={fetchList}
+                  />
+                ))}
             </S.ListMobileContiner>
             <S.MobileAddListWrapper onClick={handleAddList}>
               <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
