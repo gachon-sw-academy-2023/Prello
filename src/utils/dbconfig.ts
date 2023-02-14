@@ -31,6 +31,7 @@ export const DBConfig = {
       storeSchema: [
         { name: 'title', keypath: 'title' },
         { name: 'order', keypath: 'order' },
+        { name: 'boardId', keypath: 'boardId' },
       ],
     },
     {

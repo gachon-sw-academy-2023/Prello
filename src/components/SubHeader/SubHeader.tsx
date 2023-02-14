@@ -20,8 +20,6 @@ export const SubHeader = ({
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
-  console.log(isLoading);
-
   const handleLogout = () => {
     handleClose();
     setUser({

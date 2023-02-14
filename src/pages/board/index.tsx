@@ -3,16 +3,14 @@ import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import { IWorkspace } from '@/utils/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import Sortable from 'sortablejs';
 import Inform from '../util';
 import Card from './Card/Card';
 import * as S from './styles';
-import BoardSkeleton from './skeleton';
 
 interface ICard {
   id: number;
@@ -34,10 +32,6 @@ export default function Board() {
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    axios
-      .get('/members/list')
-      .then((res) => setMember(res.data))
-      .catch((error) => alert(error));
     UpdateList();
     fetchBoardList();
   }, []);
@@ -45,6 +39,7 @@ export default function Board() {
   useEffect(() => {
     setLists(lists);
   }, [lists]);
+
   const fetchBoardList = async () => {
     try {
       setLoading(true);
@@ -81,9 +76,13 @@ export default function Board() {
     });
   });
 
-  const UpdateList = () => {
-    axios
-      .get('/card')
+  const UpdateList = async () => {
+    await axios
+      .get('/card', {
+        params: {
+          boardId,
+        },
+      })
       .then((res) => setLists(res.data))
       .catch((error) => alert(error));
   };
@@ -93,6 +92,7 @@ export default function Board() {
       .post('/card/create', {
         title: '',
         order: lists.length,
+        boardId: boardId,
       })
       .then((res) => setLists(res.data))
       .catch((error) => alert(error));
@@ -173,7 +173,7 @@ export default function Board() {
                   title={list.title}
                   key={list.id}
                   cardId={list.id}
-                  UpdateList={UpdateList}
+                  UpdateList={fetchList}
                 />
               ))}
             </S.ListMobileContiner>
