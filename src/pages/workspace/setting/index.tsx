@@ -132,13 +132,14 @@ export default function WorkspaceSetting() {
               <S.RoundLineInput
                 value={changedWorkspaceName}
                 onChange={handleWorkspaceName}
+                data-testid="update-workspace-name"
               />
               <S.EmptyBox />
               <SubTitle size="sm">설명</SubTitle>
               <S.RoundLineInput
-                // defaultValue={workspaceSummary}
                 value={workspaceSummary}
                 onChange={handleWorkspaceExplain}
+                data-testid="update-workspace-summary"
               />
               <S.EmptyBox />
               <S.SaveButtonWrapper>

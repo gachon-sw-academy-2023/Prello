@@ -37,6 +37,7 @@ export default function DeleteModal({
       <S.RoundInput
         value={inputValue}
         onChange={handleInputValue}
+        data-testid="delete-workspace-name"
       ></S.RoundInput>
       <S.EmptyBox />
       <S.DeleteButton
