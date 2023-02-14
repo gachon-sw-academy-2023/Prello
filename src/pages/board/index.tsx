@@ -11,6 +11,7 @@ import Card from './Card/Card';
 import * as S from './styles';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { useRecoilValue } from 'recoil';
+import BoardSkeleton from './skeleton';
 
 interface ICard {
   id: number;
@@ -94,7 +95,7 @@ export default function Board() {
       .catch((error) => alert(error));
   };
 
-  if (loading) return <div>로딩중...</div>;
+  // if (loading) return <BoardSkeleton></BoardSkeleton>;
   if (error)
     return (
       <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
@@ -103,18 +104,35 @@ export default function Board() {
   return (
     <S.Container>
       <Default>
-        <WithSearchBar
-          divider={true}
-          children={board?.name}
-          profileImg="public/assets/authorization/pimfy_profile.png"
-          searchBar={true}
-        />
+        {loading ? (
+          <WithSearchBar
+            divider={true}
+            children="보드이름"
+            profileImg="public/assets/authorization/pimfy_profile.png"
+            searchBar={true}
+            isLoading={true}
+          />
+        ) : (
+          <WithSearchBar
+            divider={true}
+            children={board?.name}
+            profileImg="public/assets/authorization/pimfy_profile.png"
+            searchBar={true}
+          />
+        )}
       </Default>
       <Mobile>
-        <MobileHeader
-          children={board?.name}
-          profileImg="public/assets/authorization/pimfy_profile.png"
-        />
+        {loading ? (
+          <MobileHeader
+            children={board?.name}
+            profileImg="public/assets/authorization/pimfy_profile.png"
+          />
+        ) : (
+          <MobileHeader
+            children={board?.name}
+            profileImg="public/assets/authorization/pimfy_profile.png"
+          />
+        )}
       </Mobile>
       <S.Wrapper>
         <Default>
