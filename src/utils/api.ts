@@ -1,14 +1,4 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { modalSelector } from '@/recoil/atom/modalSelector';
-import { useRecoilState } from 'recoil';
-
-// const [modal, setModal] = useRecoilState(modalSelector);
-// const handleModal = () => {
-//   const data = {
-//     isOpen: !modal.isOpen,
-//   };
-//   setModal(data);
-// };
 
 const BASE_URL = import.meta.env.BASE_URL;
 

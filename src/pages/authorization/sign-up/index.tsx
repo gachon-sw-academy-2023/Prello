@@ -1,30 +1,15 @@
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
+import { modalSelector } from '@/recoil/atom/modalSelector';
 import ROUTES from '@/routes';
+import request from '@/utils/api';
 import { emailRegex } from '@/utils/checkEmail';
 import { pwdRegex } from '@/utils/checkPassword';
-import { modalSelector } from '@/recoil/atom/modalSelector';
 import { Default } from '@/utils/mediaQuery';
-import axios, { AxiosError } from 'axios';
+import { useAxiosInterceptor } from '@/utils/useAxiosInterceptor';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import request from '@/utils/api';
-import * as S from './styles';
 import { useRecoilState } from 'recoil';
-import { useAxiosInterceptor } from '@/utils/useAxiosInterceptor';
-
-interface IUser {
-  email: string;
-  password: string;
-  nickname: string;
-}
-
-// const postSignUp = (user: IUser) => {
-//   request({
-//     method: 'post',
-//     url: '/sign-up',
-//     data: { ...user },
-//   });
-// };
+import * as S from './styles';
 
 export default function SignUp() {
   useAxiosInterceptor();
@@ -33,7 +18,6 @@ export default function SignUp() {
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [modal, setModal] = useRecoilState(modalSelector);
-  // const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [emailValidation, setEmailValidation] = useState<boolean>(true);
   const [pwdValidation, setPwdValidation] = useState<boolean>(true);
@@ -54,7 +38,8 @@ export default function SignUp() {
       patchSignUp();
     } else {
       setModalText('입력 조건을 확인해주세요!');
-      handleModal();
+
+      handleModal(modalText);
     }
   }
 
@@ -66,16 +51,16 @@ export default function SignUp() {
     };
 
     request.post('/api/v1/users/signup', user).then((res) => {
-      handleModal();
-
+      setModalText('회원가입이 완료되었습니다! 💖');
+      handleModal(modalText);
       setTimeout(() => navigate(ROUTES.LOGIN), 1000);
     });
   };
 
-  const handleModal = () => {
+  const handleModal = (text: string) => {
     const data = {
       isOpen: !modal.isOpen,
-      text: '회원가입이 완료되었습니다! 💖',
+      text: text,
     };
     setModal(data);
   };

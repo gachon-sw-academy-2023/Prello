@@ -1,5 +1,6 @@
 import CircularLoading from '@/components/CirclularLoading/CircularLoading';
 import SimpleModal from '@/components/Modals/SimpleModal/SimpleModal';
+import { modalSelector } from '@/recoil/atom/modalSelector';
 import { userSelector } from '@/recoil/atom/userSelector';
 import ROUTES from '@/routes';
 import request from '@/utils/api';
@@ -15,7 +16,8 @@ function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [user, setUser] = useRecoilState(userSelector);
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [modal, setModal] = useRecoilState(modalSelector);
+  // const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -40,66 +42,48 @@ function Login() {
       email: email,
       password: password,
     };
+
     request
       .post('/api/v1/users/login', data)
       .then((res: AxiosResponse) => {
         console.log(res);
         setLoading(false);
         setModalText('로그인이 완료되었습니다! 💖');
+        handleModal(modalText);
+        console.log(modalText);
         setUser(res.data.user);
         console.log(user);
-        handleModal();
+
         setTimeout(() => navigate(ROUTES.MAIN), 1000);
       })
       .catch((err: AxiosError) => {
-        if (err.response?.status === 400) {
-          setLoading(false);
-          setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
-          handleModal();
-        }
-        if (err.response?.status === 401) {
-          setLoading(false);
-          setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
-          handleModal();
-        }
+        setLoading(false);
+        // if (err.response?.status === 400) {
+        //   setLoading(false);
+        //   setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
+        //   handleModal(modalText);
+        // }
+        // if (err.response?.status === 401) {
+        //   setLoading(false);
+        //   setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
+        //   handleModal(modalText);
+        // }
       });
-    // try {
-    //   const response = await axios.post('/login', data);
-    //   console.log(response.data.user);
-    //   console.log(loading);
-    //   if (response.status === 200) {
-    //     setLoading(false);
-    //     setModalText('로그인이 완료되었습니다! 💖');
-    //     setUser(response.data.user);
-    //     console.log(user);
-    //     handleModal();
-    //     setTimeout(() => navigate(ROUTES.MAIN), 1000);
-    //   }
-    // } catch (error) {
-    //   const err = error as AxiosError;
-
-    //   if (err.response?.status === 400) {
-    //     setLoading(false);
-    //     setModalText('가입된 이메일이 아닙니다. 먼저 가입해 주세요! ✋');
-    //     handleModal();
-    //   }
-    //   if (err.response?.status === 401) {
-    //     setLoading(false);
-    //     setModalText('비밀번호가 틀렸습니다. 다시 시도해주세요! 😂');
-    //     handleModal();
-    //   }
-    // }
   };
 
-  const handleModal = () => {
-    setOpenModal(!isOpenModal);
+  const handleModal = (text: string) => {
+    const data = {
+      isOpen: !modal.isOpen,
+      text: '로그인이 완료되었습니다! 💖',
+    };
+    setModal(data);
   };
 
   return (
     <S.Container>
       {loading && <CircularLoading />}
-      {isOpenModal && (
-        <SimpleModal onClickToggleModal={handleModal}>{modalText}</SimpleModal>
+      {modal.isOpen && (
+        <SimpleModal onClickToggleModal={handleModal}>{modal.text}</SimpleModal>
       )}
       <Default>
         <S.LeftWrapper>
