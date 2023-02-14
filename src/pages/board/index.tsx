@@ -1,29 +1,27 @@
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
-import Inform from '@/pages/util';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import { IWorkspace } from '@/utils/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Sortable from 'sortablejs';
+import Inform from '../util';
 import Card from './Card/Card';
 import * as S from './styles';
-import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
-import { useRecoilValue } from 'recoil';
-
 interface ICard {
   id: number;
   title: string;
   order: number;
 }
-
 interface IBoard {
   id: number;
   name: string;
   workspaceId: number;
 }
-
 export default function Board() {
   const workspace = useRecoilValue(workspaceSelector);
   const [lists, setLists] = useState<ICard[]>([]);
@@ -39,12 +37,12 @@ export default function Board() {
       .then((res) => setMember(res.data))
       .catch((error) => alert(error));
     UpdateList();
-  }, []);
-
-  useEffect(() => {
     fetchBoardList();
   }, []);
 
+  useEffect(() => {
+    setLists(lists);
+  }, [lists]);
   const fetchBoardList = async () => {
     try {
       setLoading(true);
@@ -60,6 +58,10 @@ export default function Board() {
       setError(true);
     }
     setLoading(false);
+  };
+
+  const fetchList = (list: ICard[]) => {
+    setLists(list);
   };
 
   useEffect(() => {
@@ -134,7 +136,7 @@ export default function Board() {
                     title={list.title}
                     key={list.id}
                     cardId={list.id}
-                    UpdateList={UpdateList}
+                    UpdateList={fetchList}
                   />
                 ))}
             </S.ListContainer>
