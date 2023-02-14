@@ -15,6 +15,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import * as S from './styles';
 interface IItemList {
   id: number;
@@ -52,6 +53,7 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
   const [item, setItem] = useState<IItem>();
   const [card, setCard] = useState<ICard>();
   const [description, setDescription] = useState<string>();
+  const { boardId } = useParams();
 
   useEffect(() => {
     axios
@@ -87,6 +89,7 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
     axios
       .post('/item/delete/', {
         itemId,
+        boardId,
       })
       .then((res) => {
         if (res.data.length) {
