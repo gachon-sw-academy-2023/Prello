@@ -1,4 +1,5 @@
 import Modal from '@/components/Modal/Modal';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import Box from '@mui/joy/Box';
 import {
   Chip,
@@ -16,6 +17,7 @@ import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import * as S from './styles';
 interface IItemList {
   id: number;
@@ -35,11 +37,6 @@ interface ICard {
   title: string;
 }
 
-interface IMember {
-  name: string;
-  profile: string;
-}
-
 interface DetailProps {
   setOpen: (b: boolean) => void;
   itemId: number;
@@ -49,18 +46,15 @@ interface DetailProps {
 export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
   const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
   const [personName, setPersonName] = useState<string[]>([]);
-  const [member, setMember] = useState<IMember[]>([]);
+  const [member, setMember] = useState<string[]>([]);
   const [item, setItem] = useState<IItem>();
   const [card, setCard] = useState<ICard>();
   const [description, setDescription] = useState<string>();
   const { boardId } = useParams();
+  const workspace = useRecoilValue(workspaceSelector);
 
   useEffect(() => {
-    axios
-      .get('/members/list')
-      .then((res) => setMember(res.data))
-      .catch((error) => alert(error));
-
+    setMember(workspace.memberInfo);
     axios.get(`/item/${itemId}`).then((res) => {
       setItem(res.data);
       setValue(res.data.date);
@@ -81,7 +75,7 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
     setPersonName(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const handleDesription = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDesription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
 
@@ -125,7 +119,7 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
         <S.Description
           placeholder="설명 추가하기..."
           defaultValue={item?.description}
-          onChange={() => handleDesription}
+          onChange={handleDesription}
         ></S.Description>
       </S.Title>
       <S.Wrapper>
@@ -160,8 +154,8 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
             )}
           >
             {member.map((member) => (
-              <MenuItem key={member.name} value={member.name}>
-                {member.name}
+              <MenuItem key={member} value={member}>
+                {member}
               </MenuItem>
             ))}
           </Select>
