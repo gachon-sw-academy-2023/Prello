@@ -61,11 +61,7 @@ export const userHandlers = [
     });
 
     if (isExist) {
-      return res(
-        ctx.status(409),
-        ctx.delay(1000),
-        ctx.json({ message: 'Registered Email!' }),
-      );
+      return res(ctx.status(409), ctx.json({ message: 'Registered Email!' }));
     } else {
       try {
         await add({

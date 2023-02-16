@@ -8,7 +8,7 @@ import { pwdRegex } from '@/utils/checkPassword';
 import { Default } from '@/utils/mediaQuery';
 import { useAxiosInterceptor } from '@/utils/useAxiosInterceptor';
 import { AxiosError } from 'axios';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import * as S from './styles';
@@ -30,14 +30,15 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   console.log(modal);
-  function handleSubmit() {
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
     if (
       emailValidation &&
       pwdValidation &&
       pwdConfirmValidation &&
       nicknameValidation
     ) {
-      patchSignUp();
+      fetchSignUp();
     } else {
       setModalText('입력 조건을 확인해주세요!');
 
@@ -45,8 +46,7 @@ export default function SignUp() {
     }
   }
 
-  const patchSignUp = async () => {
-    setLoading(true);
+  const fetchSignUp = async () => {
     const user = {
       email: email,
       password: password,
@@ -57,19 +57,17 @@ export default function SignUp() {
       .post('/api/v1/users/signup', user)
       .then((res) => {
         setModalText('회원가입이 완료되었습니다! 💖');
-        setLoading(false);
+
         handleModal();
         setTimeout(() => navigate(ROUTES.LOGIN), 1000);
       })
-      .catch((err: AxiosError) => {
-        setLoading(false);
-      });
+      .catch((err: AxiosError) => {});
   };
 
   const handleModal = () => {
     const data = {
       isOpen: !modal.isOpen,
-      text: modalText,
+      text: '회원가입이 완료되었습니다! 💖',
     };
     setModal(data);
   };
@@ -128,7 +126,6 @@ export default function SignUp() {
 
   return (
     <S.Container>
-      {loading && <CircularLoading />}
       {modal.isOpen && (
         <SimpleModal onClickToggleModal={handleModal}>{modal.text}</SimpleModal>
       )}
@@ -162,10 +159,11 @@ export default function SignUp() {
         <S.Content>
           <S.Title>Sign Up</S.Title>
 
-          <S.SignUpForm>
+          <S.SignUpForm onSubmit={handleSubmit}>
             <label>Email</label>
             <S.InputEmail
               type="text"
+              value={email}
               placeholder="Type here"
               onChange={handleChangeEmail}
               onBlur={emailInput}
@@ -178,6 +176,7 @@ export default function SignUp() {
             <label>Password</label>
             <S.InputPwd
               type="password"
+              value={password}
               placeholder="Type here"
               onChange={handleChangePassword}
               onBlur={pwdInput}
@@ -192,6 +191,7 @@ export default function SignUp() {
             <label>Password Confirm</label>
             <S.InputPwd
               type="password"
+              value={passwordConfirm}
               placeholder="Type here"
               onChange={handleChangePasswordConfirm}
               onBlur={pwdConfirmInput}
@@ -206,6 +206,7 @@ export default function SignUp() {
             <label>Nickname</label>
             <S.InputNickname
               type="text"
+              value={nickname}
               placeholder="Type here"
               onChange={handleChangeNickname}
               data-testid="nickname"
@@ -220,7 +221,7 @@ export default function SignUp() {
               type="submit"
               color="gradient"
               radius="circle"
-              onClick={handleSubmit}
+              // onClick={handleSubmit}
               width={160}
               data-testid="submit"
               disable={
