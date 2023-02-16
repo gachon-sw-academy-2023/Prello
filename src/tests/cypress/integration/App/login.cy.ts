@@ -16,4 +16,8 @@ describe('로그인 테스트', () => {
   it('5. 로그인 버튼 클릭', () => {
     cy.get('button').contains('Login').click();
   });
+  it('6. 로그인 확인', () => {
+    cy.wait(2000);
+    cy.get('span').contains('이메일');
+  });
 });
