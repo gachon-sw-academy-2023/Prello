@@ -1,3 +1,4 @@
+import { statusSelector } from '@/recoil/atom/statusSelector';
 import { modalSelector } from '@/recoil/atom/modalSelector';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useEffect } from 'react';
@@ -6,6 +7,7 @@ import request from './api';
 
 export const useAxiosInterceptor = () => {
   const [modal, setModal] = useRecoilState(modalSelector);
+  const [status, setStatus] = useRecoilState(statusSelector);
   const handleModal = (text: string) => {
     const data = {
       isOpen: !modal.isOpen,
@@ -13,9 +15,21 @@ export const useAxiosInterceptor = () => {
     };
     setModal(data);
   };
+  const handleError = () => {
+    const data = {
+      isError: true,
+      isLoading: false,
+    };
+    setStatus(data);
+  };
 
   const requestInterceptor = request.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig => {
+      const data = {
+        isError: false,
+        isLoading: true,
+      };
+      setStatus(data);
       return config;
     },
     (error: AxiosError): Promise<AxiosError> => {
@@ -27,6 +41,11 @@ export const useAxiosInterceptor = () => {
   const responseInterceptor = request.interceptors.response.use(
     (response: AxiosResponse): AxiosResponse => {
       const res = response;
+      const data = {
+        isError: status.isError,
+        isLoading: false,
+      };
+      setStatus(data);
       return res;
     },
     (error: AxiosError): Promise<AxiosError> => {
@@ -47,6 +66,7 @@ export const useAxiosInterceptor = () => {
           handleModal(errorText);
           return Promise.reject(error);
         default:
+          handleError();
           return Promise.reject(error);
       }
     },

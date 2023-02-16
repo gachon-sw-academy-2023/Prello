@@ -38,7 +38,7 @@ export const workspaceHandlers = [
     }
   }),
 
-  rest.get('/workspace/list', async (req, res, ctx) => {
+  rest.get('/api/v1/workspaces', async (req, res, ctx) => {
     let CWorkspaces: IWorkspace[] = [];
     const email = req.url.searchParams.get('email');
 
@@ -49,7 +49,7 @@ export const workspaceHandlers = [
     return res(ctx.status(200), ctx.delay(1000), ctx.json(CWorkspaces));
   }),
 
-  rest.get('/workspace/list/participate', async (req, res, ctx) => {
+  rest.get('/api/v1/workspaces/participated', async (req, res, ctx) => {
     let PWorkspaces: IWorkspace[] = [];
     const email = req.url.searchParams.get('email');
 
@@ -69,7 +69,7 @@ export const workspaceHandlers = [
   }),
 
   rest.get('/workspace/detail', async (req: any, res, ctx) => {
-    let Workspace;
+    let Workspace: IWorkspace[] = [];
     const workspaceId = req.url.searchParams.get('workspaceId');
     console.log(workspaceId);
     try {
@@ -109,27 +109,6 @@ export const workspaceHandlers = [
         summary: req.body.summary,
         id: workspace.id,
         memberInfo: workspace.memberInfo,
-      });
-
-      return res(
-        ctx.status(200),
-        ctx.json({ message: 'Workspace Update Success!' }),
-      );
-    } catch {
-      return res(ctx.status(500), ctx.json({ message: 'Fail to Update Data' }));
-    }
-  }),
-
-  rest.post('/workspace/update-member', async (req: any, res, ctx) => {
-    try {
-      const workspace = await getByID(req.body.id);
-
-      update({
-        owner: workspace.owner,
-        name: workspace.name,
-        summary: workspace.summary,
-        id: workspace.id,
-        memberInfo: workspace.memberInfo.concat(req.body.memberInfo),
       });
 
       return res(
