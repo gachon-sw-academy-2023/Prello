@@ -6,20 +6,37 @@ const { getAll, add, getByID, deleteRecord, update } =
   useIndexedDB('workspace');
 
 export const workspaceHandlers = [
-  rest.get('/workspace', async (req, res, ctx) => {
-    let workspace;
-    const id = req.url.searchParams.get('id');
+  // rest.get('/workspace', async (req, res, ctx) => {
+  //   let workspace;
+  //   const id = req.url.searchParams.get('id');
 
-    await getAll().then((workspaces) => {
-      workspace = workspaces.find(({ id }) => id === id);
-    });
+  //   await getAll().then((workspaces) => {
+  //     workspace = workspaces.find(({ id }) => id === id);
+  //   });
 
-    console.log(workspace);
+  //   console.log(workspace);
 
-    return res(ctx.status(200), ctx.delay(1000), ctx.json(workspace));
+  //   return res(ctx.status(200), ctx.delay(1000), ctx.json(workspace));
+  // }),
+
+  rest.get('/api/v1/workspaces', async (req: any, res, ctx) => {
+    let Workspace;
+    const workspaceId = req.url.searchParams.get('workspaceId');
+    console.log(workspaceId);
+    try {
+      await getByID(workspaceId).then((workspaceInfo) => {
+        Workspace = workspaceInfo;
+      });
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(Workspace));
+    } catch (error) {
+      return res(
+        ctx.status(500),
+        ctx.delay(1000),
+        ctx.json({ message: 'Store in DB Failed!' }),
+      );
+    }
   }),
-
-  rest.post('/workspace/create', async (req, res, ctx) => {
+  rest.post('/api/v1/workspaces', async (req, res, ctx) => {
     const { owner, name, summary, memberInfo } = await req.json<IWorkspace>();
 
     try {
@@ -38,7 +55,7 @@ export const workspaceHandlers = [
     }
   }),
 
-  rest.get('/api/v1/workspaces', async (req, res, ctx) => {
+  rest.get('/api/v1/workspaces/created', async (req, res, ctx) => {
     let CWorkspaces: IWorkspace[] = [];
     const email = req.url.searchParams.get('email');
 
@@ -68,25 +85,7 @@ export const workspaceHandlers = [
     return res(ctx.status(200), ctx.delay(1000), ctx.json(PWorkspaces));
   }),
 
-  rest.get('/workspace/detail', async (req: any, res, ctx) => {
-    let Workspace: IWorkspace[] = [];
-    const workspaceId = req.url.searchParams.get('workspaceId');
-    console.log(workspaceId);
-    try {
-      await getByID(workspaceId).then((workspaceInfo: IWorkspace[]) => {
-        Workspace = workspaceInfo;
-      });
-      return res(ctx.status(200), ctx.delay(1000), ctx.json(Workspace));
-    } catch (error) {
-      return res(
-        ctx.status(500),
-        ctx.delay(1000),
-        ctx.json({ message: 'Store in DB Failed!' }),
-      );
-    }
-  }),
-
-  rest.post('/workspace/delete', async (req: any, res, ctx) => {
+  rest.delete('/api/v1/workspaces/', async (req: any, res, ctx) => {
     try {
       await deleteRecord(req.body.workspaceId);
 
@@ -99,7 +98,7 @@ export const workspaceHandlers = [
     }
   }),
 
-  rest.post('/workspace/update', async (req: any, res, ctx) => {
+  rest.put('/api/v1/workspaces', async (req: any, res, ctx) => {
     try {
       const workspace = await getByID(req.body.id);
 

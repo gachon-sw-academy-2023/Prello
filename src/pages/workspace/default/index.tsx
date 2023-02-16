@@ -103,7 +103,7 @@ export default function WorkspaceDefault() {
     setCreatedWorkspaces([]);
     setparticipatingWorkspaces([]);
     request
-      .get('/api/v1/workspaces', {
+      .get('/api/v1/workspaces/created', {
         params: {
           email: user.email,
         },

@@ -8,6 +8,7 @@ import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import Inform from '@/pages/util';
 import { modalSelector } from '@/recoil/atom/modalSelector';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
+import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { IWorkspace } from '@/utils/types';
 import Grid from '@mui/material/Grid';
@@ -85,23 +86,17 @@ export default function WorkspaceDetail() {
     }
   };
   const fetchWorkspaceInfo = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get('/workspace/detail', {
+    request
+      .get('/api/v1/workspaces', {
         params: {
           workspaceId: workspaceId,
         },
+      })
+      .then((res) => {
+        setWorkspaceName(res.data.name);
+        setWorkspaceSummary(res.data.summary);
+        setWorkpsace(res.data);
       });
-      if (response.status === 200) {
-        setWorkspaceName(response.data.name);
-        setWorkspaceSummary(response.data.summary);
-        setWorkpsace(response.data);
-      }
-    } catch (error) {
-      setError(true);
-      throw error;
-    }
-    setLoading(false);
   };
   const fetchBoardList = async () => {
     try {
