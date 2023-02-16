@@ -5,7 +5,7 @@ describe('카드 수정 테스트', () => {
     cy.visit('/board/1');
     cy.wait(2000);
   });
-  it('2. 타이틀 수정 및 아이템 추가', async () => {
+  it('2. 타이틀 수정 및 아이템 추가', () => {
     cy.get('.column')
       .get('div[data-testid="created-card"]:first input')
       .type('new title');

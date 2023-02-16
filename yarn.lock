@@ -1801,7 +1801,7 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@istanbuljs/load-nyc-config@^1.0.0":
+"@istanbuljs/load-nyc-config@^1.0.0", "@istanbuljs/load-nyc-config@^1.1.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz"
   integrity sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==
@@ -14199,6 +14199,16 @@ vfile@^4.0.0:
     is-buffer "^2.0.0"
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
+
+vite-plugin-istanbul@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-istanbul/-/vite-plugin-istanbul-4.0.0.tgz#7449b734de1e01a0a478e13b0dd1578c189a026a"
+  integrity sha512-r5TUlEprFyp+L+by/waG1RsIMiqfy7LBAZvheFlXjxzm69146rHGW6bh9TDzXg7wJB6DsyjqKFtvAX50d/I/IQ==
+  dependencies:
+    "@istanbuljs/load-nyc-config" "^1.1.0"
+    istanbul-lib-instrument "^5.1.0"
+    picocolors "^1.0.0"
+    test-exclude "^6.0.0"
 
 vite-plugin-linter@^2.0.2:
   version "2.0.2"
