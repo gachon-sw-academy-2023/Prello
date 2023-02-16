@@ -11,6 +11,7 @@ import Card from './Card/Card';
 import * as S from './styles';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { useRecoilValue } from 'recoil';
+import request from '@/utils/api';
 
 interface ICard {
   id: number;
@@ -46,20 +47,15 @@ export default function Board() {
   }, []);
 
   const fetchBoardList = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get('/board', {
+    request
+      .get('/api/v1/boards', {
         params: {
           id: boardId,
         },
+      })
+      .then((res) => {
+        setBoard(res.data);
       });
-      if (response.status === 200) {
-        setBoard(response.data);
-      }
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
   };
 
   useEffect(() => {

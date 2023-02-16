@@ -1,9 +1,9 @@
 import DropDownMenu from '@/components/DropDownMenu/DropDownMenu';
 import { MenuBtn } from '@/pages/board/styles';
 import { IBoard } from '@/pages/workspace/detail';
+import request from '@/utils/api';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios, { AxiosError } from 'axios';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './BoardItem.styles';
@@ -40,14 +40,9 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
       name: boardName,
       workspaceId: workspaceId,
     };
-    console.log(workspaceId);
-    try {
-      await axios.post('/board/update', newBoardInfo);
+    request.put('/api/v1/boards', newBoardInfo).then(() => {
       setEdit(false);
-    } catch (error) {
-      const err = error as AxiosError;
-      console.log(err.response?.data);
-    }
+    });
   };
   return (
     <S.Item center={false} color={'#ffe7ee'}>

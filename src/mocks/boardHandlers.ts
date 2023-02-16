@@ -8,7 +8,7 @@ type IBoard = {
 };
 
 export const boardHandlers = [
-  rest.post('/board/create', async (req: any, res, ctx) => {
+  rest.post('/api/v1/boards', async (req: any, res, ctx) => {
     try {
       await add({ ...req.body });
       return res(
@@ -19,7 +19,7 @@ export const boardHandlers = [
       return res(ctx.status(500), ctx.json({ message: 'Store in DB Failed!' }));
     }
   }),
-  rest.get('/board/list', async (req: any, res, ctx) => {
+  rest.get('/api/v1/boards', async (req: any, res, ctx) => {
     let workspace: IBoard[] = [];
     const id = req.url.searchParams.get('workspaceId');
     try {
@@ -36,7 +36,7 @@ export const boardHandlers = [
       );
     }
   }),
-  rest.get('/board', async (req: any, res, ctx) => {
+  rest.get('/api/v1/boards', async (req: any, res, ctx) => {
     let board;
     const boardId = req.url.searchParams.get('id');
 
@@ -50,7 +50,7 @@ export const boardHandlers = [
       return res(ctx.status(500), ctx.json({ message: 'Store in DB Failed!' }));
     }
   }),
-  rest.post('/board/update', async (req: any, res, ctx) => {
+  rest.put('/api/v1/boards', async (req: any, res, ctx) => {
     try {
       await update({ ...req.body });
       return res(

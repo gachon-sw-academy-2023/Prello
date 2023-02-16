@@ -7,6 +7,7 @@ import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import Inform from '@/pages/util';
 import { modalSelector } from '@/recoil/atom/modalSelector';
+import { statusSelector } from '@/recoil/atom/statusSelector';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
@@ -31,15 +32,15 @@ export default function WorkspaceDetail() {
   const [modal, setModal] = useRecoilState(modalSelector);
   const [workspace, setWorkpsace] =
     useRecoilState<IWorkspace>(workspaceSelector);
-  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [workspaceName, setWorkspaceName] = useState<string>('');
   const [workspaceSummary, setWorkspaceSummary] = useState<string>('');
   const [isTitleExsit, setIsTitleExsit] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [newItem, setNewItem] = useState<boolean>(false);
   const [boards, setBoards] = useState<IBoard[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [status, setStatus] = useRecoilState(statusSelector);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [error, setError] = useState<boolean>(false);
 
   const handleModal = () => {
     const data = {
@@ -55,26 +56,17 @@ export default function WorkspaceDetail() {
   const handleCreate = () => {
     setNewItem(true);
   };
-  const handleDelete = () => {};
-  const updateBoard = () => {};
   const fetchCreate = async () => {
     const info = {
       workspaceId: workspaceId,
       name: title,
     };
     if (title.length > 0) {
-      try {
-        const response = await axios.post('/board/create', info);
-        if (response.status === 200) {
-          console.log('저장완료', info);
-        }
-      } catch (error) {
-        setError(true);
-        throw error;
-      }
-      setTitle('');
-      setNewItem(false);
-      fetchBoardList();
+      request.post('/api/v1/boards', info).finally(() => {
+        setTitle('');
+        setNewItem(false);
+        fetchBoardList();
+      });
     }
   };
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,20 +91,15 @@ export default function WorkspaceDetail() {
       });
   };
   const fetchBoardList = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get('/board/list', {
+    request
+      .get('/api/v1/boards', {
         params: {
           workspaceId: workspaceId,
         },
+      })
+      .then((res) => {
+        setBoards(res.data);
       });
-      if (response.status === 200) {
-        setBoards(response.data);
-      }
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -120,7 +107,7 @@ export default function WorkspaceDetail() {
     fetchBoardList();
   }, []);
 
-  if (error)
+  if (status.isError)
     return (
       <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
     );
@@ -151,7 +138,7 @@ export default function WorkspaceDetail() {
           onModal={handleModal}
           onNavigate={() => handleNavigate(workspaceId)}
         />
-        {loading ? (
+        {status.isLoading ? (
           <DetailSkeleton />
         ) : (
           <S.RightContainer>
