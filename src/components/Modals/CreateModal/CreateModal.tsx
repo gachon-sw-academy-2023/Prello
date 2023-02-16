@@ -96,6 +96,7 @@ export const CreateWorkspaceModal = ({
             placeholder="워크스페이스 이름을 입력해주세요."
             onChange={handleChangeName}
             className="main"
+            data-testid="workspace-name"
           ></S.StyledInput>
           <S.StyledInput
             type="text"
@@ -103,6 +104,7 @@ export const CreateWorkspaceModal = ({
             placeholder="설명을 입력해주세요."
             onChange={handleChangeSummary}
             className="sub"
+            data-testid="workspace-summary"
           ></S.StyledInput>
         </S.colWrapper>
       </S.MainWrapper>
@@ -116,6 +118,7 @@ export const CreateWorkspaceModal = ({
             type="text"
             value={newEmail}
             onChange={handleChangeEmail}
+            data-testid="workspace-invite-member"
           ></S.StyledEmailInput>
           <S.InviteBtn onClick={handleInvite} disabled={inviteBtnStatus}>
             초대 이메일 전송
