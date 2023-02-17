@@ -4,8 +4,6 @@ import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import { Skeleton } from '@mui/material';
-import { height } from '@mui/system';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -71,9 +69,12 @@ export default function Board() {
   };
 
   const fetchBoardList = async () => {
+    setLoading(true);
+
     await request
       .get(`/api/v1/boards/${boardId}`)
       .then((res) => setBoard(res.data));
+    setLoading(false);
   };
 
   const fetchList = (list: ICard[]) => {
@@ -85,14 +86,6 @@ export default function Board() {
     await request.get('/api/v1/cards', { params: { boardId } }).then((res) => {
       setLists(res.data);
     });
-    // await axios
-    //   .get('/card', {
-    //     params: {
-    //       boardId,
-    //     },
-    //   })
-    //   .then((res) => setLists(res.data))
-    //   .catch((error) => alert(error));
   };
 
   const handleAddList = async () => {
@@ -103,14 +96,6 @@ export default function Board() {
         boardId: boardId,
       })
       .then((res) => setLists(res.data));
-    // axios
-    //   .post('/card/create', {
-    //     title: '',
-    //     order: lists.length,
-    //     boardId: boardId,
-    //   })
-    //   .then((res) => setLists(res.data))
-    //   .catch((error) => alert(error));
   };
 
   if (error)
