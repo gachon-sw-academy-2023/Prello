@@ -160,6 +160,7 @@ export default function WorkspaceDetail() {
                     center={true}
                     color={'#fffcff'}
                     onClick={handleCreate}
+                    data-testid="create-board"
                   >
                     <S.Image
                       width={'50px'}
@@ -181,6 +182,7 @@ export default function WorkspaceDetail() {
                           placeholder="보드 이름을 입력해주세요"
                           defaultValue={title}
                           onChange={handleChangeTitle}
+                          data-testid="create-board-name"
                         ></S.TitleInput>
                       </S.TopWrapper>
                       <S.BtnWrapper>

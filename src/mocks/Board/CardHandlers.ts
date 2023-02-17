@@ -7,14 +7,14 @@ const { getAll, add, deleteRecord, update, getByID, getByIndex } =
 export const cardHandlers = [
   rest.get('/api/v1/cards/:cardId', async (req: any, res, ctx) => {
     const target = await getByID(req.params.cardId);
-
     return res(ctx.status(200), ctx.json(target));
   }),
 
-  rest.get('/api/v1/cards', async (req, res, ctx) => {
+  rest.get('/card', async (req: any, res, ctx) => {
+    const id = parseInt(req.url.searchParams.get('boardId'));
     try {
-      const list = await getAll();
-      return res(ctx.status(200), ctx.json(list));
+      const cardList = (await getAll()).filter((list) => list.boardId == id);
+      return res(ctx.status(200), ctx.json(cardList));
     } catch {
       return res(
         ctx.status(500),
@@ -26,8 +26,10 @@ export const cardHandlers = [
   rest.post('/api/v1/cards', async (req: any, res, ctx) => {
     try {
       add(req.body);
-      const list = await getAll();
-      return res(ctx.status(200), ctx.json(list));
+      const cardList = (await getAll()).filter(
+        (list) => list.boardId == req.body.boardId,
+      );
+      return res(ctx.status(200), ctx.json(cardList));
     } catch {
       return res(ctx.status(500), ctx.json({ message: 'Store in DB Failed!' }));
     }
@@ -40,6 +42,7 @@ export const cardHandlers = [
         title: req.body.title,
         id: target.id,
         order: target.order,
+        boardId: parseInt(target.boardId),
       });
       return res(ctx.status(200));
     } catch {
@@ -62,6 +65,7 @@ export const cardHandlers = [
             update({
               title: list.title,
               id: list.id,
+              boardId: parseInt(target.boardId),
               order: Math.max(0, list.order - 1),
             });
           }
@@ -76,6 +80,7 @@ export const cardHandlers = [
               title: list.title,
               id: list.id,
               order: list.order + 1,
+              boardId: parseInt(target.boardId),
             });
           }
         });
@@ -92,8 +97,10 @@ export const cardHandlers = [
   rest.post('/card/delete', async (req: any, res, ctx) => {
     try {
       deleteRecord(req.body.cardId);
-      const list = await getAll();
-      return res(ctx.status(200), ctx.json(list));
+      const cardList = (await getAll()).filter(
+        (list) => list.boardId == req.body.boardId,
+      );
+      return res(ctx.status(200), ctx.json(cardList));
     } catch {
       return res(ctx.status(500), ctx.json({ message: 'Fail to Delete Data' }));
     }

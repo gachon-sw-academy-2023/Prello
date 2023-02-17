@@ -1,5 +1,6 @@
 import Modal from '@/components/Modal/Modal';
 import request from '@/utils/api';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import Box from '@mui/joy/Box';
 import {
   Chip,
@@ -16,8 +17,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import * as S from './styles';
-
+interface IItemList {
+  id: number;
+  title: string;
+  order: number;
+  cardId: number;
+}
 interface IItem {
   title: string;
   order: number;
@@ -30,32 +38,25 @@ interface ICard {
   title: string;
 }
 
-interface IMember {
-  name: string;
-  profile: string;
-}
-
 interface DetailProps {
   setOpen: (b: boolean) => void;
   itemId: number;
+  fetchItems: (i: IItemList[]) => void;
 }
 
-export const Detail = ({ setOpen, itemId }: DetailProps) => {
+export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
   const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
   const [personName, setPersonName] = useState<string[]>([]);
-  const [member, setMember] = useState<IMember[]>([]);
+  const [member, setMember] = useState<string[]>([]);
   const [item, setItem] = useState<IItem>();
   const [card, setCard] = useState<ICard>();
   const [description, setDescription] = useState<string>();
+  const { boardId } = useParams();
+  const workspace = useRecoilValue(workspaceSelector);
 
   useEffect(() => {
-    request.get(`/api/v1/cards/${itemId}`).then((res) => {
-      setItem(res.data);
-      setValue(res.data.date);
-      setPersonName(res.data.members);
-      setDescription(res.data.description);
-    });
-    request.get(`/api/v1/cards/${itemId}`).then((res) => {
+    setMember(workspace.memberInfo);
+    axios.get(`/item/${itemId}`).then((res) => {
       setItem(res.data);
       setValue(res.data.date);
       setPersonName(res.data.members);
@@ -79,14 +80,21 @@ export const Detail = ({ setOpen, itemId }: DetailProps) => {
     setPersonName(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const handleDesription = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDesription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
 
   const handleDelete = () => {
-    axios.post('/item/delete/', {
-      itemId,
-    });
+    axios
+      .post('/item/delete/', {
+        itemId,
+        boardId,
+      })
+      .then((res) => {
+        if (res.data.length) {
+          fetchItems(res.data);
+        } else fetchItems([]);
+      });
     setOpen(false);
     setCardList();
   };
@@ -151,8 +159,8 @@ export const Detail = ({ setOpen, itemId }: DetailProps) => {
             )}
           >
             {member.map((member) => (
-              <MenuItem key={member.name} value={member.name}>
-                {member.name}
+              <MenuItem key={member} value={member}>
+                {member}
               </MenuItem>
             ))}
           </Select>

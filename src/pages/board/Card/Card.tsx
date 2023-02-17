@@ -7,11 +7,15 @@ import { ReactSortable } from 'react-sortablejs';
 import DropDownMenu from '../DropDownMenu/dropDownMenu';
 import Item from '../Item/Item';
 import * as S from '../styles';
-
+interface ICard {
+  id: number;
+  title: string;
+  order: number;
+}
 interface ICardProp {
   title: string;
   cardId: number;
-  UpdateList: () => void;
+  UpdateList: (list: ICard[]) => void;
 }
 
 interface IItem {
@@ -28,7 +32,11 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const [items, setItems] = useState<IItem[]>([]);
 
   useEffect(() => {
-    fetchItems();
+    axios
+      .get(`/list/item/${cardId}`)
+      .then((res) =>
+        setItems(res.data.sort((a: IItem, b: IItem) => a.order - b.order)),
+      );
   }, []);
 
   const handleSubmit = (e: { target: any; preventDefault: () => void }) => {
@@ -68,16 +76,17 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
       .catch((error) => alert(error));
   };
 
-  const fetchItems = () => {
-    axios
-      .get(`/list/item/${cardId}`)
-      .then((res) =>
-        setItems(res.data.sort((a: IItem, b: IItem) => a.order - b.order)),
-      );
+  useEffect(() => {
+    if (items != undefined)
+      setItems(items.sort((a: IItem, b: IItem) => a.order - b.order));
+  }, [items]);
+
+  const fetchItems = (item: IItem[]) => {
+    setItems(item);
   };
 
   return (
-    <div>
+    <div data-testid="created-card">
       <Default>
         <S.ListWrapper key={cardId}>
           <S.ListHeader draggable="true">
@@ -90,6 +99,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
               <FontAwesomeIcon
                 icon={faEllipsis}
                 onClick={() => setShowMenu(!showMenu)}
+                test-id="menu-btn"
               />
               {showMenu && (
                 <DropDownMenu
@@ -119,7 +129,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
                 newIndex: e.newIndex,
               });
             }}
-            onChange={fetchItems}
+            onChange={() => fetchItems(items)}
           >
             {items.map((item: IItem) => (
               <Item key={item.id} itemId={item.id} fetchItems={fetchItems}>
@@ -136,6 +146,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
           {showForm && (
             <S.Form onSubmit={handleSubmit}>
               <S.FormInput
+                data-testid="input_item"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="아이템 입력하기"
@@ -152,15 +163,31 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
       </Default>
 
       <Mobile>
-        <S.MobileListWrapper draggable="true">
-          <S.ListHeader>
-            <h1>{title}</h1>
-            <span>
-              <FontAwesomeIcon icon={faEllipsis} />
-            </span>
+        <S.MobileListWrapper key={cardId}>
+          <S.ListHeader draggable="true">
+            <input
+              defaultValue={title}
+              placeholder={'카드 제목을 입력해주세요'}
+              onChange={handleChangeTitle}
+            />
+            <S.MenuBtn>
+              <FontAwesomeIcon
+                icon={faEllipsis}
+                onClick={() => setShowMenu(!showMenu)}
+                test-id="menu-btn"
+              />
+              {showMenu && (
+                <DropDownMenu
+                  UpdateList={UpdateList}
+                  handleDeleteItems={handleDeleteItems}
+                  cardId={cardId}
+                />
+              )}
+            </S.MenuBtn>
           </S.ListHeader>
           <ReactSortable
             className="itemWrapper"
+            id={`${cardId}`}
             group="shared"
             animation={200}
             delay={1}
@@ -168,6 +195,16 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             multiDrag
             setList={setItems}
             list={items}
+            onEnd={(e) => {
+              axios.post('/item/update-index', {
+                id: parseInt(e.item.id),
+                oldCardIndex: parseInt(e.from.id),
+                newCardIndex: parseInt(e.to.id),
+                oldIndex: e.oldIndex,
+                newIndex: e.newIndex,
+              });
+            }}
+            onChange={() => fetchItems(items)}
           >
             {items.map((item: IItem) => (
               <Item key={item.id} itemId={item.id} fetchItems={fetchItems}>
@@ -184,14 +221,15 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
           {showForm && (
             <S.Form onSubmit={handleSubmit}>
               <S.FormInput
+                data-testid="input_item"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="아이템 입력하기"
               />
               <S.BtnWrapper>
-                <button type="submit">✅</button>
-                <button type="submit" onClick={() => setShowForm(false)}>
-                  ⛔
+                <button type="submit">Add Item</button>
+                <button type="submit" onClick={() => handleCancel()}>
+                  Cancel
                 </button>
               </S.BtnWrapper>
             </S.Form>

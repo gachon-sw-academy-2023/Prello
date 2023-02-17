@@ -25,7 +25,6 @@ export const boardHandlers = [
     try {
       await getAll().then((boards: IBoard[]) => {
         workspace = boards.filter(({ workspaceId }) => workspaceId === id);
-        console.log(workspace);
       });
       return res(ctx.status(200), ctx.delay(1000), ctx.json(workspace));
     } catch (error) {
@@ -43,7 +42,6 @@ export const boardHandlers = [
     try {
       await getAll().then((boards) => {
         board = boards.find(({ id }) => id === parseInt(boardId));
-        console.log(board);
       });
       return res(ctx.status(200), ctx.delay(1000), ctx.json(board));
     } catch (error) {
