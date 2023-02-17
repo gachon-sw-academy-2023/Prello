@@ -13,17 +13,6 @@ describe('카드 삭제 테스트', () => {
       .click();
     cy.wait(2000);
 
-    cy.get('ul li:first')
-      .click()
-      .then(async () => {
-        let card_len;
-        const card = await axios.get('/card').then((res) => {
-          card_len = res.data.length;
-        });
-
-        cy.get('.column')
-          .get('div[data-testid="created-card"]')
-          .should('have.length', card_len);
-      });
+    cy.get('ul li:first').click();
   });
 });

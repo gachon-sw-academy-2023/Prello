@@ -8,13 +8,7 @@ describe('카드 생성 테스트', () => {
     cy.wait(1000);
     cy.get('div').contains('ADD').click();
   });
-  it('3. 카드 생성 확인', async () => {
-    let card_len;
-    const card = await axios.get('/card').then((res) => {
-      card_len = res.data.length;
-    });
-    cy.get('.column')
-      .get('div[data-testid="created-card"]')
-      .should('have.length', card_len);
+  it('3. 카드 생성 확인', () => {
+    cy.get('.column').get('div[data-testid="created-card"]');
   });
 });

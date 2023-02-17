@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+export {};
 describe('카드 수정 테스트', () => {
   it('1. 보드페이지 접속', () => {
     cy.visit('/board/1');
@@ -30,6 +29,5 @@ describe('카드 수정 테스트', () => {
     cy.wait(2000);
 
     cy.get('ul li:last').click();
-    cy.wait(2000);
   });
 });

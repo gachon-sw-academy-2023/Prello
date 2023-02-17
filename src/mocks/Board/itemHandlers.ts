@@ -35,12 +35,11 @@ export const itemHandlers = [
     return res(ctx.status(200), ctx.json(result));
   }),
 
-  rest.delete('/api/v1/items:cardId', async (req: any, res, ctx) => {
+  rest.delete('/api/v1/items/:cardId', async (req: any, res, ctx) => {
     const AllList = await getAll();
-    const target = await getByIndex('cardId', req.params.cardId);
 
     AllList.map((list) => {
-      if (list.cardId == target.cardId) {
+      if (list.cardId == req.params.cardId) {
         deleteRecord(list.id);
       }
     });
