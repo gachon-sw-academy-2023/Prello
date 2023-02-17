@@ -6,6 +6,7 @@ import Inform from '@/pages/util';
 import { modalSelector } from '@/recoil/atom/modalSelector';
 import { statusSelector } from '@/recoil/atom/statusSelector';
 import { userSelector } from '@/recoil/atom/userSelector';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import {
@@ -16,7 +17,7 @@ import {
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CreateWorkspaceModal from '../../../components/Modals/CreateModal/CreateModal';
 import WorkSpaceSkeleton from '../skeleton';
 import * as S from './styles';
@@ -50,6 +51,7 @@ function UserImages({ members }: WorkspaceUserImageProps) {
 
 function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
   const navigate = useNavigate();
+  const setWorkpsace = useSetRecoilState<IWorkspace>(workspaceSelector);
 
   const handleNavigate = (param: number) => {
     navigate(`/workspace-detail/${param}`);
@@ -66,7 +68,12 @@ function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
           lg={3}
           key={workspace.owner + workspace.name}
         >
-          <S.Item onClick={() => handleNavigate(workspace.id)}>
+          <S.Item
+            onClick={() => {
+              handleNavigate(workspace.id);
+              setWorkpsace(workspace);
+            }}
+          >
             <S.GradientBG></S.GradientBG>
             <S.ItemContents>
               <S.Title>{workspace.name}</S.Title>
@@ -86,7 +93,7 @@ export default function WorkspaceDefault() {
   const [createdWorkspaces, setCreatedWorkspaces] = useState<IWorkspace[]>();
   const [participatingWorkspaces, setparticipatingWorkspaces] =
     useState<IWorkspace[]>();
-  const [status, setStatus] = useRecoilState(statusSelector);
+  const status = useRecoilValue(statusSelector);
 
   const handleModal = () => {
     const data = {
