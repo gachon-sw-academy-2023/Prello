@@ -61,14 +61,12 @@ export const boardHandlers = [
   }),
   rest.delete('/api/v1/boards', async (req: any, res, ctx) => {
     let workspace;
-    const workspaceId = req.body.workspaceId;
+    const id = req.body.workspaceId;
 
     try {
       await deleteRecord(req.body.id);
       await getAll().then((boards: IBoard[]) => {
-        workspace = boards.filter(
-          ({ workspaceId }) => workspaceId === workspaceId,
-        );
+        workspace = boards.filter((board) => board.workspaceId == parseInt(id));
       });
 
       return res(
