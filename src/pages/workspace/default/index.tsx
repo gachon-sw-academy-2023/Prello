@@ -102,7 +102,7 @@ export default function WorkspaceDefault() {
   const fetchWorkspaces = async () => {
     setCreatedWorkspaces([]);
     setparticipatingWorkspaces([]);
-    request
+    await request
       .get('/api/v1/workspaces/created', {
         params: {
           email: user.email,
@@ -110,7 +110,7 @@ export default function WorkspaceDefault() {
       })
       .then((res) => setCreatedWorkspaces(res.data));
 
-    request
+    await request
       .get('/api/v1/workspaces/participated', {
         params: {
           email: user.email,

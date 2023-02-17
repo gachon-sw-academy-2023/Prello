@@ -42,7 +42,7 @@ function Login() {
       password: password,
     };
 
-    request
+    await request
       .post('/api/v1/users/login', data)
       .then((res: AxiosResponse) => {
         console.log(res);

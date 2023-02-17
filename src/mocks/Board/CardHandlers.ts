@@ -1,22 +1,17 @@
 import { rest } from 'msw';
-import memberList from '../data/getMemberData.json';
 import { useIndexedDB } from 'react-indexed-db';
 
 const { getAll, add, deleteRecord, update, getByID, getByIndex } =
   useIndexedDB('card');
 
 export const cardHandlers = [
-  rest.get('/members/list', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(memberList));
-  }),
-
-  rest.get('/card/:cardId', async (req: any, res, ctx) => {
+  rest.get('/api/v1/cards/:cardId', async (req: any, res, ctx) => {
     const target = await getByID(req.params.cardId);
 
     return res(ctx.status(200), ctx.json(target));
   }),
 
-  rest.get('/card', async (req, res, ctx) => {
+  rest.get('/api/v1/cards', async (req, res, ctx) => {
     try {
       const list = await getAll();
       return res(ctx.status(200), ctx.json(list));
@@ -28,7 +23,7 @@ export const cardHandlers = [
     }
   }),
 
-  rest.post('/card/create', async (req: any, res, ctx) => {
+  rest.post('/api/v1/cards', async (req: any, res, ctx) => {
     try {
       add(req.body);
       const list = await getAll();

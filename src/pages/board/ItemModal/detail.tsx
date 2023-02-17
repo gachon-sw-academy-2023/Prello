@@ -1,4 +1,5 @@
 import Modal from '@/components/Modal/Modal';
+import request from '@/utils/api';
 import Box from '@mui/joy/Box';
 import {
   Chip,
@@ -48,22 +49,27 @@ export const Detail = ({ setOpen, itemId }: DetailProps) => {
   const [description, setDescription] = useState<string>();
 
   useEffect(() => {
-    axios
-      .get('/members/list')
-      .then((res) => setMember(res.data))
-      .catch((error) => alert(error));
-
-    axios.get(`/item/${itemId}`).then((res) => {
+    request.get(`/api/v1/cards/${itemId}`).then((res) => {
       setItem(res.data);
       setValue(res.data.date);
       setPersonName(res.data.members);
       setDescription(res.data.description);
-      axios.get(`/card/${res.data.cardId}`).then((res) => setCard(res.data));
+    });
+    request.get(`/api/v1/cards/${itemId}`).then((res) => {
+      setItem(res.data);
+      setValue(res.data.date);
+      setPersonName(res.data.members);
+      setDescription(res.data.description);
+      request
+        .get(`/api/v1/cards/${res.data.cardId}`)
+        .then((res) => setCard(res.data));
     });
   }, []);
 
-  const setCardList = () => {
-    axios.get(`/card/${item?.cardId}`).then((res) => setCard(res.data));
+  const setCardList = async () => {
+    await request
+      .get(`/api/v1/cards/${item?.cardId}`)
+      .then((res) => setCard(res.data));
   };
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {

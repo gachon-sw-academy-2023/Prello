@@ -62,7 +62,7 @@ export default function WorkspaceDetail() {
       name: title,
     };
     if (title.length > 0) {
-      request.post('/api/v1/boards', info).finally(() => {
+      await request.post('/api/v1/boards', info).finally(() => {
         setTitle('');
         setNewItem(false);
         fetchBoardList();
@@ -78,7 +78,7 @@ export default function WorkspaceDetail() {
     }
   };
   const fetchWorkspaceInfo = async () => {
-    request
+    await request
       .get('/api/v1/workspaces', {
         params: {
           workspaceId: workspaceId,
@@ -91,7 +91,7 @@ export default function WorkspaceDetail() {
       });
   };
   const fetchBoardList = async () => {
-    request
+    await request
       .get('/api/v1/boards', {
         params: {
           workspaceId: workspaceId,

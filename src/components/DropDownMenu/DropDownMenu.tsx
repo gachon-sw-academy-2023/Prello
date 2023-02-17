@@ -1,3 +1,4 @@
+import request from '@/utils/api';
 import axios, { AxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import * as S from './DropDownMenu.styles';
@@ -42,17 +43,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
 
   const handleDeleteBoard = async () => {
-    try {
-      const response = await axios.post('/board/delete', { id: boardId });
-      console.log(boardId);
-      if (response.status === 200) {
-        // 목록 업데이트 필요
-        console.log('삭제완료');
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      console.log(err.response?.data);
-    }
+    await request.delete('/api/v1/boards', { data: { id: boardId } });
   };
 
   return (

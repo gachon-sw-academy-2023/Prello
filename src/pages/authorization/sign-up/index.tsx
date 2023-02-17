@@ -53,7 +53,7 @@ export default function SignUp() {
       nickname: nickname,
     };
 
-    request
+    await request
       .post('/api/v1/users/signup', user)
       .then((res) => {
         setModalText('회원가입이 완료되었습니다! 💖');

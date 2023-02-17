@@ -40,7 +40,7 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
       name: boardName,
       workspaceId: workspaceId,
     };
-    request.put('/api/v1/boards', newBoardInfo).then(() => {
+    await request.put('/api/v1/boards', newBoardInfo).then(() => {
       setEdit(false);
     });
   };

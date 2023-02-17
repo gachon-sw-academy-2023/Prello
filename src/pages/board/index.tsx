@@ -10,8 +10,9 @@ import Sortable from 'sortablejs';
 import Card from './Card/Card';
 import * as S from './styles';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import request from '@/utils/api';
+import { statusState } from '@/recoil/atom/status';
 
 interface ICard {
   id: number;
@@ -28,17 +29,11 @@ interface IBoard {
 export default function Board() {
   const workspace = useRecoilValue(workspaceSelector);
   const [lists, setLists] = useState<ICard[]>([]);
-  const [member, setMember] = useState([]);
   const { boardId } = useParams();
   const [board, setBoard] = useState<IBoard>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [status, setStatus] = useRecoilState(statusState);
 
   useEffect(() => {
-    axios
-      .get('/members/list')
-      .then((res) => setMember(res.data))
-      .catch((error) => alert(error));
     UpdateList();
   }, []);
 
@@ -47,7 +42,7 @@ export default function Board() {
   }, []);
 
   const fetchBoardList = async () => {
-    request
+    await request
       .get('/api/v1/boards', {
         params: {
           id: boardId,
@@ -73,25 +68,20 @@ export default function Board() {
     });
   });
 
-  const UpdateList = () => {
-    axios
-      .get('/card')
-      .then((res) => setLists(res.data))
-      .catch((error) => alert(error));
+  const UpdateList = async () => {
+    await request.get('/api/v1/cards').then((res) => {
+      setLists(res.data);
+    });
   };
 
-  const handleAddList = () => {
-    axios
-      .post('/card/create', {
-        title: '',
-        order: lists.length,
-      })
-      .then((res) => setLists(res.data))
-      .catch((error) => alert(error));
+  const handleAddList = async () => {
+    await request
+      .post('/api/v1/cards', { title: '', order: lists.length })
+      .then((res) => setLists(res.data));
   };
 
-  if (loading) return <div>로딩중...</div>;
-  if (error)
+  if (status.isLoading) return <div>로딩중...</div>;
+  if (status.isError)
     return (
       <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
     );

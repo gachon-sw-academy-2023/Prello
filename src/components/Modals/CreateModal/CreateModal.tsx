@@ -75,7 +75,7 @@ export const CreateWorkspaceModal = ({
       summary: summary,
       memberInfo: emailList,
     };
-    request.post('/api/v1/workspaces', info).then((res) => {
+    await request.post('/api/v1/workspaces', info).then((res) => {
       handleModal();
       fetchWorkspaces();
     });

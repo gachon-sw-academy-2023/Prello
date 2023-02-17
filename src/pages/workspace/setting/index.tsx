@@ -62,7 +62,7 @@ export default function WorkspaceSetting() {
       summary: workspaceSummary,
       name: changedWorkspaceName,
     };
-    request.put('/api/v1/workspaces', data).then(() => {
+    await request.put('/api/v1/workspaces', data).then(() => {
       fetchWorkspace();
       alert('워크스페이스 정보가 업데이트 되었습니다!');
     });
@@ -75,7 +75,7 @@ export default function WorkspaceSetting() {
       },
     };
 
-    request.delete('/api/v1/workspaces/', config).then((res) => {
+    await request.delete('/api/v1/workspaces/', config).then((res) => {
       alert('워크스페이스가 삭제되었습니다!');
       naviate(ROUTES.WORKSPACEDEFAULT);
     });

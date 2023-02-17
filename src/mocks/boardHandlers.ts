@@ -61,7 +61,7 @@ export const boardHandlers = [
       return res(ctx.status(500), ctx.json({ message: 'Store in DB Failed!' }));
     }
   }),
-  rest.post('/board/delete', async (req: any, res, ctx) => {
+  rest.delete('/api/v1/boards', async (req: any, res, ctx) => {
     try {
       await deleteRecord(req.body.id);
       return res(
