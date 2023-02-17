@@ -5,6 +5,10 @@ describe('로그인 테스트', () => {
   });
   it('2. 로그인 메뉴 클릭', () => {
     cy.wait(1000);
+    if (cy.get('button').contains('Log Out')) {
+      cy.get('button').contains('Log Out').click();
+      cy.wait(2000);
+    }
     cy.get('button').contains('Log In').click();
   });
   it('3. 이메일 입력', () => {
