@@ -4,6 +4,7 @@ import { IBoard } from '@/pages/workspace/detail';
 import request from '@/utils/api';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './BoardItem.styles';
@@ -11,9 +12,14 @@ import * as S from './BoardItem.styles';
 type BoardProps = {
   board: IBoard;
   workspaceId: string;
+  fetchBoard: (board: IBoard[]) => void;
 };
 
-export default function BoardItem({ board, workspaceId }: BoardProps) {
+export default function BoardItem({
+  board,
+  workspaceId,
+  fetchBoard,
+}: BoardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState<boolean>(false);
@@ -40,7 +46,7 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
       name: boardName,
       workspaceId: workspaceId,
     };
-    await request.put('/api/v1/boards', newBoardInfo).then(() => {
+    await axios.put('/api/v1/boards', newBoardInfo).then(() => {
       setEdit(false);
     });
   };
@@ -65,6 +71,7 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
               handleDeleteItems={handleDelete}
               boardId={board.id}
               setEdit={setEdit}
+              fetchBoard={fetchBoard}
             />
           )}
         </MenuBtn>

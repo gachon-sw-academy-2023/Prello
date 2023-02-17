@@ -22,6 +22,7 @@ export const ListContainer = styled.div`
   margin-left: 250px;
   display: flex;
 `;
+
 export const ListMobileContiner = styled.div`
   display: flex;
   flex-direction: column;
