@@ -2,6 +2,7 @@ import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import { modalSelector } from '@/recoil/atom/modalSelector';
 import { userSelector } from '@/recoil/atom/userSelector';
+import request from '@/utils/api';
 import { CreateWorkspaceProps } from '@/utils/types';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
@@ -74,16 +75,10 @@ export const CreateWorkspaceModal = ({
       summary: summary,
       memberInfo: emailList,
     };
-    try {
-      const response = await axios.post('/workspace/create', info);
-      if (response.status === 200) {
-        handleModal();
-        fetchWorkspaces();
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      console.log(err.response?.data);
-    }
+    await request.post('/api/v1/workspaces', info).then((res) => {
+      handleModal();
+      fetchWorkspaces();
+    });
   };
 
   return (

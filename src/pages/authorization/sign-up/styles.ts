@@ -62,7 +62,7 @@ export const Content = styled.div`
   align-items: center;
 `;
 
-export const SignUpForm = styled.div`
+export const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;

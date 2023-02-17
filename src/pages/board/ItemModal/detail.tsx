@@ -1,4 +1,5 @@
 import Modal from '@/components/Modal/Modal';
+import request from '@/utils/api';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import Box from '@mui/joy/Box';
 import {
@@ -55,17 +56,21 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
 
   useEffect(() => {
     setMember(workspace.memberInfo);
-    axios.get(`/item/${itemId}`).then((res) => {
+    request.get(`/api/v1/items/${itemId}`).then((res) => {
       setItem(res.data);
       setValue(res.data.date);
       setPersonName(res.data.members);
       setDescription(res.data.description);
-      axios.get(`/card/${res.data.cardId}`).then((res) => setCard(res.data));
+      request
+        .get(`/api/v1/cards/${res.data.cardId}`)
+        .then((res) => setCard(res.data));
     });
   }, []);
 
-  const setCardList = () => {
-    axios.get(`/card/${item?.cardId}`).then((res) => setCard(res.data));
+  const setCardList = async () => {
+    await request
+      .get(`/api/v1/cards/${item?.cardId}`)
+      .then((res) => setCard(res.data));
   };
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
@@ -80,11 +85,8 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
   };
 
   const handleDelete = () => {
-    axios
-      .post('/item/delete/', {
-        itemId,
-        boardId,
-      })
+    request
+      .delete('/api/v1/items', { data: { itemId, boardId } })
       .then((res) => {
         if (res.data.length) {
           fetchItems(res.data);
@@ -95,7 +97,7 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
   };
 
   const handleSave = () => {
-    axios.post(`/item/${itemId}`, {
+    request.post(`/api/v1/items/${itemId}`, {
       title: item?.title,
       order: item?.order,
       cardId: item?.cardId,
