@@ -56,7 +56,7 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
 
   useEffect(() => {
     setMember(workspace.memberInfo);
-    axios.get(`/item/${itemId}`).then((res) => {
+    request.get(`/api/v1/items/${itemId}`).then((res) => {
       setItem(res.data);
       setValue(res.data.date);
       setPersonName(res.data.members);
@@ -85,11 +85,8 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
   };
 
   const handleDelete = () => {
-    axios
-      .post('/item/delete/', {
-        itemId,
-        boardId,
-      })
+    request
+      .delete('/api/v1/items', { data: { itemId, boardId } })
       .then((res) => {
         if (res.data.length) {
           fetchItems(res.data);
@@ -100,7 +97,7 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
   };
 
   const handleSave = () => {
-    axios.post(`/item/${itemId}`, {
+    request.post(`/api/v1/items/${itemId}`, {
       title: item?.title,
       order: item?.order,
       cardId: item?.cardId,

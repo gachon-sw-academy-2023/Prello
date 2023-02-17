@@ -39,6 +39,7 @@ export default function WorkspaceDetail() {
   const [newItem, setNewItem] = useState<boolean>(false);
   const [boards, setBoards] = useState<IBoard[]>([]);
   const [status, setStatus] = useRecoilState(statusSelector);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleModal = () => {
     const data = {
@@ -76,6 +77,12 @@ export default function WorkspaceDetail() {
     }
   };
   const fetchWorkspaceInfo = async () => {
+    const data = {
+      isError: false,
+      isLoading: true,
+    };
+    setStatus(data);
+
     await request
       .get('/api/v1/workspaces', {
         params: {
@@ -86,8 +93,15 @@ export default function WorkspaceDetail() {
         setWorkspaceName(res.data.name);
         setWorkspaceSummary(res.data.summary);
         setWorkpsace(res.data);
+
+        const data = {
+          isError: false,
+          isLoading: false,
+        };
+        setStatus(data);
       });
   };
+
   const fetchBoardList = async () => {
     await request
       .get('/api/v1/boards', {
@@ -101,7 +115,6 @@ export default function WorkspaceDetail() {
   };
 
   useEffect(() => {
-    fetchWorkspaceInfo();
     fetchBoardList();
   }, []);
 
@@ -113,6 +126,7 @@ export default function WorkspaceDetail() {
     setBoards(board);
   };
 
+  if (status.isLoading) return <DetailSkeleton />;
   if (status.isError)
     return (
       <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
@@ -144,35 +158,59 @@ export default function WorkspaceDetail() {
           onModal={handleModal}
           onNavigate={() => handleNavigate(workspaceId)}
         />
-        {status.isLoading ? (
-          <DetailSkeleton />
-        ) : (
-          <S.RightContainer>
-            <S.InfoContainer>
-              <WorkspaceImg
-                radius="none"
-                image="/assets/authorization/pimfy_profile.png"
-              />
-              <S.InfoContents>
-                <SubTitle size="md">{workspaceName}</SubTitle>
-                <S.ExplainText>{workspaceSummary}</S.ExplainText>
-              </S.InfoContents>
-            </S.InfoContainer>
-            <S.Line margin="0"></S.Line>
-            <S.BoardContainer>
-              <Grid container spacing={4}>
+        <S.RightContainer>
+          <S.InfoContainer>
+            <WorkspaceImg
+              radius="none"
+              image="/assets/authorization/pimfy_profile.png"
+            />
+            <S.InfoContents>
+              <SubTitle size="md">{workspace.name}</SubTitle>
+              <S.ExplainText>{workspace.summary}</S.ExplainText>
+            </S.InfoContents>
+          </S.InfoContainer>
+          <S.Line margin="0"></S.Line>
+          <S.BoardContainer>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={6} md={4}>
+                <S.Item
+                  center={true}
+                  color={'#fffcff'}
+                  onClick={handleCreate}
+                  data-testid="create-board"
+                >
+                  <S.Image
+                    width={'50px'}
+                    height={'50px'}
+                    img={'/assets/workspace/sample-add-icon.png'}
+                  ></S.Image>
+                </S.Item>
+              </Grid>
+              {boards.map((board) => (
+                <Grid item xs={12} sm={6} md={4} key={board.id}>
+                  <BoardItem board={board} workspaceId={workspaceId} />
+                </Grid>
+              ))}
+              {newItem && (
                 <Grid item xs={12} sm={6} md={4}>
-                  <S.Item
-                    center={true}
-                    color={'#fffcff'}
-                    onClick={handleCreate}
-                    data-testid="create-board"
-                  >
-                    <S.Image
-                      width={'50px'}
-                      height={'50px'}
-                      img={'/assets/workspace/sample-add-icon.png'}
-                    ></S.Image>
+                  <S.Item center={false} color={'#ffe7ee'}>
+                    <S.TopWrapper>
+                      <S.TitleInput
+                        placeholder="보드 이름을 입력해주세요"
+                        defaultValue={title}
+                        onChange={handleChangeTitle}
+                        data-testid="create-board-name"
+                      ></S.TitleInput>
+                    </S.TopWrapper>
+                    <S.BtnWrapper>
+                      <S.SaveBtn
+                        color="primary"
+                        onClick={fetchCreate}
+                        disable={!isTitleExsit}
+                      >
+                        확인
+                      </S.SaveBtn>
+                    </S.BtnWrapper>
                   </S.Item>
                 </Grid>
                 {boards.map((board) => (
