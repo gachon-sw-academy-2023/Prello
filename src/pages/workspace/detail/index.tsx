@@ -39,8 +39,6 @@ export default function WorkspaceDetail() {
   const [newItem, setNewItem] = useState<boolean>(false);
   const [boards, setBoards] = useState<IBoard[]>([]);
   const [status, setStatus] = useRecoilState(statusSelector);
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [error, setError] = useState<boolean>(false);
 
   const handleModal = () => {
     const data = {
@@ -107,6 +105,14 @@ export default function WorkspaceDetail() {
     fetchBoardList();
   }, []);
 
+  useEffect(() => {
+    setBoards(boards);
+  }, [boards]);
+
+  const fetchBoard = (board: IBoard[]) => {
+    setBoards(board);
+  };
+
   if (status.isError)
     return (
       <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
@@ -171,7 +177,11 @@ export default function WorkspaceDetail() {
                 </Grid>
                 {boards.map((board) => (
                   <Grid item xs={12} sm={6} md={4} key={board.id}>
-                    <BoardItem board={board} workspaceId={workspaceId} />
+                    <BoardItem
+                      board={board}
+                      workspaceId={workspaceId}
+                      fetchBoard={fetchBoard}
+                    />
                   </Grid>
                 ))}
                 {newItem && (

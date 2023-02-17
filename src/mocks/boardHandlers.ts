@@ -60,11 +60,20 @@ export const boardHandlers = [
     }
   }),
   rest.delete('/api/v1/boards', async (req: any, res, ctx) => {
+    let workspace;
+    const workspaceId = req.body.workspaceId;
+
     try {
       await deleteRecord(req.body.id);
+      await getAll().then((boards: IBoard[]) => {
+        workspace = boards.filter(
+          ({ workspaceId }) => workspaceId === workspaceId,
+        );
+      });
+
       return res(
         ctx.status(200),
-        ctx.json({ message: 'Board Update Success!' }),
+        ctx.json({ message: 'Board Update Success!', workspace }),
       );
     } catch (error) {
       return res(ctx.status(500), ctx.json({ message: 'Store in DB Failed!' }));
