@@ -49,7 +49,7 @@ export default function InviteModal({
     };
 
     try {
-      const response = await axios.post('/workspace/update-member', data);
+      const response = await axios.put('/api/v1/workspaces/member', data);
 
       if (response.status === 200) {
         alert('워크스페이스 정보가 업데이트 되었습니다!');

@@ -115,7 +115,7 @@ export const CreateWorkspaceModal = ({
             data-testid="workspace-invite-member"
           ></S.StyledEmailInput>
           <S.InviteBtn onClick={handleInvite} disabled={inviteBtnStatus}>
-            초대 이메일 전송
+            초대하기
           </S.InviteBtn>
         </S.InviteWrapper>
         <Paper
