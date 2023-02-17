@@ -188,7 +188,11 @@ export default function WorkspaceDetail() {
               </Grid>
               {boards.map((board) => (
                 <Grid item xs={12} sm={6} md={4} key={board.id}>
-                  <BoardItem board={board} workspaceId={workspaceId} />
+                  <BoardItem
+                    board={board}
+                    workspaceId={workspaceId}
+                    fetchBoard={fetchBoard}
+                  />
                 </Grid>
               ))}
               {newItem && (
@@ -213,42 +217,10 @@ export default function WorkspaceDetail() {
                     </S.BtnWrapper>
                   </S.Item>
                 </Grid>
-                {boards.map((board) => (
-                  <Grid item xs={12} sm={6} md={4} key={board.id}>
-                    <BoardItem
-                      board={board}
-                      workspaceId={workspaceId}
-                      fetchBoard={fetchBoard}
-                    />
-                  </Grid>
-                ))}
-                {newItem && (
-                  <Grid item xs={12} sm={6} md={4}>
-                    <S.Item center={false} color={'#ffe7ee'}>
-                      <S.TopWrapper>
-                        <S.TitleInput
-                          placeholder="보드 이름을 입력해주세요"
-                          defaultValue={title}
-                          onChange={handleChangeTitle}
-                          data-testid="create-board-name"
-                        ></S.TitleInput>
-                      </S.TopWrapper>
-                      <S.BtnWrapper>
-                        <S.SaveBtn
-                          color="primary"
-                          onClick={fetchCreate}
-                          disable={!isTitleExsit}
-                        >
-                          확인
-                        </S.SaveBtn>
-                      </S.BtnWrapper>
-                    </S.Item>
-                  </Grid>
-                )}
-              </Grid>
-            </S.BoardContainer>
-          </S.RightContainer>
-        )}
+              )}
+            </Grid>
+          </S.BoardContainer>
+        </S.RightContainer>
       </S.Wrapper>
     </S.Container>
   );
