@@ -7,7 +7,6 @@ import { CreateWorkspaceProps } from '@/utils/types';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import axios, { AxiosError } from 'axios';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import * as S from './CreateModal.style';

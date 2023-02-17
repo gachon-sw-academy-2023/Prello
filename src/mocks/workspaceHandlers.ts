@@ -6,19 +6,6 @@ const { getAll, add, getByID, deleteRecord, update } =
   useIndexedDB('workspace');
 
 export const workspaceHandlers = [
-  // rest.get('/workspace', async (req, res, ctx) => {
-  //   let workspace;
-  //   const id = req.url.searchParams.get('id');
-
-  //   await getAll().then((workspaces) => {
-  //     workspace = workspaces.find(({ id }) => id === id);
-  //   });
-
-  //   console.log(workspace);
-
-  //   return res(ctx.status(200), ctx.delay(1000), ctx.json(workspace));
-  // }),
-
   rest.get('/api/v1/workspaces', async (req: any, res, ctx) => {
     let Workspace;
     const workspaceId = req.url.searchParams.get('workspaceId');
@@ -95,6 +82,27 @@ export const workspaceHandlers = [
       );
     } catch {
       return res(ctx.status(500), ctx.json({ message: 'Fail to Delete Data' }));
+    }
+  }),
+
+  rest.put('/api/v1/workspaces', async (req: any, res, ctx) => {
+    try {
+      const workspace = await getByID(req.body.id);
+
+      update({
+        owner: workspace.owner,
+        name: req.body.name,
+        summary: req.body.summary,
+        id: workspace.id,
+        memberInfo: workspace.memberInfo,
+      });
+
+      return res(
+        ctx.status(200),
+        ctx.json({ message: 'Workspace Update Success!' }),
+      );
+    } catch {
+      return res(ctx.status(500), ctx.json({ message: 'Fail to Update Data' }));
     }
   }),
 

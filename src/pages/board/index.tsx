@@ -110,7 +110,7 @@ export default function Board() {
           <WithSearchBar
             divider={true}
             children="보드이름"
-            profileImg="public/assets/authorization/pimfy_profile.png"
+            profileImg="/assets/authorization/pimfy_profile.png"
             searchBar={true}
             isLoading={true}
           />
@@ -118,7 +118,7 @@ export default function Board() {
           <WithSearchBar
             divider={true}
             children={board?.name}
-            profileImg="public/assets/authorization/pimfy_profile.png"
+            profileImg="/assets/authorization/pimfy_profile.png"
             searchBar={true}
           />
         )}
@@ -127,12 +127,12 @@ export default function Board() {
         {loading ? (
           <MobileHeader
             children={board?.name}
-            profileImg="public/assets/authorization/pimfy_profile.png"
+            profileImg="/assets/authorization/pimfy_profile.png"
           />
         ) : (
           <MobileHeader
             children={board?.name}
-            profileImg="public/assets/authorization/pimfy_profile.png"
+            profileImg="/assets/authorization/pimfy_profile.png"
           />
         )}
       </Mobile>

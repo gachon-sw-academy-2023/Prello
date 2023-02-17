@@ -1,6 +1,5 @@
 import { IBoard } from '@/pages/workspace/detail';
-import request from '@/utils/api';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as S from './DropDownMenu.styles';
@@ -14,8 +13,6 @@ interface IDropMenu {
 }
 
 const DropDownMenu: React.FC<IDropMenu> = ({
-  handleDeleteItems,
-  UpdateList,
   boardId,
   setEdit,
   fetchBoard,

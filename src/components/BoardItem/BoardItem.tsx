@@ -1,7 +1,6 @@
 import DropDownMenu from '@/components/DropDownMenu/DropDownMenu';
 import { MenuBtn } from '@/pages/board/styles';
 import { IBoard } from '@/pages/workspace/detail';
-import request from '@/utils/api';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
