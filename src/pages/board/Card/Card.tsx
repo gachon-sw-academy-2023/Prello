@@ -72,7 +72,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   };
 
   const handleChangeTitle = (e: any) => {
-    request.post('/api/v1/cards', { title: e.target.value, cardId });
+    axios.put('/api/v1/cards/title', { title: e.target.value, cardId });
   };
 
   useEffect(() => {
