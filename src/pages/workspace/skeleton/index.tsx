@@ -59,7 +59,7 @@ export default function WorkSpaceSkeleton() {
         />
       </Default>
       <Mobile>
-        <MobileHeader profileImg="public/assets/authorization/pimfy_profile.png" />
+        <MobileHeader profileImg="assets/authorization/pimfy_profile.png" />
       </Mobile>
       <S.ContentsWrapper>
         <S.Wrapper>

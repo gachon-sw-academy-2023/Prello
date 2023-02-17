@@ -1,6 +1,6 @@
 import Button from '@/components/Button/Button';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
-import DeleteModal from '@/components/Modals/DeleteModal/DeleteModal';
+import DeleteWorkspaceModal from '@/components/Modals/DeleteWorkspaceModal/DeleteWorkspaceModal';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
@@ -86,7 +86,9 @@ export default function WorkspaceSetting() {
 
   return (
     <S.Container>
-      {modal.isOpen && <DeleteModal deleteWorkspace={deleteWorkspace} />}
+      {modal.isOpen && (
+        <DeleteWorkspaceModal deleteWorkspace={deleteWorkspace} />
+      )}
       <Default>
         <SubHeader
           divider={true}

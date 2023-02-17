@@ -18,7 +18,7 @@ import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import CreateWorkspaceModal from '../../../components/Modals/CreateModal/CreateModal';
+import CreateWorkspaceModal from '../../../components/Modals/CreateWorkspaceModal/CreateModal';
 import WorkSpaceSkeleton from '../skeleton';
 import * as S from './styles';
 

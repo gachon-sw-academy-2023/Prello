@@ -1,6 +1,6 @@
 import BoardItem from '@/components/BoardItem/BoardItem';
 import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
-import InviteModal from '@/components/Modals/InviteModal/InviteModal';
+import InviteWorkspaceModal from '@/components/Modals/InviteWorkspaceModal/InviteWorkspaceModal';
 import SideBar from '@/components/SideBar/SideBar';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
@@ -13,7 +13,6 @@ import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { IWorkspace } from '@/utils/types';
 import Grid from '@mui/material/Grid';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -145,10 +144,10 @@ export default function WorkspaceDetail() {
         <MobileHeader profileImg="/assets/authorization/pimfy_profile.png" />
       </Mobile>
       {modal.isOpen && (
-        <InviteModal
+        <InviteWorkspaceModal
           workspaceId={workspaceId}
           fetchWorkspaces={fetchWorkspaceInfo}
-        ></InviteModal>
+        ></InviteWorkspaceModal>
       )}
 
       <S.Wrapper>

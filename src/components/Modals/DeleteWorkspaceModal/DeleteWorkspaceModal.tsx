@@ -3,11 +3,13 @@ import SubTitle from '@/components/SubTitle/SubTitle';
 import { DeleteWorkspaceProps } from '@/utils/types';
 import { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import * as S from './DeleteModal.styles';
+import * as S from './DeleteWorkspaceModal.styles';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { modalSelector } from '@/recoil/atom/modalSelector';
 
-export default function DeleteModal({ deleteWorkspace }: DeleteWorkspaceProps) {
+export default function DeleteWorkspaceModal({
+  deleteWorkspace,
+}: DeleteWorkspaceProps) {
   const workspace = useRecoilValue(workspaceSelector);
   const [modal, setModal] = useRecoilState(modalSelector);
   const [inputValue, setInputValue] = useState<string>('');

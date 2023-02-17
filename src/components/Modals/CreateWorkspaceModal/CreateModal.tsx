@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import * as S from './CreateModal.style';
+import * as S from './CreateWorkspaceWorkspaceModal.style';
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),

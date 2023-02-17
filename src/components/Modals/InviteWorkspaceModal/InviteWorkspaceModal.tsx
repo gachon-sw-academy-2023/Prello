@@ -1,5 +1,6 @@
 import SubTitle from '@/components/SubTitle/SubTitle';
 import { modalSelector } from '@/recoil/atom/modalSelector';
+import request from '@/utils/api';
 import { InviteMembersProps } from '@/utils/types';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
@@ -9,11 +10,14 @@ import {
   InviteBtn,
   InviteWrapper,
   StyledEmailInput,
-} from '../CreateModal/CreateModal.style';
-import { DeleteButton, EmptyBox } from '../DeleteModal/DeleteModal.styles';
-import * as S from './InviteModal.styles';
+} from '../CreateWorkspaceModal/CreateWorkspaceWorkspaceModal.style';
+import {
+  DeleteButton,
+  EmptyBox,
+} from '../DeleteWorkspaceModal/DeleteWorkspaceModal.styles';
+import * as S from './InviteWorkspaceModal.styles';
 
-export default function InviteModal({
+export default function InviteWorkspaceModal({
   workspaceId,
   fetchWorkspaces,
 }: InviteMembersProps) {
@@ -48,18 +52,11 @@ export default function InviteModal({
       memberInfo: emailList,
     };
 
-    try {
-      const response = await axios.put('/api/v1/workspaces/member', data);
-
-      if (response.status === 200) {
-        alert('워크스페이스 정보가 업데이트 되었습니다!');
-        handleModal();
-        fetchWorkspaces();
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      console.log(err);
-    }
+    request.put('/api/v1/workspaces/member', data).then(() => {
+      alert('워크스페이스 정보가 업데이트 되었습니다!');
+      handleModal();
+      fetchWorkspaces();
+    });
   };
 
   return (
