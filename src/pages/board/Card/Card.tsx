@@ -33,8 +33,8 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const [items, setItems] = useState<IItem[]>([]);
 
   useEffect(() => {
-    axios
-      .get(`/list/item/${cardId}`)
+    request
+      .get('/api/v1/items/', { params: { cardId } })
       .then((res) =>
         setItems(res.data.sort((a: IItem, b: IItem) => a.order - b.order)),
       );
@@ -50,8 +50,8 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
         cardId,
       };
 
-      axios
-        .post('/item/create', {
+      request
+        .post('/api/v1/items', {
           ...item,
         })
         .then((res) => setItems(res.data));
@@ -63,7 +63,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const handleDeleteItems = () => {
     setItems([]);
     setShowForm(false);
-    axios.post('/item/clear', { cardId }).then((res) => console.log(res));
+    request.delete(`/api/v1/items:${cardId}`);
   };
 
   const handleCancel = () => {
@@ -120,7 +120,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             setList={setItems}
             list={items}
             onEnd={(e) => {
-              axios.post('/item/update-index', {
+              axios.put('/api/v1/items', {
                 id: parseInt(e.item.id),
                 oldCardIndex: parseInt(e.from.id),
                 newCardIndex: parseInt(e.to.id),
@@ -195,7 +195,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
             setList={setItems}
             list={items}
             onEnd={(e) => {
-              axios.post('/item/update-index', {
+              axios.put('/api/v1/items', {
                 id: parseInt(e.item.id),
                 oldCardIndex: parseInt(e.from.id),
                 newCardIndex: parseInt(e.to.id),

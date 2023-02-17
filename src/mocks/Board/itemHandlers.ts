@@ -5,19 +5,19 @@ const { getAll, add, deleteRecord, getByIndex, getByID, update, clear } =
   useIndexedDB('item');
 
 export const itemHandlers = [
-  rest.get('/item/:itemId', async (req: any, res, ctx) => {
+  rest.get('/api/v1/items/:itemId', async (req: any, res, ctx) => {
     const target = await getByID(req.params.itemId);
 
     return res(ctx.status(200), ctx.json(target));
   }),
-  rest.get('/list/item/:cardId', async (req, res, ctx) => {
+  rest.get('/api/v1/items', async (req: any, res, ctx) => {
     const AllList = await getAll();
     const itemList = AllList.filter(
-      (list: any) => list.cardId == req.params.cardId,
+      (list: any) => list.cardId == req.url.searchParams.get('cardId'),
     );
     return res(ctx.status(200), ctx.json(itemList));
   }),
-  rest.post('/item/create', async (req: any, res, ctx) => {
+  rest.post('/api/v1/items', async (req: any, res, ctx) => {
     add(req.body);
     const AllList = await getAll();
     const targetList = AllList.filter(
@@ -26,7 +26,7 @@ export const itemHandlers = [
     return res(ctx.status(200), ctx.json(targetList));
   }),
 
-  rest.post('/item/delete', async (req: any, res, ctx) => {
+  rest.delete('/api/v1/items', async (req: any, res, ctx) => {
     const target = await getByID(req.body.itemId);
     const cardId = target.cardId;
 
@@ -35,9 +35,9 @@ export const itemHandlers = [
     return res(ctx.status(200), ctx.json(result));
   }),
 
-  rest.post('/item/clear', async (req: any, res, ctx) => {
+  rest.delete('/api/v1/items:cardId', async (req: any, res, ctx) => {
     const AllList = await getAll();
-    const target = await getByIndex('cardId', req.body.cardId);
+    const target = await getByIndex('cardId', req.params.cardId);
 
     AllList.map((list) => {
       if (list.cardId == target.cardId) {
@@ -48,7 +48,7 @@ export const itemHandlers = [
     return res(ctx.status(200), ctx.json(AllList));
   }),
 
-  rest.post('/item/update-index', async (req: any, res, ctx) => {
+  rest.put('/api/v1/items', async (req: any, res, ctx) => {
     const target = await getByID(req.body.id);
     deleteRecord(target.id);
     target.cardId = req.body.newCardIndex;
@@ -139,7 +139,7 @@ export const itemHandlers = [
     return res(ctx.status(200));
   }),
 
-  rest.post('/item/:itemId', async (req: any, res, ctx) => {
+  rest.post('/api/v1/items/:itemId', async (req: any, res, ctx) => {
     await update({
       id: parseInt(req.params.itemId),
 
