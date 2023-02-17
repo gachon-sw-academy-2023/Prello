@@ -7,10 +7,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import * as S from './SubHeader.style';
 import { SubHeaderProps } from './SubHeader.types';
+import Skeleton from '@mui/material/Skeleton';
 export const SubHeader = ({
   profileImg,
   searchBar,
   divider,
+  isLoading,
   children,
 }: SubHeaderProps) => {
   const [user, setUser] = useRecoilState(userSelector);
@@ -42,7 +44,13 @@ export const SubHeader = ({
           <S.Title>Prello</S.Title>
         </Link>
         {divider && <S.Divider />}
-        <S.BoardName>{children}</S.BoardName>
+        {isLoading ? (
+          <Skeleton>
+            <S.BoardName>{children}</S.BoardName>
+          </Skeleton>
+        ) : (
+          <S.BoardName>{children}</S.BoardName>
+        )}
       </S.LeftHeaderDiv>
       <S.RightHeaderDiv>
         <S.SearchBar placeholder="Search" searchBar={searchBar} />

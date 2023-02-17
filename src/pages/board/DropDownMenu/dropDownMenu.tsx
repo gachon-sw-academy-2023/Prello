@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import * as S from './styles';
 interface ICard {
   id: number;
@@ -18,6 +19,7 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   cardId,
 }) => {
   const [visible, setVisible] = useState<boolean>(true);
+  const { boardId } = useParams();
 
   const wrapperRef = useRef<any>();
   useEffect(() => {
@@ -45,7 +47,9 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
 
   const handleDeleteCard = () => {
-    axios.post('/card/delete', { cardId }).then((res) => UpdateList(res.data));
+    axios
+      .post('/card/delete', { cardId, boardId })
+      .then((res) => UpdateList(res.data));
   };
 
   return (

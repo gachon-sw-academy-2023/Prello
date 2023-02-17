@@ -3,15 +3,15 @@ import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
-import { IWorkspace } from '@/utils/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import Sortable from 'sortablejs';
 import Inform from '../util';
 import Card from './Card/Card';
 import * as S from './styles';
+
 interface ICard {
   id: number;
   title: string;
@@ -25,17 +25,26 @@ interface IBoard {
 export default function Board() {
   const workspace = useRecoilValue(workspaceSelector);
   const [lists, setLists] = useState<ICard[]>([]);
-  const [member, setMember] = useState([]);
   const { boardId } = useParams();
   const [board, setBoard] = useState<IBoard>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-
+  const [size, setSize] = useState<boolean>();
   useEffect(() => {
-    axios
-      .get('/members/list')
-      .then((res) => setMember(res.data))
-      .catch((error) => alert(error));
+    const columns = document.querySelectorAll('.column');
+    columns.forEach((column: any) => {
+      new Sortable(column, {
+        animation: 150,
+        ghostClass: 'blue-background-class',
+        onUpdate({ oldIndex, newIndex }) {
+          axios
+            .post('/card/update-index', { oldIndex, newIndex })
+            .catch((error) => alert(error));
+        },
+      });
+    });
+  });
+  useEffect(() => {
     UpdateList();
     fetchBoardList();
   }, []);
@@ -43,6 +52,22 @@ export default function Board() {
   useEffect(() => {
     setLists(lists);
   }, [lists]);
+
+  useEffect(() => {
+    window.addEventListener('resize', resize);
+  });
+  useEffect(() => {
+    UpdateList();
+  }, [size]);
+
+  const resize = () => {
+    if (window.innerWidth < 765) {
+      setSize(true);
+    } else {
+      setSize(false);
+    }
+  };
+
   const fetchBoardList = async () => {
     try {
       setLoading(true);
@@ -64,24 +89,13 @@ export default function Board() {
     setLists(list);
   };
 
-  useEffect(() => {
-    const columns = document.querySelectorAll('.column');
-    columns.forEach((column: any) => {
-      new Sortable(column, {
-        animation: 150,
-        ghostClass: 'blue-background-class',
-        onUpdate({ oldIndex, newIndex }) {
-          axios
-            .post('/card/update-index', { oldIndex, newIndex })
-            .catch((error) => alert(error));
+  const UpdateList = async () => {
+    await axios
+      .get('/card', {
+        params: {
+          boardId,
         },
-      });
-    });
-  });
-
-  const UpdateList = () => {
-    axios
-      .get('/card')
+      })
       .then((res) => setLists(res.data))
       .catch((error) => alert(error));
   };
@@ -91,12 +105,12 @@ export default function Board() {
       .post('/card/create', {
         title: '',
         order: lists.length,
+        boardId: boardId,
       })
       .then((res) => setLists(res.data))
       .catch((error) => alert(error));
   };
 
-  if (loading) return <div>로딩중...</div>;
   if (error)
     return (
       <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
@@ -105,18 +119,35 @@ export default function Board() {
   return (
     <S.Container>
       <Default>
-        <WithSearchBar
-          divider={true}
-          children={board?.name}
-          profileImg="public/assets/authorization/pimfy_profile.png"
-          searchBar={true}
-        />
+        {loading ? (
+          <WithSearchBar
+            divider={true}
+            children="보드이름"
+            profileImg="public/assets/authorization/pimfy_profile.png"
+            searchBar={true}
+            isLoading={true}
+          />
+        ) : (
+          <WithSearchBar
+            divider={true}
+            children={board?.name}
+            profileImg="public/assets/authorization/pimfy_profile.png"
+            searchBar={true}
+          />
+        )}
       </Default>
       <Mobile>
-        <MobileHeader
-          children={board?.name}
-          profileImg="public/assets/authorization/pimfy_profile.png"
-        />
+        {loading ? (
+          <MobileHeader
+            children={board?.name}
+            profileImg="public/assets/authorization/pimfy_profile.png"
+          />
+        ) : (
+          <MobileHeader
+            children={board?.name}
+            profileImg="public/assets/authorization/pimfy_profile.png"
+          />
+        )}
       </Mobile>
       <S.Wrapper>
         <Default>
@@ -149,14 +180,16 @@ export default function Board() {
         <Mobile>
           <S.MobileRightWrapper>
             <S.ListMobileContiner className="column">
-              {lists.map((list: ICard) => (
-                <Card
-                  title={list.title}
-                  key={list.id}
-                  cardId={list.id}
-                  UpdateList={UpdateList}
-                />
-              ))}
+              {lists
+                .sort((a, b) => a.order - b.order)
+                .map((list: ICard) => (
+                  <Card
+                    title={list.title}
+                    key={list.id}
+                    cardId={list.id}
+                    UpdateList={fetchList}
+                  />
+                ))}
             </S.ListMobileContiner>
             <S.MobileAddListWrapper onClick={handleAddList}>
               <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
