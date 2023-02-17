@@ -5,6 +5,10 @@ describe('로그인 테스트', () => {
   });
   it('2. 로그인 메뉴 클릭', () => {
     cy.wait(1000);
+    if (cy.get('button').contains('Log Out')) {
+      cy.get('button').contains('Log Out').click();
+      cy.wait(2000);
+    }
     cy.get('button').contains('Log In').click();
   });
   it('3. 이메일 입력', () => {
@@ -15,9 +19,6 @@ describe('로그인 테스트', () => {
   });
   it('5. 로그인 버튼 클릭', () => {
     cy.get('button').contains('Login').click();
-  });
-  it('6. 로그인 확인', () => {
-    cy.wait(2000);
-    cy.get('span').contains('Welcome');
+    cy.url().should('eq', 'http://localhost:5173/');
   });
 });

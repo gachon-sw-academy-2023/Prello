@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 import Sortable from 'sortablejs';
 import Inform from '../util';
 import Card from './Card/Card';
+import { CardSkeleton } from './Card/skeleton';
 import * as S from './styles';
 
 interface ICard {
@@ -68,12 +69,16 @@ export default function Board() {
   };
 
   const fetchBoardList = async () => {
+    setLoading(true);
+
     await request
       .get(`/api/v1/boards/${boardId}`)
       .then((res) => setBoard(res.data));
+    setLoading(false);
   };
 
   const fetchList = (list: ICard[]) => {
+    setLoading(true);
     setLists(list);
   };
 
@@ -81,14 +86,6 @@ export default function Board() {
     await request.get('/api/v1/cards', { params: { boardId } }).then((res) => {
       setLists(res.data);
     });
-    // await axios
-    //   .get('/card', {
-    //     params: {
-    //       boardId,
-    //     },
-    //   })
-    //   .then((res) => setLists(res.data))
-    //   .catch((error) => alert(error));
   };
 
   const handleAddList = async () => {
@@ -99,14 +96,6 @@ export default function Board() {
         boardId: boardId,
       })
       .then((res) => setLists(res.data));
-    // axios
-    //   .post('/card/create', {
-    //     title: '',
-    //     order: lists.length,
-    //     boardId: boardId,
-    //   })
-    //   .then((res) => setLists(res.data))
-    //   .catch((error) => alert(error));
   };
 
   if (error)
@@ -156,23 +145,38 @@ export default function Board() {
         </Default>
 
         <Default>
-          <S.RightWrapper>
-            <S.ListContainer className="column">
-              {lists
-                .sort((a, b) => a.order - b.order)
-                .map((list: ICard) => (
-                  <Card
-                    title={list.title}
-                    key={list.id}
-                    cardId={list.id}
-                    UpdateList={fetchList}
-                  />
-                ))}
-            </S.ListContainer>
-            <S.AddListWrapper onClick={handleAddList}>
-              <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
-            </S.AddListWrapper>
-          </S.RightWrapper>
+          {loading ? (
+            <S.RightWrapper>
+              <S.ListContainer>
+                {lists
+                  .sort((a, b) => a.order - b.order)
+                  .map((list: ICard) => (
+                    <CardSkeleton />
+                  ))}
+                <S.AddListWrapper onClick={handleAddList}>
+                  <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
+                </S.AddListWrapper>
+              </S.ListContainer>
+            </S.RightWrapper>
+          ) : (
+            <S.RightWrapper>
+              <S.ListContainer className="column">
+                {lists
+                  .sort((a, b) => a.order - b.order)
+                  .map((list: ICard) => (
+                    <Card
+                      title={list.title}
+                      key={list.id}
+                      cardId={list.id}
+                      UpdateList={fetchList}
+                    />
+                  ))}
+              </S.ListContainer>
+              <S.AddListWrapper onClick={handleAddList}>
+                <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
+              </S.AddListWrapper>
+            </S.RightWrapper>
+          )}
         </Default>
 
         <Mobile>

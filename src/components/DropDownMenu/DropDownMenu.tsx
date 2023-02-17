@@ -1,11 +1,14 @@
+import { IBoard } from '@/pages/workspace/detail';
 import request from '@/utils/api';
 import axios, { AxiosError } from 'axios';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import * as S from './DropDownMenu.styles';
 
 interface IDropMenu {
   handleDeleteItems: () => void;
   UpdateList: () => void;
+  fetchBoard: (board: IBoard[]) => void;
   boardId: number;
   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -15,8 +18,10 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   UpdateList,
   boardId,
   setEdit,
+  fetchBoard,
 }) => {
   const [visible, setVisible] = useState<boolean>(true);
+  const { workspaceId } = useParams() as { workspaceId: string };
 
   const wrapperRef = useRef<any>();
   useEffect(() => {
@@ -42,8 +47,12 @@ const DropDownMenu: React.FC<IDropMenu> = ({
     setVisible(false);
   };
 
-  const handleDeleteBoard = async () => {
-    await request.delete('/api/v1/boards', { data: { id: boardId } });
+  const handleDeleteBoard = () => {
+    axios
+      .delete('/api/v1/boards', {
+        data: { id: boardId, workspaceId: workspaceId },
+      })
+      .then((res) => fetchBoard(res.data.workspace));
   };
 
   return (
