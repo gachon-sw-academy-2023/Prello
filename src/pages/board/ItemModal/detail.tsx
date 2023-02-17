@@ -1,4 +1,5 @@
 import Modal from '@/components/Modal/Modal';
+import request from '@/utils/api';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import Box from '@mui/joy/Box';
 import {
@@ -60,12 +61,16 @@ export const Detail = ({ setOpen, itemId, fetchItems }: DetailProps) => {
       setValue(res.data.date);
       setPersonName(res.data.members);
       setDescription(res.data.description);
-      axios.get(`/card/${res.data.cardId}`).then((res) => setCard(res.data));
+      request
+        .get(`/api/v1/cards/${res.data.cardId}`)
+        .then((res) => setCard(res.data));
     });
   }, []);
 
-  const setCardList = () => {
-    axios.get(`/card/${item?.cardId}`).then((res) => setCard(res.data));
+  const setCardList = async () => {
+    await request
+      .get(`/api/v1/cards/${item?.cardId}`)
+      .then((res) => setCard(res.data));
   };
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {

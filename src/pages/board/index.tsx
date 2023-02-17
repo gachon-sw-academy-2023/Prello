@@ -2,6 +2,7 @@ import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
+import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { Skeleton } from '@mui/material';
 import { height } from '@mui/system';
@@ -40,9 +41,7 @@ export default function Board() {
         animation: 150,
         ghostClass: 'blue-background-class',
         onUpdate({ oldIndex, newIndex }) {
-          axios
-            .post('/card/update-index', { oldIndex, newIndex })
-            .catch((error) => alert(error));
+          axios.put('/api/v1/cards/index', { oldIndex, newIndex });
         },
       });
     });
@@ -72,20 +71,9 @@ export default function Board() {
   };
 
   const fetchBoardList = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get('/board', {
-        params: {
-          id: boardId,
-        },
-      });
-      if (response.status === 200) {
-        setBoard(response.data);
-      }
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
+    await request
+      .get(`/api/v1/boards/${boardId}`)
+      .then((res) => setBoard(res.data));
   };
 
   const fetchList = (list: ICard[]) => {
@@ -94,25 +82,35 @@ export default function Board() {
   };
 
   const UpdateList = async () => {
-    await axios
-      .get('/card', {
-        params: {
-          boardId,
-        },
-      })
-      .then((res) => setLists(res.data))
-      .catch((error) => alert(error));
+    await request.get('/api/v1/cards', { params: { boardId } }).then((res) => {
+      setLists(res.data);
+    });
+    // await axios
+    //   .get('/card', {
+    //     params: {
+    //       boardId,
+    //     },
+    //   })
+    //   .then((res) => setLists(res.data))
+    //   .catch((error) => alert(error));
   };
 
-  const handleAddList = () => {
-    axios
-      .post('/card/create', {
+  const handleAddList = async () => {
+    await request
+      .post('/api/v1/cards', {
         title: '',
         order: lists.length,
         boardId: boardId,
       })
-      .then((res) => setLists(res.data))
-      .catch((error) => alert(error));
+      .then((res) => setLists(res.data));
+    // axios
+    //   .post('/card/create', {
+    //     title: '',
+    //     order: lists.length,
+    //     boardId: boardId,
+    //   })
+    //   .then((res) => setLists(res.data))
+    //   .catch((error) => alert(error));
   };
 
   if (error)

@@ -1,3 +1,4 @@
+import request from '@/utils/api';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -47,8 +48,8 @@ const DropDownMenu: React.FC<IDropMenu> = ({
   };
 
   const handleDeleteCard = () => {
-    axios
-      .post('/card/delete', { cardId, boardId })
+    request
+      .delete('/api/v1/cards', { data: { cardId, boardId } })
       .then((res) => UpdateList(res.data));
   };
 
