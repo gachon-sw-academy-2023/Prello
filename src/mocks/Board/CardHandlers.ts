@@ -35,7 +35,7 @@ export const cardHandlers = [
     }
   }),
 
-  rest.post('/api/v1/cards', async (req: any, res, ctx) => {
+  rest.put('/api/v1/cards/title', async (req: any, res, ctx) => {
     try {
       const target = await getByID(req.body.cardId);
       update({
@@ -50,7 +50,7 @@ export const cardHandlers = [
     }
   }),
 
-  rest.post('/card/update-index', async (req: any, res, ctx) => {
+  rest.put('/api/v1/cards/index', async (req: any, res, ctx) => {
     try {
       const target = await getByIndex('order', req.body.oldIndex);
       deleteRecord(target.id);
@@ -94,7 +94,7 @@ export const cardHandlers = [
     }
   }),
 
-  rest.post('/card/delete', async (req: any, res, ctx) => {
+  rest.delete('/api/v1/cards', async (req: any, res, ctx) => {
     try {
       deleteRecord(req.body.cardId);
       const cardList = (await getAll()).filter(

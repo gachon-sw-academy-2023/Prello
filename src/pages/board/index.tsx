@@ -38,9 +38,7 @@ export default function Board() {
         animation: 150,
         ghostClass: 'blue-background-class',
         onUpdate({ oldIndex, newIndex }) {
-          axios
-            .post('/card/update-index', { oldIndex, newIndex })
-            .catch((error) => alert(error));
+          axios.put('/api/v1/cards/index', { oldIndex, newIndex });
         },
       });
     });
@@ -73,20 +71,6 @@ export default function Board() {
     await request
       .get(`/api/v1/boards/${boardId}`)
       .then((res) => setBoard(res.data));
-    // try {
-    //   setLoading(true);
-    //   const response = await axios.get('/board', {
-    //     params: {
-    //       id: boardId,
-    //     },
-    //   });
-    //   if (response.status === 200) {
-    //     setBoard(response.data);
-    //   }
-    // } catch (error) {
-    //   setError(true);
-    // }
-    // setLoading(false);
   };
 
   const fetchList = (list: ICard[]) => {
