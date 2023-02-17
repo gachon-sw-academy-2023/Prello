@@ -63,7 +63,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   const handleDeleteItems = () => {
     setItems([]);
     setShowForm(false);
-    request.delete(`/api/v1/items:${cardId}`);
+    request.delete(`/api/v1/items/${cardId}`);
   };
 
   const handleCancel = () => {
