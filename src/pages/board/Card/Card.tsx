@@ -1,3 +1,4 @@
+import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -71,9 +72,7 @@ const Card: React.FC<ICardProp> = ({ title, cardId, UpdateList }) => {
   };
 
   const handleChangeTitle = (e: any) => {
-    axios
-      .post('/card/update-title', { title: e.target.value, cardId })
-      .catch((error) => alert(error));
+    request.post('/api/v1/cards', { title: e.target.value, cardId });
   };
 
   useEffect(() => {

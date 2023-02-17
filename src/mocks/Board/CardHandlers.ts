@@ -10,7 +10,7 @@ export const cardHandlers = [
     return res(ctx.status(200), ctx.json(target));
   }),
 
-  rest.get('/card', async (req: any, res, ctx) => {
+  rest.get('/api/v1/cards', async (req: any, res, ctx) => {
     const id = parseInt(req.url.searchParams.get('boardId'));
     try {
       const cardList = (await getAll()).filter((list) => list.boardId == id);
@@ -35,7 +35,7 @@ export const cardHandlers = [
     }
   }),
 
-  rest.post('/card/update-title', async (req: any, res, ctx) => {
+  rest.post('/api/v1/cards', async (req: any, res, ctx) => {
     try {
       const target = await getByID(req.body.cardId);
       update({

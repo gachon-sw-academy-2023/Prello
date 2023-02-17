@@ -35,9 +35,9 @@ export const boardHandlers = [
       );
     }
   }),
-  rest.get('/api/v1/boards', async (req: any, res, ctx) => {
+  rest.get('/api/v1/boards/:boardId', async (req: any, res, ctx) => {
     let board;
-    const boardId = req.url.searchParams.get('id');
+    const boardId = req.params.boardId;
 
     try {
       await getAll().then((boards) => {
