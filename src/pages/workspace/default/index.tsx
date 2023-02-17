@@ -3,8 +3,11 @@ import { MobileHeader } from '@/components/MobileHeader/MobileHeader';
 import ProfileImg from '@/components/ProfileImg/ProfileImg';
 import { SubHeader } from '@/components/SubHeader/SubHeader';
 import Inform from '@/pages/util';
-import { userSelector } from '@/recoil/atom/userSelector';
 import { modalSelector } from '@/recoil/atom/modalSelector';
+import { statusSelector } from '@/recoil/atom/statusSelector';
+import { userSelector } from '@/recoil/atom/userSelector';
+import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
+import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import {
   IWorkspace,
@@ -12,10 +15,9 @@ import {
   WorkspaceUserImageProps,
 } from '@/utils/types';
 import Grid from '@mui/material/Grid';
-import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CreateWorkspaceModal from '../../../components/Modals/CreateModal/CreateModal';
 import WorkSpaceSkeleton from '../skeleton';
 import * as S from './styles';
@@ -49,6 +51,7 @@ function UserImages({ members }: WorkspaceUserImageProps) {
 
 function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
   const navigate = useNavigate();
+  const setWorkpsace = useSetRecoilState<IWorkspace>(workspaceSelector);
 
   const handleNavigate = (param: number) => {
     navigate(`/workspace-detail/${param}`);
@@ -65,7 +68,12 @@ function WorkSpaceContainer({ workspaces }: WorkspaceContainerProps) {
           lg={3}
           key={workspace.owner + workspace.name}
         >
-          <S.Item onClick={() => handleNavigate(workspace.id)}>
+          <S.Item
+            onClick={() => {
+              handleNavigate(workspace.id);
+              setWorkpsace(workspace);
+            }}
+          >
             <S.GradientBG></S.GradientBG>
             <S.ItemContents>
               <S.Title>{workspace.name}</S.Title>
@@ -85,8 +93,7 @@ export default function WorkspaceDefault() {
   const [createdWorkspaces, setCreatedWorkspaces] = useState<IWorkspace[]>();
   const [participatingWorkspaces, setparticipatingWorkspaces] =
     useState<IWorkspace[]>();
-  const [loading, setLoading] = useState<Boolean>(false);
-  const [error, setError] = useState<Boolean>(false);
+  const status = useRecoilValue(statusSelector);
 
   const handleModal = () => {
     const data = {
@@ -100,39 +107,29 @@ export default function WorkspaceDefault() {
   }, []);
 
   const fetchWorkspaces = async () => {
-    try {
-      setError(false);
-      setCreatedWorkspaces([]);
-      setparticipatingWorkspaces([]);
-      setLoading(true);
-
-      const response = await axios.get('/workspace/list', {
+    setCreatedWorkspaces([]);
+    setparticipatingWorkspaces([]);
+    await request
+      .get('/api/v1/workspaces/created', {
         params: {
           email: user.email,
         },
-      });
+      })
+      .then((res) => setCreatedWorkspaces(res.data));
 
-      if (response.status === 200) {
-        setCreatedWorkspaces(response.data);
-      }
-
-      const response2 = await axios.get('/workspace/list/participate', {
+    await request
+      .get('/api/v1/workspaces/participated', {
         params: {
           email: user.email,
         },
+      })
+      .then((res) => {
+        setparticipatingWorkspaces(res.data);
       });
-      if (response2.status === 200) {
-        setparticipatingWorkspaces(response2.data);
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      setError(true);
-    }
-    setLoading(false);
   };
 
-  if (loading) return <WorkSpaceSkeleton></WorkSpaceSkeleton>;
-  if (error)
+  if (status.isLoading) return <WorkSpaceSkeleton></WorkSpaceSkeleton>;
+  if (status.isError)
     return (
       <Inform message="알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요!"></Inform>
     );

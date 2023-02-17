@@ -7,6 +7,7 @@ import { SubTitle } from '@/components/SubTitle/SubTitle.styles';
 import WorkspaceImg from '@/components/WorkspaceImg/WorkspaceImg';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import ROUTES from '@/routes';
+import request from '@/utils/api';
 import { Default, Mobile } from '@/utils/mediaQuery';
 import { IWorkspace } from '@/utils/types';
 import axios, { AxiosError } from 'axios';
@@ -64,34 +65,23 @@ export default function WorkspaceSetting() {
       summary: workspaceSummary,
       name: changedWorkspaceName,
     };
-
-    try {
-      const response = await axios.post('/workspace/update', data);
-
-      if (response.status === 200) {
-        fetchWorkspace();
-        alert('워크스페이스 정보가 업데이트 되었습니다!');
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      console.log(err);
-    }
+    await request.put('/api/v1/workspaces', data).then(() => {
+      fetchWorkspace();
+      alert('워크스페이스 정보가 업데이트 되었습니다!');
+    });
   };
 
   const deleteWorkspace = async () => {
-    const data = {
-      workspaceId: parseInt(workspaceId),
+    const config = {
+      data: {
+        workspaceId: parseInt(workspaceId),
+      },
     };
-    try {
-      const response = await axios.post('/workspace/delete', data);
-      if (response.status === 200) {
-        alert('워크스페이스가 삭제되었습니다!');
-        naviate(ROUTES.WORKSPACEDEFAULT);
-      }
-    } catch (error) {
-      const err = error as AxiosError;
-      console.log(err);
-    }
+
+    await request.delete('/api/v1/workspaces/', config).then((res) => {
+      alert('워크스페이스가 삭제되었습니다!');
+      naviate(ROUTES.WORKSPACEDEFAULT);
+    });
   };
 
   return (
