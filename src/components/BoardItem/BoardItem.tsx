@@ -58,8 +58,9 @@ export default function BoardItem({ board, workspaceId }: BoardProps) {
           value={boardName}
           disabled={!isEdit}
           onChange={handleChangeTitle}
+          data-testid="update-board-name"
         ></S.TitleInput>
-        <MenuBtn>
+        <MenuBtn data-testid="update-board">
           <S.IconBtn onClick={handleMenu}>
             <FontAwesomeIcon icon={faEllipsis} />
           </S.IconBtn>
