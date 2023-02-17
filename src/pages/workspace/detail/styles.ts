@@ -23,6 +23,14 @@ export const Wrapper = styled.div`
   display: flex;
   padding-top: 65px;
 `;
+
+export const MobileWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  background-color: #f5f6f7;
+  align-items: center;
+  padding-top: 65px;
+`;
 // 구분선
 export const Line = styled.div<TitleProps>`
   width: 100%;
@@ -97,6 +105,12 @@ export const RightContainer = styled.div`
   width: 80%;
   padding: 30px;
   margin-left: 250px;
+`;
+export const MobileRightContainer = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  padding: 30px;
 `;
 
 export const InfoContainer = styled.div`
