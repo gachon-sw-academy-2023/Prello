@@ -3,6 +3,8 @@ import SideBar from '@/components/SideBar/SideBar';
 import { WithSearchBar } from '@/components/SubHeader/SubHeader.stories';
 import { workspaceSelector } from '@/recoil/atom/workspaceSelector';
 import { Default, Mobile } from '@/utils/mediaQuery';
+import { Skeleton } from '@mui/material';
+import { height } from '@mui/system';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -10,6 +12,7 @@ import { useRecoilValue } from 'recoil';
 import Sortable from 'sortablejs';
 import Inform from '../util';
 import Card from './Card/Card';
+import { CardSkeleton } from './Card/skeleton';
 import * as S from './styles';
 
 interface ICard {
@@ -86,6 +89,7 @@ export default function Board() {
   };
 
   const fetchList = (list: ICard[]) => {
+    setLoading(true);
     setLists(list);
   };
 
@@ -158,23 +162,38 @@ export default function Board() {
         </Default>
 
         <Default>
-          <S.RightWrapper>
-            <S.ListContainer className="column">
-              {lists
-                .sort((a, b) => a.order - b.order)
-                .map((list: ICard) => (
-                  <Card
-                    title={list.title}
-                    key={list.id}
-                    cardId={list.id}
-                    UpdateList={fetchList}
-                  />
-                ))}
-            </S.ListContainer>
-            <S.AddListWrapper onClick={handleAddList}>
-              <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
-            </S.AddListWrapper>
-          </S.RightWrapper>
+          {loading ? (
+            <S.RightWrapper>
+              <S.ListContainer>
+                {lists
+                  .sort((a, b) => a.order - b.order)
+                  .map((list: ICard) => (
+                    <CardSkeleton />
+                  ))}
+                <S.AddListWrapper onClick={handleAddList}>
+                  <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
+                </S.AddListWrapper>
+              </S.ListContainer>
+            </S.RightWrapper>
+          ) : (
+            <S.RightWrapper>
+              <S.ListContainer className="column">
+                {lists
+                  .sort((a, b) => a.order - b.order)
+                  .map((list: ICard) => (
+                    <Card
+                      title={list.title}
+                      key={list.id}
+                      cardId={list.id}
+                      UpdateList={fetchList}
+                    />
+                  ))}
+              </S.ListContainer>
+              <S.AddListWrapper onClick={handleAddList}>
+                <S.AddListBtn>+ ADD ANOTHER LIST</S.AddListBtn>
+              </S.AddListWrapper>
+            </S.RightWrapper>
+          )}
         </Default>
 
         <Mobile>
